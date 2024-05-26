@@ -1,13 +1,9 @@
-import firebaseApp from "../../config";
+import { auth } from "../../firebase.config";
 import {
   createUserWithEmailAndPassword,
   updateProfile,
-  getAuth,
-  Auth,
   User,
 } from "firebase/auth";
-
-const auth: Auth = getAuth(firebaseApp);
 
 interface SignUpResult {
   result: any;
