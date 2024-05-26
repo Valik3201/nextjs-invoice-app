@@ -1,7 +1,5 @@
-import { getAuth, signOut } from "firebase/auth";
-import firebase_app from "../../config";
-
-const auth = getAuth(firebase_app);
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase.config";
 
 export default async function logout(): Promise<{
   success: boolean;
