@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useAppSelector } from "../lib/hooks";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Navigation() {
   const user = useAppSelector((state) => state.auth.user);
@@ -28,6 +29,10 @@ export default function Navigation() {
             </li>
           </>
         )}
+
+        <li>
+          <ThemeToggle />
+        </li>
       </ul>
     </nav>
   );

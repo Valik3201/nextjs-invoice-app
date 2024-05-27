@@ -49,7 +49,7 @@ export default function SignUp() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="example@mail.com"
+              placeholder="Password"
             />
             <button type="submit">Sign up</button>
           </form>
