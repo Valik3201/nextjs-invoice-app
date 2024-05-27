@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
-import { useAuthContext } from "../context/AuthContext";
+import { useAppSelector } from "../lib/hooks";
 
 export default function Navigation() {
-  const { user } = useAuthContext();
+  const user = useAppSelector((state) => state.auth.user);
 
   return (
     <nav>
