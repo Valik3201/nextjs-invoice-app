@@ -1,67 +1,56 @@
 "use client";
 import React, { useState } from "react";
-import signUp from "../../firebase/auth/signup";
+import { signUp } from "@/src/lib/features/auth/authOperations";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/src/lib/hooks";
+import InputField from "@/src/components/InputField";
 
 export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const handleForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const { result, error } = await signUp(email, password, name);
+    dispatch(signUp({ email, password, displayName: name }));
 
-    if (error) {
-      console.log(error);
-      return;
-    }
-
-    console.log(result);
     router.push("/invoices");
   };
 
   return (
     <main>
       <div className="container flex justify-center">
-        <div className="form-wrapper">
+        <div>
           <h1 className="mt-60 mb-30">Sign up</h1>
-          <form onSubmit={handleForm} className="form">
-            <label htmlFor="name">
-              <p>Name</p>
-              <input
-                onChange={(e) => setName(e.target.value)}
-                required
-                type="text"
-                name="name"
-                id="name"
-                placeholder="John Doe"
-              />
-            </label>
-            <label htmlFor="email">
-              <p>Email</p>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                type="email"
-                name="email"
-                id="email"
-                placeholder="example@mail.com"
-              />
-            </label>
-            <label htmlFor="password">
-              <p>Password</p>
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                type="password"
-                name="password"
-                id="password"
-                placeholder="password"
-              />
-            </label>
+          <form onSubmit={handleForm}>
+            <InputField
+              label="Name"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="John Doe"
+            />
+
+            <InputField
+              label="Email"
+              name="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="example@mail.com"
+            />
+
+            <InputField
+              label="Password"
+              name="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="example@mail.com"
+            />
             <button type="submit">Sign up</button>
           </form>
         </div>

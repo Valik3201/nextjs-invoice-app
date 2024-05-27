@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { League_Spartan } from "next/font/google";
-import { AuthContextProvider } from "../context/AuthContext";
 import Navigation from "../components/Navigation";
+import StoreProvider from "../store/StoreProvider";
+import AuthProvider from "../store/AuthProvider";
 import "./globals.css";
 
 const leagueSpartan = League_Spartan({ subsets: ["latin"] });
@@ -18,11 +19,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={leagueSpartan.className}>
-        <AuthContextProvider>
-          <Navigation />
-          {children}
-        </AuthContextProvider>
+      <body
+        className={`${leagueSpartan.className} bg-light text-dark-darkest dark:bg-dark dark:text-white`}
+      >
+        <StoreProvider>
+          <AuthProvider>
+            <Navigation />
+            {children}
+          </AuthProvider>
+        </StoreProvider>
       </body>
     </html>
   );

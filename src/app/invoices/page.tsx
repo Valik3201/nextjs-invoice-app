@@ -1,27 +1,55 @@
 "use client";
 import React, { useEffect } from "react";
-import { useAuthContext } from "../../context/AuthContext";
 import { useRouter } from "next/navigation";
-import logout from "../../firebase/auth/logout";
+import { logout } from "@/src/lib/features/auth/authOperations";
+import AddInvoiceForm from "@/src/components/AddInvoiceForm";
+import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
+import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
 
 export default function Page() {
-  const { user } = useAuthContext();
   const router = useRouter();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.auth.user);
+  const loading = useAppSelector((state) => state.auth.loading);
+  const invoices = useAppSelector((state) => state.invoices.invoices);
+  const error = useAppSelector((state) => state.invoices.error);
 
   useEffect(() => {
-    if (user == null) router.push("/");
+    if (user) {
+      dispatch(fetchInvoices(user.uid));
+    }
+  }, [user, dispatch]);
+
+  const result = {
+    invoices,
+    error,
+  };
+
+  console.log(result);
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+      return;
+    }
   }, [user, router]);
 
   const handleLogout = async () => {
-    await logout();
+    dispatch(logout());
   };
 
   return (
     <div>
-      {user && (
+      {user && !loading && (
         <>
-          <h1>Welcome back, {user.displayName}</h1>
-          <button onClick={handleLogout}>Logout</button>
+          <h1 className="text-3xl">
+            Welcome back, <span className="font-bold">{user.displayName}</span>
+          </h1>
+          <button onClick={handleLogout} className="text-red-medium font-bold">
+            Logout
+          </button>
+
+          <AddInvoiceForm />
         </>
       )}
     </div>
