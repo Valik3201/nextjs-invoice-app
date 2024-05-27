@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { listenToAuthChanges } from "../lib/features/auth/authOperations";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 
-interface AuthProviderProps {
+export default function AuthProvider({
+  children,
+}: {
   children: React.ReactNode;
-}
-
-const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+}) {
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state) => state.auth);
 
@@ -20,6 +20,4 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }
 
   return <>{children}</>;
-};
-
-export default AuthProvider;
+}
