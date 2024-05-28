@@ -102,6 +102,17 @@ export default function Page() {
                 );
               })}
           </ul>
+
+          {!invoices && (
+            <div className="flex flex-col items-center gap-[23px]">
+              <h2 className="text-heading-m">There is nothing here</h2>
+              <p className="text-body-variant text-gray-medium dark:text-gray-light text-center">
+                Create an invoice by clicking the <br />
+                <span className="font-bold">New Invoice</span> button and get
+                started
+              </p>
+            </div>
+          )}
         </>
       )}
     </>
