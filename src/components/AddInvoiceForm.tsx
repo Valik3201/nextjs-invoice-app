@@ -10,7 +10,9 @@ export default function AddInvoiceForm() {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
-  const [invoiceData, setInvoiceData] = useState<Omit<Invoice, "id">>({
+  const [invoiceData, setInvoiceData] = useState<Invoice>({
+    id: "",
+    uid: "",
     status: InvoiceStatus.Pending,
     billFrom: {
       streetAddress: "",
@@ -34,6 +36,8 @@ export default function AddInvoiceForm() {
 
   const clearForm = () => {
     setInvoiceData({
+      id: "",
+      uid: "",
       billFrom: {
         city: "",
         country: "",

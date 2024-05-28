@@ -4,6 +4,7 @@ import { DocumentData } from "firebase/firestore";
 export const orderInvoiceKeys = (invoice: DocumentData): Invoice => {
   return {
     id: invoice.id,
+    uid: invoice.uid,
     status: invoice.status,
     billFrom: {
       city: invoice.billFrom.city,

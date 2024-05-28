@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import AddInvoiceForm from "@/src/components/AddInvoiceForm";
+// import AddInvoiceForm from "@/src/components/AddInvoiceForm";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
 import ArrowIcon from "@/src/icons/ArrowIcon";
@@ -102,6 +102,17 @@ export default function Page() {
                 );
               })}
           </ul>
+
+          {!invoices && (
+            <div className="flex flex-col items-center gap-[23px]">
+              <h2 className="text-heading-m">There is nothing here</h2>
+              <p className="text-body-variant text-gray-medium dark:text-gray-light text-center">
+                Create an invoice by clicking the <br />
+                <span className="font-bold">New Invoice</span> button and get
+                started
+              </p>
+            </div>
+          )}
         </>
       )}
     </>
