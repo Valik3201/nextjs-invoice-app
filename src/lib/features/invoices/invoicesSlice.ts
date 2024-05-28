@@ -1,15 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Invoice } from "@/src/lib/types";
-import { fetchInvoices, addInvoice } from "./invoicesOperations";
+import {
+  fetchInvoices,
+  addInvoice,
+  fetchInvoiceById,
+  updateInvoice,
+} from "./invoicesOperations";
 
 interface InvoicesState {
   invoices: Invoice[];
+  invoice: Invoice | null;
   loading: boolean;
   error: string | null;
 }
 
 const initialState: InvoicesState = {
   invoices: [],
+  invoice: null,
   loading: false,
   error: null,
 };
@@ -47,6 +54,32 @@ const invoicesSlice = createSlice({
         }
       )
       .addCase(addInvoice.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+      })
+      .addCase(fetchInvoiceById.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchInvoiceById.fulfilled, (state, action) => {
+        state.invoice = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchInvoiceById.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+      })
+      .addCase(updateInvoice.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(updateInvoice.fulfilled, (state, action) => {
+        if (state.invoice && state.invoice.id === action.payload.invoiceId) {
+          state.invoice = { ...state.invoice, ...action.payload.updatedData };
+        }
+        state.loading = false;
+      })
+      .addCase(updateInvoice.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
       });
