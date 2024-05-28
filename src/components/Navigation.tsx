@@ -1,14 +1,20 @@
 "use client";
 import Link from "next/link";
-import { useAppSelector } from "../lib/hooks";
+import { useAppSelector, useAppDispatch } from "../lib/hooks";
 import ThemeToggle from "./ThemeToggle";
 import Logo from "./Logo";
 import Avatar from "../icons/Avatar";
+import { logout } from "@/src/lib/features/auth/authOperations";
 
 export default function Navigation() {
-  const user = useAppSelector((state) => state.auth.user);
+  const dispatch = useAppDispatch();
+  const { user, loading } = useAppSelector((state) => state.auth);
 
   console.log(user);
+
+  const handleLogout = async () => {
+    dispatch(logout());
+  };
 
   return (
     <nav className="bg-[#373b53] text-white md:w-[103px] h-screen fixed top-0 rounded-r-[1.25rem]">
@@ -24,13 +30,19 @@ export default function Navigation() {
               <Link href="/">Home</Link>
             </li>
 
-            {user && (
-              <li className="hover:text-primary transition duration-200 ease-in-out text-lg">
-                <Link href="/invoices">Invoices</Link>
-              </li>
+            {user && !loading && (
+              <>
+                <li className="hover:text-primary transition duration-200 ease-in-out text-lg">
+                  <Link href="/invoices">Invoices</Link>
+                </li>
+
+                <li className="text-red-medium hover:text-red-light transition duration-200 ease-in-out text-lg">
+                  <button onClick={handleLogout}>Logout</button>
+                </li>
+              </>
             )}
 
-            {!user && (
+            {!user && !loading && (
               <>
                 <li className="hover:text-primary transition duration-200 ease-in-out text-lg">
                   <Link href="/signup">Sign Up</Link>
@@ -45,7 +57,7 @@ export default function Navigation() {
 
         <div className="divide-y-2 divide-[#494e6e]">
           <div className="flex justify-center w-full py-7">
-            <div className="w-5 h-5 flex justify-center items-center">
+            <div className="w-5 h-5 flex justify-center items-center text-[#858BB2]">
               <ThemeToggle />
             </div>
           </div>
