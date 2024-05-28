@@ -23,10 +23,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const theme = cookies().get("__theme__")?.value || "system";
+  const theme = cookies().get("__theme__")?.value || "light";
 
   return (
-    <html lang="en" style={theme !== "system" ? { colorScheme: theme } : {}}>
+    <html lang="en" style={theme !== "light" ? { colorScheme: theme } : {}}>
       <body
         className={`${leagueSpartan.className} bg-light text-dark-darkest dark:bg-dark dark:text-white`}
       >
