@@ -20,9 +20,62 @@ const config: Config = {
         "blue-gray-light": "#777f98",
         "dark-darkest": "#0C0E16",
         "red-medium": "#EC5757",
-        "red-light": "#9277FF",
+        "red-light": "#FF9797",
         light: "#F8F8FB",
         dark: "#141625",
+      },
+      fontSize: {
+        "heading-l": [
+          "36px",
+          {
+            lineHeight: "33px",
+            letterSpacing: "-1px",
+            fontWeight: "bold",
+          },
+        ],
+        "heading-m": [
+          "24px",
+          {
+            lineHeight: "22px",
+            letterSpacing: "-0.75px",
+            fontWeight: "bold",
+          },
+        ],
+        "heading-s": [
+          "15px",
+          {
+            lineHeight: "24px",
+            letterSpacing: "-0.25px",
+            fontWeight: "bold",
+          },
+        ],
+        "heading-s-variant": [
+          "15px",
+          {
+            lineHeight: "15px",
+            letterSpacing: "-0.25px",
+            fontWeight: "bold",
+          },
+        ],
+        body: [
+          "13px",
+          {
+            lineHeight: "18px",
+            letterSpacing: "-0.1px",
+            fontWeight: "500",
+          },
+        ],
+        "body-variant": [
+          "13px",
+          {
+            lineHeight: "15px",
+            letterSpacing: "-0.25px",
+            fontWeight: "500",
+          },
+        ],
+      },
+      boxShadow: {
+        item: "0 10px 10px -10px rgba(72, 84, 159, 0.1)",
       },
     },
   },
