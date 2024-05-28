@@ -24,6 +24,8 @@ export interface InvoiceItem {
 }
 
 export interface Invoice {
+  id: string;
+  uid: string;
   billFrom: {
     city: string;
     country: string;
