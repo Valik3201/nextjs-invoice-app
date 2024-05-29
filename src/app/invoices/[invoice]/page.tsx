@@ -13,6 +13,7 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Status from "@/src/components/Status";
 import { formatDate, calculateDueDate } from "@/src/lib/utils";
+import Modal from "@/src/components/Modal";
 
 export default function Page() {
   const router = useRouter();
@@ -91,12 +92,7 @@ export default function Page() {
               <button className="py-4 px-6 rounded-full text-heading-s-variant text-blue-gray-light bg-[#F9FAFE] hover:bg-gray-light dark:text-gray-light dark:bg-dark-medium dark:hover:bg-white/10 transition duration-200 ease-in-out">
                 Edit
               </button>
-              <button
-                onClick={() => handleDelete()}
-                className="py-4 px-6 rounded-full text-heading-s-variant text-white bg-red-medium hover:bg-red-light transition duration-200 ease-in-out"
-              >
-                Delete
-              </button>
+              <Modal handleConfirm={() => handleDelete()} id={invoice.id} />
               <button
                 onClick={() => handleStatusChange(InvoiceStatus.Paid)}
                 className="py-4 px-6 rounded-full text-heading-s-variant text-white bg-primary hover:bg-primary-light transition duration-200 ease-in-out"
