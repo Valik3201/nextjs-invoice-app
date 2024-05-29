@@ -1,36 +1,4 @@
-import { Invoice } from "./types";
-import { DocumentData } from "firebase/firestore";
-
-export const orderInvoiceKeys = (invoice: DocumentData): Invoice => {
-  return {
-    id: invoice.id,
-    uid: invoice.uid,
-    status: invoice.status,
-    billFrom: {
-      city: invoice.billFrom.city,
-      country: invoice.billFrom.country,
-      postCode: invoice.billFrom.postCode,
-      streetAddress: invoice.billFrom.streetAddress,
-    },
-    billTo: {
-      city: invoice.billTo.city,
-      clientEmail: invoice.billTo.clientEmail,
-      clientName: invoice.billTo.clientName,
-      country: invoice.billTo.country,
-      postCode: invoice.billTo.postCode,
-      streetAddress: invoice.billTo.streetAddress,
-    },
-    invoiceDate: invoice.invoiceDate,
-    itemList: invoice.itemList.map((item: DocumentData) => ({
-      itemName: item.itemName,
-      qty: item.qty,
-      price: item.price,
-      total: item.total,
-    })),
-    paymentTerms: invoice.paymentTerms,
-    projectDescription: invoice.projectDescription,
-  };
-};
+import { PaymentTerms } from "./types";
 
 export function generateInvoiceId(): string {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -41,7 +9,7 @@ export function generateInvoiceId(): string {
   return letterPart + numberPart;
 }
 
-export const formatDate = (dateString: string): string => {
+export function formatDate(dateString: string): string {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {
     day: "2-digit",
@@ -49,4 +17,31 @@ export const formatDate = (dateString: string): string => {
     year: "numeric",
   };
   return date.toLocaleDateString("en-GB", options);
-};
+}
+
+export function calculateDueDate(
+  invoiceDate: string,
+  paymentTerms: PaymentTerms
+): string {
+  const date = new Date(invoiceDate);
+  let dueDate = new Date(date);
+
+  switch (paymentTerms) {
+    case PaymentTerms.Net1Day:
+      dueDate.setDate(date.getDate() + 1);
+      break;
+    case PaymentTerms.Net7Days:
+      dueDate.setDate(date.getDate() + 7);
+      break;
+    case PaymentTerms.Net14Days:
+      dueDate.setDate(date.getDate() + 14);
+      break;
+    case PaymentTerms.Net30Days:
+      dueDate.setDate(date.getDate() + 30);
+      break;
+    default:
+      throw new Error("Unknown payment term");
+  }
+
+  return formatDate(dueDate.toISOString());
+}
