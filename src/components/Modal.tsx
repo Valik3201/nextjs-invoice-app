@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Modal({
   handleConfirm,
@@ -10,6 +10,18 @@ export default function Modal({
   id: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.removeEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen]);
 
   const openModal = () => {
     setIsOpen(true);
@@ -24,6 +36,18 @@ export default function Modal({
     closeModal();
   };
 
+  const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) {
+      closeModal();
+    }
+  };
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      closeModal();
+    }
+  };
+
   return (
     <>
       <button
@@ -34,13 +58,16 @@ export default function Modal({
       </button>
 
       {isOpen && (
-        <div className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-full max-h-full bg-black/50">
+        <div
+          onClick={handleBackdropClick}
+          className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-full max-h-full bg-dark-darkest/50"
+        >
           <div className="relative w-[480px] max-h-full">
-            <div className="relative bg-white shadow-item p-12 rounded-lg">
+            <div className="relative bg-white shadow-item p-12 rounded-lg dark:bg-dark-light">
               <button
                 type="button"
                 onClick={closeModal}
-                className="absolute top-6 right-6"
+                className="absolute top-6 right-6 stroke-dark-darkest dark:stroke-gray-light"
               >
                 <svg
                   width="14"
@@ -49,12 +76,8 @@ export default function Modal({
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path d="M1 1L13 13" stroke="#52555F" strokeWidth="2" />
-                  <path
-                    d="M1 13L13 0.999999"
-                    stroke="#52555F"
-                    strokeWidth="2"
-                  />
+                  <path d="M1 1L13 13" strokeWidth="2" />
+                  <path d="M1 13L13 0.999999" strokeWidth="2" />
                 </svg>
                 <span className="sr-only">Close modal</span>
               </button>
