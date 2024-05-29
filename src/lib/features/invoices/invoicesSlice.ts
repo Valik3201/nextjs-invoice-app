@@ -5,6 +5,7 @@ import {
   addInvoice,
   fetchInvoiceById,
   updateInvoice,
+  deleteInvoice,
 } from "./invoicesOperations";
 
 interface InvoicesState {
@@ -74,12 +75,26 @@ const invoicesSlice = createSlice({
         state.error = null;
       })
       .addCase(updateInvoice.fulfilled, (state, action) => {
-        if (state.invoice && state.invoice.id === action.payload.invoiceId) {
+        if (state.invoice && state.invoice.uid === action.payload.invoiceUid) {
           state.invoice = { ...state.invoice, ...action.payload.updatedData };
         }
         state.loading = false;
       })
       .addCase(updateInvoice.rejected, (state, action) => {
+        state.error = action.payload as string;
+        state.loading = false;
+      })
+      .addCase(deleteInvoice.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteInvoice.fulfilled, (state, action) => {
+        state.invoices = state.invoices.filter(
+          (invoice) => invoice.uid !== action.payload.invoiceUid
+        );
+        state.loading = false;
+      })
+      .addCase(deleteInvoice.rejected, (state, action) => {
         state.error = action.payload as string;
         state.loading = false;
       });
