@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/src/firebase.config";
 import { Invoice } from "@/src/lib/types";
-import { orderInvoiceKeys, generateInvoiceId } from "../../utils";
+import { generateInvoiceId } from "../../utils";
 
 export const fetchInvoices = createAsyncThunk(
   "invoices/fetchInvoices",
@@ -22,7 +22,7 @@ export const fetchInvoices = createAsyncThunk(
         invoicesRef
       );
       const invoices = querySnapshot.docs.map((doc) => ({
-        ...orderInvoiceKeys(doc.data()),
+        ...doc.data(),
         uid: doc.id,
       })) as Invoice[];
       return invoices;
