@@ -6,15 +6,17 @@ import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import {
   fetchInvoiceById,
   updateInvoice,
+  deleteInvoice,
 } from "@/src/lib/features/invoices/invoicesOperations";
 import { InvoiceStatus } from "@/src/lib/types";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import Status from "@/src/components/Status";
 import { formatDate, calculateDueDate } from "@/src/lib/utils";
 
 export default function Page() {
-  const invoiceId = useParams<{ invoice: string }>().invoice;
+  const router = useRouter();
+  const invoiceUid = useParams<{ invoice: string }>().invoice;
   const dispatch = useAppDispatch();
   const { invoice, loading, error } = useAppSelector((state) => state.invoices);
   const user = useAppSelector((state) => state.auth.user);
@@ -22,10 +24,10 @@ export default function Page() {
   const [dueDate, setDueDate] = useState<string>("");
 
   useEffect(() => {
-    if (user && user.uid && invoiceId) {
-      dispatch(fetchInvoiceById({ userId: user.uid, invoiceId }));
+    if (user && user.uid && invoiceUid) {
+      dispatch(fetchInvoiceById({ userId: user.uid, invoiceUid }));
     }
-  }, [dispatch, user, invoiceId]);
+  }, [dispatch, user, invoiceUid]);
 
   useEffect(() => {
     if (invoice) {
@@ -43,16 +45,24 @@ export default function Page() {
   }, [invoice]);
 
   const handleStatusChange = (newStatus: InvoiceStatus) => {
-    if (user && user.uid && invoiceId) {
+    if (user && user.uid && invoiceUid) {
       dispatch(
         updateInvoice({
           userId: user.uid,
-          invoiceId,
+          invoiceUid,
           updatedData: { status: newStatus },
         })
       );
 
-      dispatch(fetchInvoiceById({ userId: user.uid, invoiceId }));
+      dispatch(fetchInvoiceById({ userId: user.uid, invoiceUid }));
+    }
+  };
+
+  const handleDelete = () => {
+    if (user && user.uid && invoice) {
+      dispatch(deleteInvoice({ userId: user.uid, invoiceUid }));
+
+      router.push("/invoices");
     }
   };
 
@@ -81,7 +91,10 @@ export default function Page() {
               <button className="py-4 px-6 rounded-full text-heading-s-variant text-blue-gray-light bg-[#F9FAFE] hover:bg-gray-light dark:text-gray-light dark:bg-dark-medium dark:hover:bg-white/10 transition duration-200 ease-in-out">
                 Edit
               </button>
-              <button className="py-4 px-6 rounded-full text-heading-s-variant text-white bg-red-medium hover:bg-red-light transition duration-200 ease-in-out">
+              <button
+                onClick={() => handleDelete()}
+                className="py-4 px-6 rounded-full text-heading-s-variant text-white bg-red-medium hover:bg-red-light transition duration-200 ease-in-out"
+              >
                 Delete
               </button>
               <button
