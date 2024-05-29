@@ -6,6 +6,7 @@ import {
   getDoc,
   setDoc,
   updateDoc,
+  deleteDoc,
   QuerySnapshot,
   DocumentData,
 } from "firebase/firestore";
@@ -57,11 +58,11 @@ export const addInvoice = createAsyncThunk(
 export const fetchInvoiceById = createAsyncThunk(
   "invoices/fetchInvoiceById",
   async (
-    { userId, invoiceId }: { userId: string; invoiceId: string },
+    { userId, invoiceUid }: { userId: string; invoiceUid: string },
     { rejectWithValue }
   ) => {
     try {
-      const invoiceRef = doc(db, `users/${userId}/invoices/${invoiceId}`);
+      const invoiceRef = doc(db, `users/${userId}/invoices/${invoiceUid}`);
       const invoiceDoc = await getDoc(invoiceRef);
       if (invoiceDoc.exists()) {
         return invoiceDoc.data() as Invoice;
@@ -81,15 +82,33 @@ export const updateInvoice = createAsyncThunk(
   async (
     {
       userId,
-      invoiceId,
+      invoiceUid,
       updatedData,
-    }: { userId: string; invoiceId: string; updatedData: Partial<Invoice> },
+    }: { userId: string; invoiceUid: string; updatedData: Partial<Invoice> },
     { rejectWithValue }
   ) => {
     try {
-      const invoiceRef = doc(db, `users/${userId}/invoices/${invoiceId}`);
+      const invoiceRef = doc(db, `users/${userId}/invoices/${invoiceUid}`);
       await updateDoc(invoiceRef, updatedData);
-      return { invoiceId, updatedData };
+      return { invoiceUid, updatedData };
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      return rejectWithValue(errorMessage);
+    }
+  }
+);
+
+export const deleteInvoice = createAsyncThunk(
+  "invoices/deleteInvoice",
+  async (
+    { userId, invoiceUid }: { userId: string; invoiceUid: string },
+    { rejectWithValue }
+  ) => {
+    try {
+      const invoiceRef = doc(db, `users/${userId}/invoices`, invoiceUid);
+      await deleteDoc(invoiceRef);
+      return { userId, invoiceUid };
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
