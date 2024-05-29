@@ -174,10 +174,10 @@ export default function Page() {
                 </h3>
               </div>
 
-              <ul className="w-full">
+              <ul className="w-full flex flex-col gap-8">
                 {invoice.itemList.map((item, index) => (
                   <li
-                    className="flex justify-between w-full mb-8 text-heading-s-variant"
+                    className="flex justify-between w-full text-heading-s-variant"
                     key={index}
                   >
                     <p className="w-2/5">{item.itemName}</p>
