@@ -5,6 +5,7 @@ import ThemeToggle from "./ThemeToggle";
 import Logo from "./Logo";
 import Avatar from "../icons/Avatar";
 import { logout } from "@/src/lib/features/auth/authOperations";
+import Image from "next/image";
 
 export default function Navigation() {
   const dispatch = useAppDispatch();
@@ -64,10 +65,12 @@ export default function Navigation() {
 
           <div className="flex justify-center w-full py-[26px]">
             {user?.photoURL ? (
-              <img
-                className="w-10 h-10 rounded-full"
+              <Image
                 src={user.photoURL}
                 alt="User avatar"
+                className="w-10 h-10 rounded-full"
+                width={40}
+                height={40}
               />
             ) : (
               <Avatar />
