@@ -15,7 +15,7 @@ import Status from "@/src/components/Status";
 import { formatDate, calculateDueDate } from "@/src/lib/utils";
 import Modal from "@/src/components/Modal";
 
-export default function Invoice() {
+export default function Page() {
   const router = useRouter();
   const invoiceUid = useParams<{ invoice: string }>().invoice;
   const dispatch = useAppDispatch();
