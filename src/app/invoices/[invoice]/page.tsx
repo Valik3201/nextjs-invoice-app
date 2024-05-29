@@ -194,7 +194,7 @@ export default function Page() {
                 ))}
               </ul>
             </div>
-            <div className="w-full mb-8 text-white bg-[#373B53] dark:bg-dark-darkest px-8 py-9 rounded-b-lg">
+            <div className="w-full text-white bg-[#373B53] dark:bg-dark-darkest px-8 py-9 rounded-b-lg">
               <div className="flex justify-between w-full items-center">
                 <p className="text-body">Amount Due</p>
                 <p className="text-heading-m">£ {invoiceTotal}</p>
