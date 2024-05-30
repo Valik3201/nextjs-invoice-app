@@ -12,13 +12,16 @@ export default function SelectField({
   options: { label: string; value: string }[];
 }) {
   return (
-    <label>
-      {label}
+    <div className="mb-[25px]">
+      <label className="block text-body-variant text-blue-gray mb-2">
+        {label}
+      </label>
       <select
         name={name}
         value={value}
         onChange={onChange}
-        className="bg-transparent"
+        className="bg-white w-full h-12 text-heading-s-variant border border-gray-light rounded-[0.25rem] p-4 focus:outline-none focus:ring-primary focus:border-primary dark:bg-dark-light dark:border-[#252945]"
+        required
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -26,6 +29,6 @@ export default function SelectField({
           </option>
         ))}
       </select>
-    </label>
+    </div>
   );
 }
