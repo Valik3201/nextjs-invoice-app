@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
-// import AddInvoiceForm from "@/src/components/AddInvoiceForm";
+import AddInvoiceForm from "@/src/components/AddInvoiceForm";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
 import ArrowIcon from "@/src/icons/ArrowIcon";
-import PlusIcon from "@/src/icons/PlusIcon";
 import { formatDate } from "@/src/lib/utils";
 import Status from "@/src/components/Status";
 import Link from "next/link";
@@ -43,8 +42,6 @@ export default function Page() {
     <>
       {user && !loading && (
         <>
-          {/* <AddInvoiceForm /> */}
-
           <div className="flex justify-between items-center mb-8 md:mb-[55px] lg:mb-[68px]">
             <div>
               <h1 className="text-heading-l mb-[6px]">Invoices</h1>
@@ -62,19 +59,17 @@ export default function Page() {
                 Filter by status
                 <ArrowIcon />
               </button>
-              <button className="flex gap-4 items-center bg-primary rounded-full p-2 text-white pr-4 text-heading-s-variant hover:bg-primary-light transition duration-200 ease-in-out">
-                <PlusIcon />
-                New Invoice
-              </button>
+              <AddInvoiceForm />
             </div>
           </div>
 
           <ul className="flex flex-col gap-4 w-full">
             {invoices &&
               invoices.map((invoice) => {
-                const total = invoice.itemList
+                const total = (invoice.itemList || [])
                   .reduce((acc, item) => acc + item.total, 0)
                   .toFixed(2);
+
                 return (
                   <li key={invoice.id}>
                     <Link href={`/invoices/${invoice.uid}`}>
@@ -84,10 +79,14 @@ export default function Page() {
                           {invoice.id}
                         </p>
                         <p className="text-gray-medium dark:text-gray-light w-[20%]">
-                          Due {formatDate(invoice.invoiceDate)}
+                          {invoice.invoiceDate !== ""
+                            ? `Due ${formatDate(invoice.invoiceDate)}`
+                            : "Date not provided"}
                         </p>
                         <p className="text-gray-medium dark:text-gray-light w-[20%] truncate">
-                          {invoice.billTo.clientName}
+                          {invoice.billTo && invoice.billTo.clientName
+                            ? invoice.billTo.clientName
+                            : "No client name"}
                         </p>
                         <p className="text-heading-s w-[15%]">£ {total}</p>
                         <div className="w-[104px]">
