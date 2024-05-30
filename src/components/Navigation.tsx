@@ -18,7 +18,7 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-[#373b53] text-white md:w-[103px] h-screen fixed top-0 rounded-r-[1.25rem]">
+    <nav className="bg-[#373b53] text-white md:w-[103px] h-svh fixed top-0 rounded-r-[1.25rem] z-20">
       <div className="flex flex-col justify-between h-full">
         <div className="flex flex-col gap-6">
           <Link href="/">
