@@ -14,6 +14,7 @@ import Link from "next/link";
 import Status from "@/src/components/Status";
 import { formatDate, calculateDueDate } from "@/src/lib/utils";
 import Modal from "@/src/components/Modal";
+import Button from "@/src/components/Button";
 
 export default function Page() {
   const router = useRouter();
@@ -37,10 +38,10 @@ export default function Page() {
         .toFixed(2);
       setInvoiceTotal(total);
 
-      const paymentDueDate = calculateDueDate(
-        invoice.invoiceDate,
-        invoice.paymentTerms
-      );
+      const paymentDueDate = invoice.invoiceDate
+        ? calculateDueDate(invoice.invoiceDate, invoice.paymentTerms)
+        : "Date not provided";
+
       setDueDate(paymentDueDate);
     }
   }, [invoice]);
@@ -89,16 +90,14 @@ export default function Page() {
             </div>
 
             <div className="flex gap-2">
-              <button className="py-4 px-6 rounded-full text-heading-s-variant text-blue-gray-light bg-[#F9FAFE] hover:bg-gray-light dark:text-gray-light dark:bg-dark-medium dark:hover:bg-white/10 transition duration-200 ease-in-out">
-                Edit
-              </button>
+              <Button variant={"default"}>Edit</Button>
               <Modal handleConfirm={() => handleDelete()} id={invoice.id} />
-              <button
+              <Button
+                variant={"primary"}
                 onClick={() => handleStatusChange(InvoiceStatus.Paid)}
-                className="py-4 px-6 rounded-full text-heading-s-variant text-white bg-primary hover:bg-primary-light transition duration-200 ease-in-out"
               >
                 Mark as Paid
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -110,15 +109,33 @@ export default function Page() {
                   {invoice.id}
                 </p>
                 <p className="text-blue-gray dark:text-gray-light text-body-variant">
-                  {invoice.projectDescription}
+                  {invoice.projectDescription
+                    ? invoice.projectDescription
+                    : "No project description"}
                 </p>
               </div>
 
               <div className="text-right text-blue-gray dark:text-gray-light text-body">
-                <p>{invoice.billFrom.streetAddress}</p>
-                <p>{invoice.billFrom.city}</p>
-                <p>{invoice.billFrom.postCode}</p>
-                <p>{invoice.billFrom.country}</p>
+                <p>
+                  {invoice.billFrom && invoice.billFrom.streetAddress
+                    ? invoice.billFrom.streetAddress
+                    : "No street"}
+                </p>
+                <p>
+                  {invoice.billFrom && invoice.billFrom.city
+                    ? invoice.billFrom.city
+                    : "No city"}
+                </p>
+                <p>
+                  {invoice.billFrom && invoice.billFrom.postCode
+                    ? invoice.billFrom.postCode
+                    : "No postcode"}
+                </p>
+                <p>
+                  {invoice.billFrom && invoice.billFrom.country
+                    ? invoice.billFrom.country
+                    : "No country"}
+                </p>
               </div>
             </div>
 
@@ -129,7 +146,9 @@ export default function Page() {
                     Invoice Date
                   </h3>
                   <p className="text-heading-s-variant">
-                    {formatDate(invoice.invoiceDate)}
+                    {invoice.invoiceDate !== ""
+                      ? formatDate(invoice.invoiceDate)
+                      : "Date not provided"}
                   </p>
                 </div>
                 <div>
@@ -146,15 +165,33 @@ export default function Page() {
                     Bill To
                   </h3>
                   <p className="text-heading-s-variant">
-                    {invoice.billTo.clientName}
+                    {invoice.billTo && invoice.billTo.clientName
+                      ? invoice.billTo.clientName
+                      : "No client name"}
                   </p>
                 </div>
 
                 <div className="text-blue-gray dark:text-gray-light text-body mt-2">
-                  <p>{invoice.billTo.streetAddress}</p>
-                  <p>{invoice.billTo.city}</p>
-                  <p>{invoice.billTo.postCode}</p>
-                  <p>{invoice.billTo.country}</p>
+                  <p>
+                    {invoice.billTo && invoice.billTo.streetAddress
+                      ? invoice.billTo.streetAddress
+                      : "No street"}
+                  </p>
+                  <p>
+                    {invoice.billTo && invoice.billTo.city
+                      ? invoice.billTo.city
+                      : "No city"}
+                  </p>
+                  <p>
+                    {invoice.billTo && invoice.billTo.postCode
+                      ? invoice.billTo.postCode
+                      : "No postcode"}
+                  </p>
+                  <p>
+                    {invoice.billTo && invoice.billTo.country
+                      ? invoice.billTo.country
+                      : "No country"}
+                  </p>
                 </div>
               </div>
               <div>
@@ -162,7 +199,9 @@ export default function Page() {
                   Sent To
                 </h3>
                 <p className="text-heading-s-variant">
-                  {invoice.billTo.clientEmail}
+                  {invoice.billTo && invoice.billTo.clientEmail
+                    ? invoice.billTo.clientEmail
+                    : "No client email"}
                 </p>
               </div>
             </div>
@@ -183,26 +222,33 @@ export default function Page() {
                 </h3>
               </div>
 
-              <ul className="w-full flex flex-col gap-8">
-                {invoice.itemList.map((item, index) => (
-                  <li
-                    className="flex justify-between w-full text-heading-s-variant"
-                    key={index}
-                  >
-                    <p className="w-2/5">{item.itemName}</p>
-                    <p className="w-1/5 text-center text-blue-gray dark:text-gray-light">
-                      {item.qty}
-                    </p>
-                    <p className="w-1/5 text-right text-blue-gray dark:text-gray-light">
-                      £ {item.price}
-                    </p>
-                    <p className="w-1/5 text-right">
-                      £ {item.total.toFixed(2)}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+              {invoice.itemList.length !== 0 ? (
+                <ul className="w-full flex flex-col gap-8">
+                  {invoice.itemList.map((item, index) => (
+                    <li
+                      className="flex justify-between w-full text-heading-s-variant"
+                      key={index}
+                    >
+                      <p className="w-2/5">{item.itemName}</p>
+                      <p className="w-1/5 text-center text-blue-gray dark:text-gray-light">
+                        {item.qty}
+                      </p>
+                      <p className="w-1/5 text-right text-blue-gray dark:text-gray-light">
+                        £ {item.price}
+                      </p>
+                      <p className="w-1/5 text-right">
+                        £ {item.total.toFixed(2)}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-body-variant text-center text-blue-gray dark:text-gray-light">
+                  No items. You can edit this invoice to add items.
+                </p>
+              )}
             </div>
+
             <div className="w-full text-white bg-[#373B53] dark:bg-dark-darkest px-8 py-9 rounded-b-lg">
               <div className="flex justify-between w-full items-center">
                 <p className="text-body">Amount Due</p>

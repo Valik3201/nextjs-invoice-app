@@ -4,6 +4,7 @@ import {
   doc,
   getDocs,
   getDoc,
+  addDoc,
   setDoc,
   updateDoc,
   deleteDoc,
@@ -43,10 +44,20 @@ export const addInvoice = createAsyncThunk(
   ) => {
     try {
       const invoiceId = generateInvoiceId();
-      const newInvoice = { ...invoice, id: invoiceId };
-      const invoiceDoc = doc(db, `users/${userId}/invoices`, invoiceId);
-      await setDoc(invoiceDoc, newInvoice);
-      return newInvoice;
+      const invoiceWithId = { ...invoice, id: invoiceId };
+
+      const addedInvoice = await addDoc(
+        collection(db, `users/${userId}/invoices`),
+        invoiceWithId
+      );
+
+      const invoiceRef = doc(db, `users/${userId}/invoices/${addedInvoice.id}`);
+
+      await updateDoc(invoiceRef, {
+        uid: invoiceRef.id,
+      });
+
+      return { ...invoiceWithId, uid: invoiceRef.id };
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
