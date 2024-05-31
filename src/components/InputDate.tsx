@@ -56,7 +56,7 @@ export default function InputDate({
       onChange({
         target: {
           name: name,
-          value: selectedDate.toISOString().split("T")[0],
+          value: selectedDate.toString(),
         },
       } as React.ChangeEvent<HTMLInputElement>);
     }
