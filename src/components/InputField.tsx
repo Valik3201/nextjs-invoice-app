@@ -35,7 +35,7 @@ export default function InputField({
         placeholder={placeholder}
         readOnly={readOnly}
         required
-        className={`bg-white w-full h-12 text-heading-s-variant border border-gray-light rounded-[0.25rem] p-4 focus:outline-none focus:ring-primary focus:border-primary dark:bg-dark-light dark:border-[#252945] ${
+        className={`bg-white w-full h-12 text-heading-s-variant border border-gray-light rounded p-4 focus:outline-none focus:ring-primary focus:border-primary dark:bg-dark-light dark:border-[#252945] ${
           type !== "date" ? "pr-0" : ""
         } `}
       />
