@@ -4,9 +4,9 @@ export interface GetInvoiceResult {
 }
 
 export enum InvoiceStatus {
+  Draft = "draft",
   Pending = "pending",
   Paid = "paid",
-  Draft = "draft",
 }
 
 export enum PaymentTerms {
