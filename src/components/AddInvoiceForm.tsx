@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { addInvoice } from "../lib/features/invoices/invoicesOperations";
 import { Invoice, PaymentTerms, InvoiceStatus } from "../lib/types";
 import InputField from "./InputField";
+import InputDate from "./InputDate";
 import SelectField from "./SelectField";
 import Button from "./Button";
 import PlusIcon from "../icons/PlusIcon";
@@ -209,7 +210,7 @@ export default function AddInvoiceForm() {
 
             <form
               onSubmit={handleSubmit}
-              className="h-[calc(100svh_-_245px)] overflow-y-scroll overflow-x-hidden pb-8 pr-4"
+              className="h-[calc(100svh_-_245px)] overflow-y-scroll overflow-x-hidden pb-8 pl-0.5 pr-4"
             >
               <h3 className="text-primary text-heading-s-variant mb-6">
                 Bill From
@@ -290,11 +291,17 @@ export default function AddInvoiceForm() {
               </div>
 
               <div className="grid grid-cols-2 gap-6">
-                <InputField
+                {/* <InputField
                   label="Invoice Date"
                   name="invoiceDate"
                   type="date"
                   value={invoiceData.invoiceDate.toString()}
+                  onChange={handleChange}
+                /> */}
+
+                <InputDate
+                  name="invoiceDate"
+                  value={invoiceData.invoiceDate}
                   onChange={handleChange}
                 />
 
