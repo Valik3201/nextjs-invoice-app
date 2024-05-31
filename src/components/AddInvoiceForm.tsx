@@ -10,6 +10,7 @@ import SelectField from "./SelectField";
 import Button from "./Button";
 import PlusIcon from "../icons/PlusIcon";
 import TrashIcon from "../icons/TrashIcon";
+import ArrowIcon from "../icons/ArrowIcon";
 
 export default function AddInvoiceForm() {
   const user = useAppSelector((state) => state.auth.user);
@@ -186,7 +187,7 @@ export default function AddInvoiceForm() {
   return (
     <>
       <Button variant="primary" icon={<PlusIcon />} onClick={openForm}>
-        New Invoice
+        New<span className="hidden md:inline"> Invoice</span>
       </Button>
 
       <div
@@ -199,12 +200,25 @@ export default function AddInvoiceForm() {
       >
         <div
           onClick={handleBackdropClick}
-          className={`fixed top-0 left-0 h-svh pl-[103px] bg-white text-dark-darkest dark:bg-dark dark:text-white rounded-r-[1.25rem] transition duration-500 ease-in-out ${
+          className={`fixed top-0 left-0 h-svh lg:pl-[103px] pt-[72px] md:pt-20 lg:pt-0 bg-white text-dark-darkest dark:bg-dark dark:text-white rounded-r-[1.25rem] transition duration-500 ease-in-out ${
             isOpen ? "transform-none" : "-translate-x-full"
           }`}
         >
-          <div className="relative lg:w-[616px] max-h-full pl-14 pr-10 py-16">
-            <h2 className="text-heading-m mb-12">New Invoice</h2>
+          <div className="relative md:w-[616px] max-h-full pl-6 md:pl-14 pr-2 md:pr-10 py-6 md:py-16">
+            <button
+              type="button"
+              className="flex gap-6 items-center mb-6 md:hidden"
+              onClick={handleDiscard}
+            >
+              <div className="rotate-90">
+                <ArrowIcon />
+              </div>
+              <p className="text-heading-s-variant h-3 hover:text-blue-gray transition duration-200 ease-in-out dark:hover:text-gray-medium">
+                Go back
+              </p>
+            </button>
+
+            <h2 className="text-heading-m mb-6 md:mb-12">New Invoice</h2>
 
             <form
               onSubmit={handleSubmit}
@@ -364,7 +378,7 @@ export default function AddInvoiceForm() {
                 + Add New Item
               </Button>
 
-              <div className="fixed bottom-0 left-0 ml-[103px] py-8 px-14 lg:w-[616px] flex justify-between shadow-[0_0_200px_0_rgba(0,0,0,0.1)] dark:shadow-[0_0_200px_0_rgba(0,0,0,0.3)] bg-white text-dark-darkest dark:bg-dark dark:text-white rounded-r-[1.25rem]">
+              <div className="fixed bottom-0 left-0 lg:ml-[103px] py-5 md:py-8 px-6 md:px-14 md:w-[616px] flex justify-between shadow-[0_0_200px_0_rgba(0,0,0,0.1)] dark:shadow-[0_0_200px_0_rgba(0,0,0,0.3)] bg-white text-dark-darkest dark:bg-dark dark:text-white rounded-r-[1.25rem]">
                 <Button variant="default" onClick={handleDiscard}>
                   Discard
                 </Button>

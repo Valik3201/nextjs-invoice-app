@@ -16,8 +16,12 @@ export default function Button({
   isOnlyIcon?: boolean;
 }) {
   const baseClasses =
-    "rounded-full text-heading-s-variant transition duration-200 ease-in-out flex items-center justify-center space-x-2";
-  const paddingClasses = isOnlyIcon ? "p-2" : icon ? "p-2 pr-4" : "py-4 px-6";
+    "rounded-full text-heading-s-variant transition duration-200 ease-in-out flex items-center justify-center md:space-x-2";
+  const paddingClasses = isOnlyIcon
+    ? "p-2"
+    : icon
+    ? "p-2 pr-4"
+    : "py-4 px-4 md:px-6";
 
   const variantClasses = {
     primary: "text-white bg-primary hover:bg-primary-light",

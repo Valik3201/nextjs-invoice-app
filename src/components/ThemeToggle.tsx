@@ -10,7 +10,10 @@ const ThemeToggle = () => {
   };
 
   return (
-    <button onClick={toggleTheme}>
+    <button
+      onClick={toggleTheme}
+      className="text-blue-gray dark:text-gray-light"
+    >
       {theme === "dark" ? <DotIcon /> : <MoonIcon />}
     </button>
   );

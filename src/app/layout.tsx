@@ -34,7 +34,7 @@ export default function RootLayout({
           <AuthProvider>
             <ThemeProvider attribute="class" defaultTheme={theme} enableSystem>
               <Navigation />
-              <main className="container mx-auto lg:w-[730px] my-[78px] ">
+              <main className="container mx-auto pt-[72px] md:pt-20 lg:pt-0 w-[327px] md:w-[672px] lg:w-[730px] my-8 md:my-[61px] lg:my-[78px]">
                 {children}
               </main>
             </ThemeProvider>
