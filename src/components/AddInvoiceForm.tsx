@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { addInvoice } from "../lib/features/invoices/invoicesOperations";
 import { Invoice, PaymentTerms, InvoiceStatus } from "../lib/types";
@@ -220,7 +220,6 @@ export default function AddInvoiceForm() {
                   name="billFrom.streetAddress"
                   value={invoiceData.billFrom.streetAddress}
                   onChange={handleChange}
-                  placeholder="Street Address"
                 />
                 <div className="flex gap-6">
                   <InputField
@@ -228,21 +227,18 @@ export default function AddInvoiceForm() {
                     name="billFrom.city"
                     value={invoiceData.billFrom.city}
                     onChange={handleChange}
-                    placeholder="City"
                   />
                   <InputField
                     label="Post Code"
                     name="billFrom.postCode"
                     value={invoiceData.billFrom.postCode}
                     onChange={handleChange}
-                    placeholder="Post Code"
                   />
                   <InputField
                     label="Country"
                     name="billFrom.country"
                     value={invoiceData.billFrom.country}
                     onChange={handleChange}
-                    placeholder="Country"
                   />
                 </div>
               </div>
@@ -256,7 +252,6 @@ export default function AddInvoiceForm() {
                   name="billTo.clientName"
                   value={invoiceData.billTo.clientName}
                   onChange={handleChange}
-                  placeholder="Client Name"
                 />
                 <InputField
                   label="Client Email"
@@ -264,14 +259,13 @@ export default function AddInvoiceForm() {
                   name="billTo.clientEmail"
                   value={invoiceData.billTo.clientEmail}
                   onChange={handleChange}
-                  placeholder="Client Email"
+                  placeholder="e.g. email@example.com"
                 />
                 <InputField
                   label="Street Address"
                   name="billTo.streetAddress"
                   value={invoiceData.billTo.streetAddress}
                   onChange={handleChange}
-                  placeholder="Street Address"
                 />
                 <div className="flex gap-6">
                   <InputField
@@ -279,21 +273,18 @@ export default function AddInvoiceForm() {
                     name="billTo.city"
                     value={invoiceData.billTo.city}
                     onChange={handleChange}
-                    placeholder="City"
                   />
                   <InputField
                     label="Post Code"
                     name="billTo.postCode"
                     value={invoiceData.billTo.postCode}
                     onChange={handleChange}
-                    placeholder="Post Code"
                   />
                   <InputField
                     label="Country"
                     name="billTo.country"
                     value={invoiceData.billTo.country}
                     onChange={handleChange}
-                    placeholder="Country"
                   />
                 </div>
               </div>
@@ -305,7 +296,6 @@ export default function AddInvoiceForm() {
                   type="date"
                   value={invoiceData.invoiceDate.toString()}
                   onChange={handleChange}
-                  placeholder="Invoice Date"
                 />
 
                 <SelectField
@@ -327,7 +317,7 @@ export default function AddInvoiceForm() {
                 name="projectDescription"
                 value={invoiceData.projectDescription}
                 onChange={handleChange}
-                placeholder="Project Description"
+                placeholder="e.g. Graphic Design Service"
               />
 
               <h3 className="text-blue-gray-light text-lg font-bold -tracking-[0.38px] mb-4">
@@ -343,7 +333,6 @@ export default function AddInvoiceForm() {
                         name={"itemName"}
                         value={item.itemName}
                         onChange={(e) => handleItemChange(index, e)}
-                        placeholder="Item Name"
                       />
                     </div>
                     <div className="w-[15%]">
@@ -353,7 +342,6 @@ export default function AddInvoiceForm() {
                         type="number"
                         value={item.qty}
                         onChange={(e) => handleItemChange(index, e)}
-                        placeholder="Qty"
                       />
                     </div>
                     <div className="w-[20%]">
@@ -363,7 +351,6 @@ export default function AddInvoiceForm() {
                         type="number"
                         value={item.price.toFixed(2)}
                         onChange={(e) => handleItemChange(index, e)}
-                        placeholder="Price"
                       />
                     </div>
                     <div className="w-[10%] mb-[25px]">
