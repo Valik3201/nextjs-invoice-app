@@ -66,9 +66,7 @@ export default function AddInvoiceForm() {
     });
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const keys = name.split(".");
 
@@ -89,6 +87,10 @@ export default function AddInvoiceForm() {
         };
       }
     });
+  };
+
+  const handlePaymentTermChange = (value: PaymentTerms) => {
+    setInvoiceData({ ...invoiceData, paymentTerms: value });
   };
 
   const handleItemChange = (
@@ -133,8 +135,6 @@ export default function AddInvoiceForm() {
       try {
         dispatch(addInvoice({ userId: user.uid, invoice: invoiceData }));
 
-        alert("Invoice added successfully!");
-
         clearForm();
       } catch (error) {
         console.error("Error adding invoice:", error);
@@ -153,8 +153,6 @@ export default function AddInvoiceForm() {
         await dispatch(
           addInvoice({ userId: user.uid, invoice: draftInvoiceData })
         );
-
-        alert("Invoice saved as draft!");
 
         clearForm();
       } catch (error) {
@@ -291,32 +289,13 @@ export default function AddInvoiceForm() {
               </div>
 
               <div className="grid grid-cols-2 gap-6">
-                {/* <InputField
-                  label="Invoice Date"
-                  name="invoiceDate"
-                  type="date"
-                  value={invoiceData.invoiceDate.toString()}
-                  onChange={handleChange}
-                /> */}
-
                 <InputDate
                   name="invoiceDate"
                   value={invoiceData.invoiceDate}
                   onChange={handleChange}
                 />
 
-                <SelectField
-                  label="Payment Terms"
-                  name="paymentTerms"
-                  value={invoiceData.paymentTerms}
-                  onChange={handleChange}
-                  options={[
-                    { label: "Net 1 Day", value: PaymentTerms.Net1Day },
-                    { label: "Net 7 Days", value: PaymentTerms.Net7Days },
-                    { label: "Net 14 Days", value: PaymentTerms.Net14Days },
-                    { label: "Net 30 Days", value: PaymentTerms.Net30Days },
-                  ]}
-                />
+                <SelectField onChange={handlePaymentTermChange} />
               </div>
 
               <InputField
