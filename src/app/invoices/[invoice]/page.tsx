@@ -1,20 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ArrowIcon from "@/src/icons/ArrowIcon";
+import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import {
   fetchInvoiceById,
   updateInvoice,
   deleteInvoice,
 } from "@/src/lib/features/invoices/invoicesOperations";
-import { InvoiceStatus } from "@/src/lib/types";
-import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
-import Status from "@/src/components/Status";
 import { formatDate, calculateDueDate } from "@/src/lib/utils";
+import { InvoiceStatus } from "@/src/lib/types";
+import Status from "@/src/components/Status";
 import Modal from "@/src/components/Modal";
 import Button from "@/src/components/Button";
+import ArrowIcon from "@/src/icons/ArrowIcon";
 
 export default function Page() {
   const router = useRouter();
@@ -75,7 +75,9 @@ export default function Page() {
           <div className="rotate-90">
             <ArrowIcon />
           </div>
-          <p className="text-heading-s-variant h-3">Go back</p>
+          <p className="text-heading-s-variant h-3 hover:text-blue-gray transition duration-200 ease-in-out dark:hover:text-gray-medium">
+            Go back
+          </p>
         </div>
       </Link>
 
