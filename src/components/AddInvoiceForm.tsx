@@ -367,7 +367,7 @@ export default function AddInvoiceForm() {
                       />
                     </div>
                     <div className="w-[10%] mb-[25px]">
-                      <h4 className="mb-2 text-body-variant text-blue-gray">
+                      <h4 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
                         {index === 0 ? "Total" : ""}
                       </h4>
                       <p className="py-4 text-gray-medium text-heading-s-variant dark:text-gray-light">
