@@ -20,7 +20,7 @@ export default function SelectField({
         name={name}
         value={value}
         onChange={onChange}
-        className="bg-white w-full h-12 text-heading-s-variant border border-gray-light rounded p-4 focus:outline-none focus:ring-primary focus:border-primary dark:bg-dark-light dark:border-[#252945]"
+        className="bg-white w-full h-12 text-heading-s-variant border border-gray-light rounded p-4 focus:outline-none focus:ring-primary focus:border-primary hover:border-primary hover:cursor-pointer dark:bg-dark-light dark:border-[#252945]"
         required
       >
         {options.map((option) => (
