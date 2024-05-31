@@ -80,7 +80,9 @@ export default function Page() {
         <>
           <div className="flex justify-between items-center mb-8 md:mb-[55px] lg:mb-[68px]">
             <div>
-              <h1 className="text-heading-l mb-[6px]">Invoices</h1>
+              <h1 className="text-heading-m md:text-heading-l mb-[6px]">
+                Invoices
+              </h1>
               {invoices.length !== 0 ? (
                 <p className="text-body-variant text-gray-medium dark:text-gray-light">
                   {getMessage()}
@@ -90,12 +92,15 @@ export default function Page() {
               )}
             </div>
 
-            <div className="relative flex gap-[41px] items-center">
+            <div className="relative flex gap-5 md:gap-10items-center">
               <button
                 onClick={toggleFilter}
                 className="flex gap-[14px] items-center text-heading-s-variant"
               >
-                Filter by status
+                <p>
+                  Filter <span className="hidden md:inline">by status</span>
+                </p>
+
                 <span
                   className={`transition duration-200 ease-in-out ${
                     isOpen ? "rotate-180" : "rotate-0"
@@ -140,28 +145,60 @@ export default function Page() {
                 return (
                   <li key={invoice.id}>
                     <Link href={`/invoices/${invoice.uid}`}>
-                      <div className="flex items-center justify-between bg-white rounded-lg p-5 pl-8 shadow-item border-2 border-white hover:border-primary transition duration-200 ease-in-out dark:bg-dark-light dark:border-dark-light">
-                        <p className="text-heading-s-variant w-[15%]">
-                          <span className="text-blue-gray">#</span>
-                          {invoice.id}
-                        </p>
-                        <p className="text-gray-medium dark:text-gray-light w-[20%]">
-                          {invoice.invoiceDate !== ""
-                            ? `Due ${formatDate(invoice.invoiceDate)}`
-                            : "Date not provided"}
-                        </p>
-                        <p className="text-gray-medium dark:text-gray-light w-[20%] truncate">
-                          {invoice.billTo && invoice.billTo.clientName
-                            ? invoice.billTo.clientName
-                            : "No client name"}
-                        </p>
-                        <p className="text-heading-s w-[15%]">£ {total}</p>
-                        <div className="w-[104px]">
-                          <Status status={invoice.status} />
+                      <div className="bg-white rounded-lg p-5 pl-6 md:pl-8 shadow-item border-2 border-white hover:border-primary transition duration-200 ease-in-out dark:bg-dark-light dark:border-dark-light">
+                        {/* Tablet % Desktop Styles */}
+                        <div className="hidden md:flex items-center justify-between">
+                          <p className="text-heading-s-variant w-[15%]">
+                            <span className="text-blue-gray">#</span>
+                            {invoice.id}
+                          </p>
+                          <p className="text-body-variant text-gray-medium dark:text-gray-light w-[20%]">
+                            {invoice.invoiceDate !== ""
+                              ? `Due ${formatDate(invoice.invoiceDate)}`
+                              : "Date not provided"}
+                          </p>
+                          <p className="text-body-variant text-gray-medium dark:text-gray-light w-[20%] truncate">
+                            {invoice.billTo && invoice.billTo.clientName
+                              ? invoice.billTo.clientName
+                              : "No client name"}
+                          </p>
+                          <p className="text-heading-s w-[15%]">£ {total}</p>
+                          <div className="w-[104px]">
+                            <Status status={invoice.status} />
+                          </div>
+
+                          <div className="-rotate-90 py-5">
+                            <ArrowIcon />
+                          </div>
                         </div>
 
-                        <div className="-rotate-90 py-5">
-                          <ArrowIcon />
+                        {/* Mobile Styles */}
+                        <div className="flex md:hidden flex-col items-stretch justify-center gap-6">
+                          <div className="flex items-center justify-between">
+                            <p className="text-heading-s-variant">
+                              <span className="text-blue-gray">#</span>
+                              {invoice.id}
+                            </p>
+                            <p className="text-body-variant text-gray-medium dark:text-gray-light">
+                              {invoice.billTo && invoice.billTo.clientName
+                                ? invoice.billTo.clientName
+                                : "No client name"}
+                            </p>
+                          </div>
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <p className="text-body-variant text-gray-medium dark:text-gray-light pb-2">
+                                {invoice.invoiceDate !== ""
+                                  ? `Due ${formatDate(invoice.invoiceDate)}`
+                                  : "Date not provided"}
+                              </p>
+                              <p className="text-heading-s">£ {total}</p>
+                            </div>
+
+                            <div className="w-[104px]">
+                              <Status status={invoice.status} />
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </Link>

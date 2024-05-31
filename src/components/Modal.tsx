@@ -62,8 +62,8 @@ export default function Modal({
           onClick={handleBackdropClick}
           className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full md:inset-0 h-full max-h-full bg-dark-darkest/50"
         >
-          <div className="relative w-[480px] max-h-full">
-            <div className="relative bg-white shadow-item p-12 rounded-lg dark:bg-dark-light">
+          <div className="relative w-80 md:w-[480px] max-h-full">
+            <div className="relative bg-white shadow-item p-8 md:p-12 rounded-lg dark:bg-dark-light">
               <button
                 type="button"
                 onClick={closeModal}
