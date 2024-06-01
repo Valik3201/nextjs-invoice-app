@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { nanoid } from "nanoid";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import { addInvoice } from "../lib/features/invoices/invoicesOperations";
 import { Invoice, PaymentTerms, InvoiceStatus } from "../lib/types";
@@ -328,50 +329,100 @@ export default function AddInvoiceForm() {
                 Item List
               </h3>
 
-              <ul className="max-w-full">
+              {/* Tablet & Desktop Styles */}
+              <ul className="hidden md:block max-w-full">
                 {invoiceData.itemList.map((item, index) => (
-                  <>
-                    {/* Tablet & Desktop Styles */}
-                    <li
-                      key={index}
-                      className="hidden md:flex gap-4 items-center"
-                    >
-                      <div className="w-[35%]">
+                  <li key={nanoid()} className="flex gap-4 items-center">
+                    <div className="w-[35%]">
+                      <InputField
+                        label={index === 0 ? "Item Name" : ""}
+                        name={"itemName"}
+                        value={item.itemName}
+                        onChange={(e) => handleItemChange(index, e)}
+                      />
+                    </div>
+                    <div className="w-[15%]">
+                      <InputField
+                        label={index === 0 ? "Qty" : ""}
+                        name={"qty"}
+                        type="number"
+                        value={item.qty}
+                        onChange={(e) => handleItemChange(index, e)}
+                      />
+                    </div>
+                    <div className="w-[20%]">
+                      <InputField
+                        label={index === 0 ? "Price" : ""}
+                        name={"price"}
+                        type="number"
+                        value={item.price.toFixed(2)}
+                        onChange={(e) => handleItemChange(index, e)}
+                      />
+                    </div>
+                    <div className="w-[10%] mb-[25px]">
+                      <h4 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
+                        {index === 0 ? "Total" : ""}
+                      </h4>
+
+                      <p className="py-4 text-gray-medium text-heading-s-variant dark:text-gray-light">
+                        {item.qty && item.price
+                          ? item.total.toFixed(2)
+                          : Number(0).toFixed(2)}
+                      </p>
+                    </div>
+
+                    <div className={`${index === 0 ? "mt-[15px]" : ""}`}>
+                      <Button
+                        variant="icon"
+                        onClick={() => handleRemoveItem(index)}
+                        icon={<TrashIcon />}
+                        isOnlyIcon
+                      />
+                    </div>
+                  </li>
+                ))}
+              </ul>
+
+              {/*  Mobile Styles */}
+              <ul className="block md:hidden max-w-full">
+                {invoiceData.itemList.map((item, index) => (
+                  <li key={nanoid()} className="flex flex-col gap-6">
+                    <InputField
+                      label={"Item Name"}
+                      name={"itemName"}
+                      value={item.itemName}
+                      onChange={(e) => handleItemChange(index, e)}
+                    />
+                    <div className="flex gap-4 -mt-[25px]">
+                      <div className="w-[25%]">
                         <InputField
-                          label={index === 0 ? "Item Name" : ""}
-                          name={"itemName"}
-                          value={item.itemName}
-                          onChange={(e) => handleItemChange(index, e)}
-                        />
-                      </div>
-                      <div className="w-[15%]">
-                        <InputField
-                          label={index === 0 ? "Qty" : ""}
+                          label={"Qty"}
                           name={"qty"}
                           type="number"
                           value={item.qty}
                           onChange={(e) => handleItemChange(index, e)}
                         />
                       </div>
-                      <div className="w-[20%]">
+                      <div className="w-[35%]">
                         <InputField
-                          label={index === 0 ? "Price" : ""}
+                          label={"Price"}
                           name={"price"}
                           type="number"
                           value={item.price.toFixed(2)}
                           onChange={(e) => handleItemChange(index, e)}
                         />
                       </div>
-                      <div className="w-[10%] mb-[25px]">
+                      <div className="w-[35%] mb-[25px]">
                         <h4 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
-                          {index === 0 ? "Total" : ""}
+                          Total
                         </h4>
                         <p className="py-4 text-gray-medium text-heading-s-variant dark:text-gray-light">
-                          {item.total.toFixed(2)}
+                          {item.qty && item.price
+                            ? item.total.toFixed(2)
+                            : Number(0).toFixed(2)}
                         </p>
                       </div>
-
-                      <div className={`${index === 0 ? "mt-[15px]" : ""}`}>
+                      <div className="mt-[28px]">
                         <Button
                           variant="icon"
                           onClick={() => handleRemoveItem(index)}
@@ -379,54 +430,8 @@ export default function AddInvoiceForm() {
                           isOnlyIcon
                         />
                       </div>
-                    </li>
-
-                    {/*  Mobile Styles */}
-                    <li key={index} className="flex md:hidden flex-col gap-6">
-                      <InputField
-                        label={"Item Name"}
-                        name={"itemName"}
-                        value={item.itemName}
-                        onChange={(e) => handleItemChange(index, e)}
-                      />
-                      <div className="flex gap-4 -mt-[25px]">
-                        <div className="w-[25%]">
-                          <InputField
-                            label={"Qty"}
-                            name={"qty"}
-                            type="number"
-                            value={item.qty}
-                            onChange={(e) => handleItemChange(index, e)}
-                          />
-                        </div>
-                        <div className="w-[35%]">
-                          <InputField
-                            label={"Price"}
-                            name={"price"}
-                            type="number"
-                            value={item.price.toFixed(2)}
-                            onChange={(e) => handleItemChange(index, e)}
-                          />
-                        </div>
-                        <div className="w-[35%] mb-[25px]">
-                          <h4 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
-                            Total
-                          </h4>
-                          <p className="py-4 text-gray-medium text-heading-s-variant dark:text-gray-light">
-                            {item.total.toFixed(2)}
-                          </p>
-                        </div>
-                        <div className="mt-[28px]">
-                          <Button
-                            variant="icon"
-                            onClick={() => handleRemoveItem(index)}
-                            icon={<TrashIcon />}
-                            isOnlyIcon
-                          />
-                        </div>
-                      </div>
-                    </li>
-                  </>
+                    </div>
+                  </li>
                 ))}
               </ul>
 
