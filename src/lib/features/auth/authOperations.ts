@@ -8,6 +8,7 @@ import {
   updateProfile,
   User,
 } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
 import { setUser } from "./authSlice";
 
 export const signUp = createAsyncThunk(
@@ -31,9 +32,10 @@ export const signUp = createAsyncThunk(
           displayName: displayName,
         });
       }
-      return result.user;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+      return { ...result.user, displayName: displayName };
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
     }
   }
 );
@@ -46,9 +48,11 @@ export const signIn = createAsyncThunk(
   ) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
+
       return result.user;
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
     }
   }
 );
@@ -58,8 +62,9 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await signOut(auth);
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
     }
   }
 );
@@ -68,15 +73,16 @@ export const listenToAuthChanges = createAsyncThunk(
   "auth/listenToAuthChanges",
   async (_, { dispatch, rejectWithValue }) => {
     try {
-      return new Promise<User | null>((resolve, reject) => {
+      return new Promise<User | null>((resolve) => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
           dispatch(setUser(user));
           resolve(user);
         });
         return () => unsubscribe();
       });
-    } catch (error: any) {
-      return rejectWithValue(error.message);
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
     }
   }
 );
