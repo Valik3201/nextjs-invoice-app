@@ -11,8 +11,9 @@ import {
 } from "@/src/lib/features/invoices/invoicesOperations";
 import { formatDate, calculateDueDate } from "@/src/lib/utils";
 import { InvoiceStatus } from "@/src/lib/types";
-import Status from "@/src/components/Status";
 import Modal from "@/src/components/Modal";
+import Status from "@/src/components/Status";
+import SkeletonInvoice from "@/src/components/SkeletonInvoice";
 import Button from "@/src/components/Button";
 import ArrowIcon from "@/src/icons/ArrowIcon";
 
@@ -20,7 +21,9 @@ export default function Page() {
   const router = useRouter();
   const invoiceUid = useParams<{ invoice: string }>().invoice;
   const dispatch = useAppDispatch();
-  const { invoice, loading, error } = useAppSelector((state) => state.invoices);
+  const { invoice, invoicesLoading, invoicesError } = useAppSelector(
+    (state) => state.invoices
+  );
   const user = useAppSelector((state) => state.auth.user);
   const [invoiceTotal, setInvoiceTotal] = useState<string>("");
   const [dueDate, setDueDate] = useState<string>("");
@@ -70,7 +73,7 @@ export default function Page() {
 
   return (
     <div>
-      <Link href="/invoices">
+      <Link href="/invoices" className="block w-fit">
         <div className="flex gap-6 items-center mb-[31px]">
           <div className="rotate-90">
             <ArrowIcon />
@@ -81,7 +84,9 @@ export default function Page() {
         </div>
       </Link>
 
-      {invoice && !loading && (
+      {invoicesLoading && <SkeletonInvoice />}
+
+      {invoice && !invoicesLoading && (
         <>
           <div className="flex items-center justify-between bg-white rounded-lg p-5 pl-8 shadow-item dark:bg-dark-light dark:border-dark-light">
             <div className="flex gap-5 items-center justify-between md:justify-start w-full md:w-fit">
@@ -91,8 +96,8 @@ export default function Page() {
               <Status status={invoice.status} />
             </div>
 
-            <div className="fixed md:static bottom-0 left-0 w-full md:w-fit bg-white dark:bg-dark-light px-6 py-5 md:p-0">
-              <div className="flex gap-2 justify-between">
+            <div className="fixed md:static flex justify-center bottom-0 left-0 w-full md:w-fit bg-white dark:bg-dark-light px-6 py-5 md:p-0">
+              <div className="flex gap-2 justify-between w-[327px] md:w-fit">
                 <Button variant={"default"}>Edit</Button>
                 <Modal handleConfirm={() => handleDelete()} id={invoice.id} />
                 <Button
@@ -105,7 +110,7 @@ export default function Page() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-between bg-white rounded-lg mt-4 md:mt-6 p-6 md:p-8 lg:p-[52px] shadow-item dark:bg-dark-light dark:border-dark-light mb-32 md:mb-0">
+          <div className="flex flex-col items-center justify-between bg-white rounded-lg mt-9 md:mt-6 p-6 md:p-8 lg:p-[52px] shadow-item dark:bg-dark-light dark:border-dark-light mb-32 md:mb-0">
             <div className="flex flex-col gap-[30px] md:gap-0 md:flex-row justify-between items-start w-full mb-7">
               <div className="flex flex-col gap-2">
                 <p className="text-heading-s-variant">
