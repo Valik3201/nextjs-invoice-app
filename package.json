@@ -12,6 +12,7 @@
     "@reduxjs/toolkit": "^2.2.5",
     "cookies-next": "^4.2.1",
     "firebase": "^10.12.1",
+    "nanoid": "^5.0.7",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
     "react": "^18",

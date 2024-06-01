@@ -11,8 +11,6 @@ export default function Navigation() {
   const dispatch = useAppDispatch();
   const { user, loading } = useAppSelector((state) => state.auth);
 
-  console.log(user);
-
   const handleLogout = async () => {
     dispatch(logout());
   };

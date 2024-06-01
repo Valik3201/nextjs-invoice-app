@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
@@ -234,13 +235,13 @@ export default function Page() {
               </div>
 
               {invoice.itemList.length !== 0 ? (
-                <ul className="w-full flex flex-col gap-8">
-                  {invoice.itemList.map((item, index) => (
-                    <>
-                      {/* Tablet & Desktop Styles */}
+                <>
+                  {/* Tablet & Desktop Styles */}
+                  <ul className="hidden md:flex flex-col gap-8 w-full">
+                    {invoice.itemList.map((item, index) => (
                       <li
-                        className="hidden md:flex justify-between w-full text-heading-s-variant"
-                        key={index}
+                        className="flex justify-between w-full text-heading-s-variant"
+                        key={nanoid()}
                       >
                         <p className="w-2/5">{item.itemName}</p>
                         <p className="w-1/5 text-center text-blue-gray dark:text-gray-light">
@@ -253,10 +254,15 @@ export default function Page() {
                           £ {item.total.toFixed(2)}
                         </p>
                       </li>
-                      {/*  Mobile Styles */}
+                    ))}
+                  </ul>
+
+                  {/*  Mobile Styles */}
+                  <ul className="flex md:hidden flex-col gap-8 w-full">
+                    {invoice.itemList.map((item, index) => (
                       <li
-                        className="flex md:hidden justify-between items-center w-full text-heading-s-variant"
-                        key={index}
+                        className="flex justify-between items-center w-full text-heading-s-variant"
+                        key={nanoid()}
                       >
                         <div className="flex flex-col items-start gap-2">
                           <p>{item.itemName}</p>
@@ -268,9 +274,9 @@ export default function Page() {
 
                         <p className="text-right">£ {item.total.toFixed(2)}</p>
                       </li>
-                    </>
-                  ))}
-                </ul>
+                    ))}
+                  </ul>
+                </>
               ) : (
                 <p className="text-body-variant text-center text-blue-gray dark:text-gray-light">
                   No items. You can edit this invoice to add items.
