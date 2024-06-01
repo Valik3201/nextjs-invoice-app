@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { League_Spartan } from "next/font/google";
-import Navigation from "../components/Navigation";
+import { cookies } from "next/headers";
+import dynamic from "next/dynamic";
 import StoreProvider from "../store/StoreProvider";
 import AuthProvider from "../store/AuthProvider";
-import dynamic from "next/dynamic";
-import { cookies } from "next/headers";
+import Navigation from "../components/Navigation";
 import "./globals.css";
 
 const leagueSpartan = League_Spartan({ subsets: ["latin"] });
