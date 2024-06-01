@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector, useAppStore } from "@/src/lib/hooks";
@@ -19,10 +19,12 @@ export default function SignIn() {
   const store = useAppStore();
   const initialize = useRef(false);
 
-  if (!initialize.current) {
-    store.dispatch(resetErrors());
-    initialize.current = true;
-  }
+  useEffect(() => {
+    if (!initialize.current) {
+      store.dispatch(resetErrors());
+      initialize.current = true;
+    }
+  }, [store]);
 
   const handleForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
