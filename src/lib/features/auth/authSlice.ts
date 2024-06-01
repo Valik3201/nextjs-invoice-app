@@ -6,6 +6,7 @@ import { FirebaseError } from "firebase/app";
 interface AuthState {
   user: User | null;
   loading: boolean;
+  refreshing: boolean;
   errors: {
     registerError: FirebaseError | null;
     loginError: FirebaseError | null;
@@ -15,6 +16,7 @@ interface AuthState {
 const initialState: AuthState = {
   user: null,
   loading: false,
+  refreshing: false,
   errors: { registerError: null, loginError: null, authError: null },
 };
 
@@ -25,6 +27,13 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<User | null>) => {
       state.user = action.payload;
       state.loading = false;
+    },
+    resetErrors: (state) => {
+      state.errors = {
+        registerError: null,
+        loginError: null,
+        authError: null,
+      };
     },
   },
   extraReducers: (builder) => {
@@ -66,18 +75,19 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(listenToAuthChanges.pending, (state) => {
-        state.loading = true;
+        state.refreshing = true;
         state.errors.authError = null;
       })
       .addCase(listenToAuthChanges.fulfilled, (state, action) => {
-        state.loading = false;
+        state.refreshing = false;
+        state.user = action.payload;
       })
       .addCase(listenToAuthChanges.rejected, (state, action) => {
         state.errors.authError = action.payload as FirebaseError;
-        state.loading = false;
+        state.refreshing = false;
       });
   },
 });
 
-export const { setUser } = authSlice.actions;
+export const { setUser, resetErrors } = authSlice.actions;
 export default authSlice.reducer;
