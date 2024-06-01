@@ -24,7 +24,7 @@ const options = {
       "leading-4 text-dark-darkest/[0.08] hover:bg-white hover:dark:bg-dark-medium dark:text-gray-light/[0.08]",
     input: "",
     inputIcon: "text-blue-gray",
-    selected: "text-primary bg-white dark:bg-dark-medium",
+    selected: "text-primary bg-white dark:bg-dark-medium dark:text-primary",
   },
   icons: {
     prev: () => <ArrowIcon />,
