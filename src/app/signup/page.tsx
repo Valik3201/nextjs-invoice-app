@@ -1,9 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import { signUp } from "@/src/lib/features/auth/authOperations";
+
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useAppDispatch } from "@/src/lib/hooks";
+import { signUp } from "@/src/lib/features/auth/authOperations";
 import InputField from "@/src/components/InputField";
+import Button from "@/src/components/Button";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -21,40 +24,49 @@ export default function SignUp() {
   };
 
   return (
-    <main>
-      <div className="container flex justify-center">
-        <div>
-          <h1 className="mt-60 mb-30">Sign up</h1>
-          <form onSubmit={handleForm}>
-            <InputField
-              label="Name"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="John Doe"
-            />
+    <div className="flex justify-center w-full">
+      <div className="w-full md:w-80">
+        <h1 className="text-heading-m md:text-heading-l mb-8">Sign Up</h1>
 
-            <InputField
-              label="Email"
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="example@mail.com"
-            />
+        <form onSubmit={handleForm}>
+          <InputField
+            label="Name"
+            name="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="John Doe"
+          />
 
-            <InputField
-              label="Password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-            />
-            <button type="submit">Sign up</button>
-          </form>
-        </div>
+          <InputField
+            label="Email"
+            name="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="example@mail.com"
+          />
+
+          <InputField
+            label="Password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+
+          <Button variant="primary" type="submit" size="full">
+            Sign Up
+          </Button>
+        </form>
+
+        <p className="text-body-variant text-gray-medium dark:text-gray-light mt-6">
+          Already have an account?{" "}
+          <Link href={"/signin"} className="text-primary hover:underline">
+            Sign in here
+          </Link>
+        </p>
       </div>
-    </main>
+    </div>
   );
 }
