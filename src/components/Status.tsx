@@ -19,13 +19,13 @@ export default function Status({ status }: { status: string }) {
   return (
     <>
       {status === "draft" ? (
-        <div className="flex justify-center gap-2 rounded-[0.38rem] p-[17px] w-[104px] bg-[#373B53]/10 text-[#373B53] dark:bg-[#dfe3fa]/10 dark:text-white">
+        <div className="flex justify-center gap-2 rounded-[0.38rem] p-3 lg:p-4 w-[104px] bg-[#373B53]/10 text-[#373B53] dark:bg-[#dfe3fa]/10 dark:text-white">
           <DotIcon />
           <span className="capitalize text-heading-s-variant">{status}</span>
         </div>
       ) : (
         <div
-          className="flex justify-center gap-2 rounded-[0.38rem] p-[17px] w-[104px]"
+          className="flex justify-center gap-2 rounded-[0.38rem] p-3 lg:p-4 w-[104px]"
           style={{ backgroundColor: `${color}15`, color: `${color}` }}
         >
           <DotIcon />

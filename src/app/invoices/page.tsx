@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
 import { formatDate } from "@/src/lib/utils";
 import { InvoiceStatus } from "@/src/lib/types";
+import SkeletonInvoices from "@/src/components/SkeletonInvoices";
 import ArrowIcon from "@/src/icons/ArrowIcon";
 import CheckboxIcon from "@/src/icons/CheckboxIcon";
 
@@ -17,9 +18,9 @@ export default function Page() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const loading = useAppSelector((state) => state.auth.loading);
-  const invoices = useAppSelector((state) => state.invoices.invoices);
-  const error = useAppSelector((state) => state.invoices.error);
+  const { invoices, invoicesLoading, invoicesError } = useAppSelector(
+    (state) => state.invoices
+  );
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selectedStatuses, setSelectedStatuses] = useState<Set<InvoiceStatus>>(
     new Set()
@@ -76,23 +77,30 @@ export default function Page() {
 
   return (
     <>
-      {user && !loading && (
+      {invoicesLoading && <SkeletonInvoices />}
+
+      {user && !invoicesLoading && (
         <>
           <div className="flex justify-between items-center mb-8 md:mb-[55px] lg:mb-[68px]">
             <div>
               <h1 className="text-heading-m md:text-heading-l mb-[6px]">
                 Invoices
               </h1>
-              {invoices.length !== 0 ? (
-                <p className="text-body-variant text-gray-medium dark:text-gray-light">
-                  {getMessage()}
-                </p>
+              {invoices.length !== 0 || filteredInvoices.length !== 0 ? (
+                <>
+                  <p className="text-body-variant text-gray-medium dark:text-gray-light block sm:hidden">
+                    {`${filteredInvoices.length} invoices`}
+                  </p>
+                  <p className="text-body-variant text-gray-medium dark:text-gray-light hidden sm:block">
+                    {getMessage()}
+                  </p>
+                </>
               ) : (
                 <p>No invoices</p>
               )}
             </div>
 
-            <div className="relative flex gap-5 md:gap-10items-center">
+            <div className="relative flex gap-5 md:gap-10 items-center">
               <button
                 onClick={toggleFilter}
                 className="flex gap-[14px] items-center text-heading-s-variant"
@@ -145,7 +153,7 @@ export default function Page() {
                 return (
                   <li key={invoice.id}>
                     <Link href={`/invoices/${invoice.uid}`}>
-                      <div className="bg-white rounded-lg p-5 pl-6 md:pl-8 shadow-item border-2 border-white hover:border-primary transition duration-200 ease-in-out dark:bg-dark-light dark:border-dark-light">
+                      <div className="bg-white rounded-lg px-4 py-3 md:ps-6 lg:ps-8 shadow-item border-2 border-white hover:border-primary transition duration-200 ease-in-out dark:bg-dark-light dark:border-dark-light">
                         {/* Tablet % Desktop Styles */}
                         <div className="hidden md:flex items-center justify-between">
                           <p className="text-heading-s-variant w-[15%]">

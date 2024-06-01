@@ -1,9 +1,12 @@
 "use client";
-import React, { useState } from "react";
-import { signIn } from "@/src/lib/features/auth/authOperations";
+
+import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useAppDispatch } from "@/src/lib/hooks";
+import { signIn } from "@/src/lib/features/auth/authOperations";
 import InputField from "@/src/components/InputField";
+import Button from "@/src/components/Button";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -20,33 +23,41 @@ export default function SignIn() {
   };
 
   return (
-    <main>
-      <div className="container flex justify-center">
-        <div className="form-wrapper">
-          <h1 className="mt-60 mb-30">Sign In</h1>
-          <form onSubmit={handleForm} className="form">
-            <InputField
-              label="Email"
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="example@mail.com"
-            />
+    <div className="flex justify-center w-full">
+      <div className="w-full md:w-80">
+        <h1 className="text-heading-m md:text-heading-l mb-8">Sign In</h1>
 
-            <InputField
-              label="Password"
-              name="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-            />
+        <form onSubmit={handleForm} className="form">
+          <InputField
+            label="Email"
+            name="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="example@mail.com"
+          />
 
-            <button type="submit">Sign In</button>
-          </form>
-        </div>
+          <InputField
+            label="Password"
+            name="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+
+          <Button variant="primary" type="submit" size="full">
+            Sign In
+          </Button>
+        </form>
+
+        <p className="text-body-variant text-gray-medium dark:text-gray-light mt-6">
+          Don’t have an account yet?{" "}
+          <Link href={"/signup"} className="text-primary hover:underline">
+            Sign up here
+          </Link>
+        </p>
       </div>
-    </main>
+    </div>
   );
 }

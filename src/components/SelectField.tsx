@@ -49,7 +49,7 @@ export default function SelectField({
       </div>
 
       {isOpen && (
-        <div className="absolute mt-2 z-10 bg-light top-full left-0 w-full rounded-lg shadow-filter-light divide-y-[1px] divide-gray-light dark:bg-dark-medium dark:shadow-filter-dark dark:divide-dark-light">
+        <div className="absolute mt-2 z-10 bg-white top-full left-0 w-full rounded-lg shadow-filter-light divide-y-[1px] divide-gray-light dark:bg-dark-medium dark:shadow-filter-dark dark:divide-dark-light">
           {Object.values(PaymentTerms).map((term) => (
             <div
               key={term}

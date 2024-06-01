@@ -204,7 +204,7 @@ export default function AddInvoiceForm() {
             isOpen ? "transform-none" : "-translate-x-full"
           }`}
         >
-          <div className="relative md:w-[616px] max-h-full pl-6 md:pl-14 pr-2 md:pr-10 py-6 md:py-16">
+          <div className="relative md:w-[616px] max-h-full pl-6 md:pl-14 pr-2 md:pr-10 py-6 md:pb-28 md:py-16">
             <button
               type="button"
               className="flex gap-6 items-center mb-6 md:hidden"
@@ -222,7 +222,7 @@ export default function AddInvoiceForm() {
 
             <form
               onSubmit={handleSubmit}
-              className="h-[calc(100svh_-_245px)] overflow-y-scroll overflow-x-hidden pb-8 pl-0.5 pr-4"
+              className="h-[calc(100svh_-_245px)] overflow-y-scroll overflow-x-hidden pb-20 md:pb-32 lg:pb-8 pl-0.5 pr-4"
             >
               <h3 className="text-primary text-heading-s-variant mb-6">
                 Bill From
@@ -234,19 +234,21 @@ export default function AddInvoiceForm() {
                   value={invoiceData.billFrom.streetAddress}
                   onChange={handleChange}
                 />
-                <div className="flex gap-6">
-                  <InputField
-                    label="City"
-                    name="billFrom.city"
-                    value={invoiceData.billFrom.city}
-                    onChange={handleChange}
-                  />
-                  <InputField
-                    label="Post Code"
-                    name="billFrom.postCode"
-                    value={invoiceData.billFrom.postCode}
-                    onChange={handleChange}
-                  />
+                <div className="flex flex-col md:flex-row md:gap-6">
+                  <div className="flex gap-6">
+                    <InputField
+                      label="City"
+                      name="billFrom.city"
+                      value={invoiceData.billFrom.city}
+                      onChange={handleChange}
+                    />
+                    <InputField
+                      label="Post Code"
+                      name="billFrom.postCode"
+                      value={invoiceData.billFrom.postCode}
+                      onChange={handleChange}
+                    />
+                  </div>
                   <InputField
                     label="Country"
                     name="billFrom.country"
@@ -280,19 +282,21 @@ export default function AddInvoiceForm() {
                   value={invoiceData.billTo.streetAddress}
                   onChange={handleChange}
                 />
-                <div className="flex gap-6">
-                  <InputField
-                    label="City"
-                    name="billTo.city"
-                    value={invoiceData.billTo.city}
-                    onChange={handleChange}
-                  />
-                  <InputField
-                    label="Post Code"
-                    name="billTo.postCode"
-                    value={invoiceData.billTo.postCode}
-                    onChange={handleChange}
-                  />
+                <div className="flex flex-col md:flex-row md:gap-6">
+                  <div className="flex gap-6">
+                    <InputField
+                      label="City"
+                      name="billTo.city"
+                      value={invoiceData.billTo.city}
+                      onChange={handleChange}
+                    />
+                    <InputField
+                      label="Post Code"
+                      name="billTo.postCode"
+                      value={invoiceData.billTo.postCode}
+                      onChange={handleChange}
+                    />
+                  </div>
                   <InputField
                     label="Country"
                     name="billTo.country"
@@ -302,7 +306,7 @@ export default function AddInvoiceForm() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 <InputDate
                   name="invoiceDate"
                   value={invoiceData.invoiceDate}
@@ -326,51 +330,103 @@ export default function AddInvoiceForm() {
 
               <ul className="max-w-full">
                 {invoiceData.itemList.map((item, index) => (
-                  <li key={index} className="flex gap-4 items-center">
-                    <div className="w-[35%]">
+                  <>
+                    {/* Tablet & Desktop Styles */}
+                    <li
+                      key={index}
+                      className="hidden md:flex gap-4 items-center"
+                    >
+                      <div className="w-[35%]">
+                        <InputField
+                          label={index === 0 ? "Item Name" : ""}
+                          name={"itemName"}
+                          value={item.itemName}
+                          onChange={(e) => handleItemChange(index, e)}
+                        />
+                      </div>
+                      <div className="w-[15%]">
+                        <InputField
+                          label={index === 0 ? "Qty" : ""}
+                          name={"qty"}
+                          type="number"
+                          value={item.qty}
+                          onChange={(e) => handleItemChange(index, e)}
+                        />
+                      </div>
+                      <div className="w-[20%]">
+                        <InputField
+                          label={index === 0 ? "Price" : ""}
+                          name={"price"}
+                          type="number"
+                          value={item.price.toFixed(2)}
+                          onChange={(e) => handleItemChange(index, e)}
+                        />
+                      </div>
+                      <div className="w-[10%] mb-[25px]">
+                        <h4 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
+                          {index === 0 ? "Total" : ""}
+                        </h4>
+                        <p className="py-4 text-gray-medium text-heading-s-variant dark:text-gray-light">
+                          {item.total.toFixed(2)}
+                        </p>
+                      </div>
+
+                      <div className={`${index === 0 ? "mt-[15px]" : ""}`}>
+                        <Button
+                          variant="icon"
+                          onClick={() => handleRemoveItem(index)}
+                          icon={<TrashIcon />}
+                          isOnlyIcon
+                        />
+                      </div>
+                    </li>
+
+                    {/*  Mobile Styles */}
+                    <li key={index} className="flex md:hidden flex-col gap-6">
                       <InputField
-                        label={index === 0 ? "Item Name" : ""}
+                        label={"Item Name"}
                         name={"itemName"}
                         value={item.itemName}
                         onChange={(e) => handleItemChange(index, e)}
                       />
-                    </div>
-                    <div className="w-[15%]">
-                      <InputField
-                        label={index === 0 ? "Qty" : ""}
-                        name={"qty"}
-                        type="number"
-                        value={item.qty}
-                        onChange={(e) => handleItemChange(index, e)}
-                      />
-                    </div>
-                    <div className="w-[20%]">
-                      <InputField
-                        label={index === 0 ? "Price" : ""}
-                        name={"price"}
-                        type="number"
-                        value={item.price.toFixed(2)}
-                        onChange={(e) => handleItemChange(index, e)}
-                      />
-                    </div>
-                    <div className="w-[10%] mb-[25px]">
-                      <h4 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
-                        {index === 0 ? "Total" : ""}
-                      </h4>
-                      <p className="py-4 text-gray-medium text-heading-s-variant dark:text-gray-light">
-                        {item.total.toFixed(2)}
-                      </p>
-                    </div>
-
-                    <div className={`${index === 0 ? "mt-[15px]" : ""}`}>
-                      <Button
-                        variant="icon"
-                        onClick={() => handleRemoveItem(index)}
-                        icon={<TrashIcon />}
-                        isOnlyIcon
-                      />
-                    </div>
-                  </li>
+                      <div className="flex gap-4 -mt-[25px]">
+                        <div className="w-[25%]">
+                          <InputField
+                            label={"Qty"}
+                            name={"qty"}
+                            type="number"
+                            value={item.qty}
+                            onChange={(e) => handleItemChange(index, e)}
+                          />
+                        </div>
+                        <div className="w-[35%]">
+                          <InputField
+                            label={"Price"}
+                            name={"price"}
+                            type="number"
+                            value={item.price.toFixed(2)}
+                            onChange={(e) => handleItemChange(index, e)}
+                          />
+                        </div>
+                        <div className="w-[35%] mb-[25px]">
+                          <h4 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
+                            Total
+                          </h4>
+                          <p className="py-4 text-gray-medium text-heading-s-variant dark:text-gray-light">
+                            {item.total.toFixed(2)}
+                          </p>
+                        </div>
+                        <div className="mt-[28px]">
+                          <Button
+                            variant="icon"
+                            onClick={() => handleRemoveItem(index)}
+                            icon={<TrashIcon />}
+                            isOnlyIcon
+                          />
+                        </div>
+                      </div>
+                    </li>
+                  </>
                 ))}
               </ul>
 
@@ -378,7 +434,7 @@ export default function AddInvoiceForm() {
                 + Add New Item
               </Button>
 
-              <div className="fixed bottom-0 left-0 lg:ml-[103px] py-5 md:py-8 px-6 md:px-14 md:w-[616px] flex justify-between shadow-[0_0_200px_0_rgba(0,0,0,0.1)] dark:shadow-[0_0_200px_0_rgba(0,0,0,0.3)] bg-white text-dark-darkest dark:bg-dark dark:text-white rounded-r-[1.25rem]">
+              <div className="fixed bottom-0 left-0 lg:ml-[103px] py-5 md:py-8 px-6 md:px-14 w-full md:w-[616px] flex justify-between shadow-[0_0_200px_0_rgba(0,0,0,0.1)] dark:shadow-[0_0_200px_0_rgba(0,0,0,0.3)] bg-white text-dark-darkest dark:bg-dark dark:text-white md:rounded-r-[1.25rem]">
                 <Button variant="default" onClick={handleDiscard}>
                   Discard
                 </Button>
