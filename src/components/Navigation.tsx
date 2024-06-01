@@ -12,7 +12,7 @@ export default function Navigation() {
   const { user, loading } = useAppSelector((state) => state.auth);
 
   const handleLogout = async () => {
-    dispatch(logout());
+    await dispatch(logout());
   };
 
   return (

@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAppDispatch } from "@/src/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { signIn } from "@/src/lib/features/auth/authOperations";
+import AuthError from "@/src/components/AuthError";
 import InputField from "@/src/components/InputField";
 import Button from "@/src/components/Button";
 
@@ -13,13 +14,17 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const error = useAppSelector((state) => state.auth.errors.loginError);
 
   const handleForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(signIn({ email, password }));
-
-    router.push("/invoices");
+    try {
+      await dispatch(signIn({ email, password })).unwrap();
+      router.push("/invoices");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -57,6 +62,8 @@ export default function SignIn() {
             Sign up here
           </Link>
         </p>
+
+        {error && <AuthError errorCode={error.code} />}
       </div>
     </div>
   );
