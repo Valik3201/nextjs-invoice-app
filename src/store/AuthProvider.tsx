@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { listenToAuthChanges } from "../lib/features/auth/authOperations";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
+import Spinner from "../components/Spinner";
 
 export default function AuthProvider({
   children,
@@ -16,7 +17,7 @@ export default function AuthProvider({
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   return <>{children}</>;
