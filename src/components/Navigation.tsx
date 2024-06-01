@@ -1,15 +1,18 @@
 "use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
 import { useAppSelector, useAppDispatch } from "../lib/hooks";
-import ThemeToggle from "./ThemeToggle";
-import Logo from "./Logo";
-import Avatar from "../icons/Avatar";
 import { logout } from "@/src/lib/features/auth/authOperations";
+import Avatar from "../icons/Avatar";
+import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
+
 import Image from "next/image";
 
 export default function Navigation() {
   const dispatch = useAppDispatch();
-  const { user, loading } = useAppSelector((state) => state.auth);
+  const { user, refreshing } = useAppSelector((state) => state.auth);
 
   const handleLogout = async () => {
     await dispatch(logout());
@@ -29,7 +32,7 @@ export default function Navigation() {
               <Link href="/">Home</Link>
             </li>
 
-            {user && !loading && (
+            {user && !refreshing && (
               <>
                 <li className="hover:text-primary transition duration-200 ease-in-out">
                   <Link href="/invoices">Invoices</Link>
@@ -41,7 +44,7 @@ export default function Navigation() {
               </>
             )}
 
-            {!user && !loading && (
+            {!user && !refreshing && (
               <>
                 <li className="hover:text-primary transition duration-200 ease-in-out">
                   <Link href="/signup">Sign Up</Link>
