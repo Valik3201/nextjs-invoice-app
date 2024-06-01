@@ -13,7 +13,8 @@ const options = {
   maxDate: new Date("2030-01-01"),
   minDate: new Date("1950-01-01"),
   theme: {
-    background: "bg-white dark:bg-dark-medium w-full px-5",
+    background:
+      "bg-white dark:bg-dark-medium w-full px-5 !shadow-filter-light !dark:shadow-filter-dark",
     todayBtn: "",
     clearBtn: "",
     icons:
@@ -29,7 +30,7 @@ const options = {
     prev: () => <ArrowIcon />,
     next: () => <ArrowIcon />,
   },
-  datepickerClassNames: "absolute top-14 left-0 w-full pb-4",
+  datepickerClassNames: "absolute top-12 left-0 w-full pb-4 z-20",
   defaultDate: new Date(),
   language: "en",
   disabledDates: [],
