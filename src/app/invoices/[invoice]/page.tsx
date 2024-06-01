@@ -72,6 +72,13 @@ export default function Page() {
     }
   };
 
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+      return;
+    }
+  }, [user, router]);
+
   return (
     <div>
       <Link href="/invoices" className="block w-fit">
