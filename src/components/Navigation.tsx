@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useAppSelector, useAppDispatch } from "../lib/hooks";
 import { logout } from "@/src/lib/features/auth/authOperations";
@@ -11,11 +11,13 @@ import ThemeToggle from "./ThemeToggle";
 import Image from "next/image";
 
 export default function Navigation() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const { user, refreshing } = useAppSelector((state) => state.auth);
 
   const handleLogout = async () => {
     await dispatch(logout());
+    router.push("/");
   };
 
   return (
