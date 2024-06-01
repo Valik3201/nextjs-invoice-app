@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
+import { useAppDispatch, useAppSelector, useAppStore } from "@/src/lib/hooks";
+import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import { signIn } from "@/src/lib/features/auth/authOperations";
 import AuthError from "@/src/components/AuthError";
 import InputField from "@/src/components/InputField";
@@ -15,6 +16,13 @@ export default function SignIn() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const error = useAppSelector((state) => state.auth.errors.loginError);
+  const store = useAppStore();
+  const initialize = useRef(false);
+
+  if (!initialize.current) {
+    store.dispatch(resetErrors());
+    initialize.current = true;
+  }
 
   const handleForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
