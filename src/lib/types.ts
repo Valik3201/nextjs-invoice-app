@@ -17,6 +17,7 @@ export enum PaymentTerms {
 }
 
 export interface InvoiceItem {
+  id: string;
   itemName: string;
   qty: number;
   price: number;
