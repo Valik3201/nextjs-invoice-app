@@ -17,6 +17,7 @@ import Status from "@/src/components/Status";
 import SkeletonInvoice from "@/src/components/SkeletonInvoice";
 import Button from "@/src/components/Button";
 import ArrowIcon from "@/src/icons/ArrowIcon";
+import GoBackButton from "@/src/components/GoBackButton";
 
 export default function Page() {
   const router = useRouter();
@@ -81,16 +82,7 @@ export default function Page() {
 
   return (
     <div>
-      <Link href="/invoices" className="block w-fit">
-        <div className="flex gap-6 items-center mb-[31px]">
-          <div className="rotate-90">
-            <ArrowIcon />
-          </div>
-          <p className="text-heading-s-variant h-3 hover:text-blue-gray transition duration-200 ease-in-out dark:hover:text-gray-medium">
-            Go back
-          </p>
-        </div>
-      </Link>
+      <GoBackButton href="/invoices" />
 
       {invoicesLoading && <SkeletonInvoice />}
 
