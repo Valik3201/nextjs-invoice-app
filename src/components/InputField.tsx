@@ -41,12 +41,12 @@ export default function InputField({
           type={type}
           placeholder={placeholder}
           readOnly={readOnly}
-          className={`bg-white w-full h-12 text-heading-s-variant text-dark-darkest dark:text-white p-4 rounded focus:outline-none  dark:bg-dark-light  ${
+          className={`bg-white w-full h-12 text-heading-s-variant p-4 rounded focus:outline-none  ${
             error ? "border-red-medium" : "border-gray-light"
           } ${
             readOnly
-              ? "text-gray-medium text-heading-s-variant dark:text-gray-light cursor-default ps-0"
-              : "border focus:ring-primary focus:border-primary dark:border-[#252945]"
+              ? "text-gray-medium text-heading-s-variant dark:bg-dark dark:text-gray-light cursor-default ps-0"
+              : "text-dark-darkest dark:text-white dark:bg-dark-light border focus:ring-primary focus:border-primary dark:border-[#252945]"
           } ${type === "number" ? "pe-0" : ""}`}
         />
       </label>
