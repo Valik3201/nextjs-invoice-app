@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import AddInvoiceForm from "@/src/components/AddInvoiceForm";
+import InvoiceFormWrapper from "@/src/components/InvoiceFormWrapper";
 import Status from "@/src/components/Status";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
@@ -141,7 +141,7 @@ export default function Page() {
                 </div>
               )}
 
-              <AddInvoiceForm />
+              <InvoiceFormWrapper />
             </div>
           </div>
 
