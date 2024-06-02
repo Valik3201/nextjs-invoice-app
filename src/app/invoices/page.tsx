@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import AddInvoiceForm from "@/src/components/AddInvoiceForm";
-import Status from "@/src/components/Status";
+import InvoiceFormWrapper from "@/src/components/Invoice/InvoiceFormWrapper";
+import Status from "@/src/components/Status/Status";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
 import { formatDate } from "@/src/lib/utils";
 import { InvoiceStatus } from "@/src/lib/types";
-import SkeletonInvoices from "@/src/components/SkeletonInvoices";
+import SkeletonInvoices from "@/src/components/Invoice/SkeletonInvoices";
 import ArrowIcon from "@/src/icons/ArrowIcon";
 import CheckboxIcon from "@/src/icons/CheckboxIcon";
 
@@ -141,7 +141,7 @@ export default function Page() {
                 </div>
               )}
 
-              <AddInvoiceForm />
+              <InvoiceFormWrapper />
             </div>
           </div>
 

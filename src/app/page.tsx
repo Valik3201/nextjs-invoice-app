@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/src/lib/hooks";
 import Link from "next/link";
-import Button from "../components/Button";
+import Button from "../components/Button/Button";
 
 export default function Home() {
   const user = useAppSelector((state) => state.auth.user);

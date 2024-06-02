@@ -1,4 +1,4 @@
-import DotIcon from "../icons/DotIcon";
+import DotIcon from "@/src/icons/DotIcon";
 
 export default function Status({ status }: { status: string }) {
   const color = getColor(status);

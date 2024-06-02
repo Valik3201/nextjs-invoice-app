@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import {
   fetchInvoiceById,
@@ -12,11 +11,11 @@ import {
 } from "@/src/lib/features/invoices/invoicesOperations";
 import { formatDate, calculateDueDate } from "@/src/lib/utils";
 import { InvoiceStatus } from "@/src/lib/types";
-import Modal from "@/src/components/Modal";
-import Status from "@/src/components/Status";
-import SkeletonInvoice from "@/src/components/SkeletonInvoice";
-import Button from "@/src/components/Button";
-import ArrowIcon from "@/src/icons/ArrowIcon";
+import Modal from "@/src/components/Modal/Modal";
+import Status from "@/src/components/Status/Status";
+import SkeletonInvoice from "@/src/components/Invoice/SkeletonInvoice";
+import Button from "@/src/components/Button/Button";
+import GoBackButton from "@/src/components/Button/GoBackButton";
 
 export default function Page() {
   const router = useRouter();
@@ -81,16 +80,7 @@ export default function Page() {
 
   return (
     <div>
-      <Link href="/invoices" className="block w-fit">
-        <div className="flex gap-6 items-center mb-[31px]">
-          <div className="rotate-90">
-            <ArrowIcon />
-          </div>
-          <p className="text-heading-s-variant h-3 hover:text-blue-gray transition duration-200 ease-in-out dark:hover:text-gray-medium">
-            Go back
-          </p>
-        </div>
-      </Link>
+      <GoBackButton href="/invoices" />
 
       {invoicesLoading && <SkeletonInvoice />}
 
@@ -255,7 +245,7 @@ export default function Page() {
                           {item.qty}
                         </p>
                         <p className="w-1/5 text-right text-blue-gray dark:text-gray-light">
-                          £ {item.price.toFixed(2)}
+                          £ {item.price && item.price.toFixed(2)}
                         </p>
                         <p className="w-1/5 text-right">
                           £ {item.total.toFixed(2)}
@@ -275,7 +265,7 @@ export default function Page() {
                           <p>{item.itemName}</p>
 
                           <p className="text-center text-blue-gray dark:text-gray-light">
-                            {item.qty} x £ {item.price}
+                            {item.qty} x £ {item.price && item.price.toFixed(2)}
                           </p>
                         </div>
 

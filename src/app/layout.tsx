@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import dynamic from "next/dynamic";
 import StoreProvider from "../store/StoreProvider";
 import AuthProvider from "../store/AuthProvider";
-import Navigation from "../components/Navigation";
+import Navigation from "../components/Layout/Navigation";
 import "./globals.css";
 
 const leagueSpartan = League_Spartan({ subsets: ["latin"] });
