@@ -11,6 +11,7 @@ export default function InvoiceDetailsForm({
   touched,
   errors,
   setFieldValue,
+  action,
 }: {
   values: Invoice;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -18,6 +19,7 @@ export default function InvoiceDetailsForm({
   touched: FormikTouched<Invoice>;
   errors: FormikErrors<Invoice>;
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
+  action: "new" | "edit";
 }) {
   return (
     <>
@@ -26,6 +28,12 @@ export default function InvoiceDetailsForm({
           name="invoiceDate"
           value={values.invoiceDate}
           onChange={(e) => setFieldValue("invoiceDate", e.target.value)}
+          action={action}
+          error={
+            touched.invoiceDate && !values.invoiceDate
+              ? "cant'be empty"
+              : undefined
+          }
         />
 
         <SelectField

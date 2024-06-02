@@ -1,6 +1,6 @@
 import { Formik, Form } from "formik";
-import { Invoice, PaymentTerms, InvoiceStatus } from "../../lib/types";
-import { addInvoiceValidationSchema } from "../../validation/addInvoiceValidationSchema";
+import { Invoice } from "../../lib/types";
+import { invoiceValidationSchema } from "../../validation/invoiceValidationSchema";
 import { useInvoiceForm } from "../../hooks/useInvoiceForm";
 import ItemListFieldArray from "./ItemListFieldArray";
 import BillFromForm from "./BillFromForm";
@@ -10,35 +10,15 @@ import ErrorMessages from "./ErrorMessages";
 import FormActions from "./FormActions";
 import GoBackButton from "../Button/GoBackButton";
 
-export default function AddInvoiceForm({
+export default function InvoiceForm({
+  initialValues,
   closeForm,
+  action,
 }: {
+  initialValues: Invoice;
   closeForm: () => void;
+  action: "new" | "edit";
 }) {
-  const initialValues: Invoice = {
-    id: "",
-    uid: "",
-    status: InvoiceStatus.Pending,
-    billFrom: {
-      streetAddress: "",
-      city: "",
-      postCode: "",
-      country: "",
-    },
-    billTo: {
-      clientName: "",
-      clientEmail: "",
-      streetAddress: "",
-      city: "",
-      postCode: "",
-      country: "",
-    },
-    invoiceDate: "",
-    paymentTerms: PaymentTerms.Net30Days,
-    projectDescription: "",
-    itemList: [],
-  };
-
   const { handleSubmit, handleSaveAsDraft, handleDiscard } =
     useInvoiceForm(closeForm);
 
@@ -46,7 +26,7 @@ export default function AddInvoiceForm({
     <div className="relative md:w-[616px] max-h-full pl-6 md:pl-14 pr-2 md:pr-10 py-6 md:pb-28 md:py-16">
       <Formik
         initialValues={initialValues}
-        validationSchema={addInvoiceValidationSchema}
+        validationSchema={invoiceValidationSchema}
         onSubmit={handleSubmit}
       >
         {({
@@ -62,7 +42,14 @@ export default function AddInvoiceForm({
           <Form>
             <GoBackButton handleDiscard={() => handleDiscard(resetForm)} />
 
-            <h2 className="text-heading-m mb-6 md:mb-12">New Invoice</h2>
+            {action === "new" ? (
+              <h2 className="text-heading-m mb-6 md:mb-12">New Invoice</h2>
+            ) : (
+              <h2 className="text-heading-m mb-6 md:mb-12">
+                Edit <span className="text-gray-medium">#</span>
+                {values.id}
+              </h2>
+            )}
 
             <div className="h-[calc(100svh_-_245px)] overflow-y-scroll overflow-x-hidden pb-12 md:pb-32 lg:pb-8 pl-0.5 pr-4">
               <BillFromForm
@@ -88,6 +75,7 @@ export default function AddInvoiceForm({
                 touched={touched}
                 errors={errors}
                 setFieldValue={setFieldValue}
+                action={action}
               />
 
               <ItemListFieldArray values={values} />
@@ -99,6 +87,7 @@ export default function AddInvoiceForm({
               />
 
               <FormActions
+                action={action}
                 handleDiscard={() => handleDiscard(resetForm)}
                 handleSaveAsDraft={() =>
                   handleSaveAsDraft(values, { resetForm, setSubmitting })

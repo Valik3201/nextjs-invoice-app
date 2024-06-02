@@ -16,6 +16,7 @@ import Status from "@/src/components/Status/Status";
 import SkeletonInvoice from "@/src/components/Invoice/SkeletonInvoice";
 import Button from "@/src/components/Button/Button";
 import GoBackButton from "@/src/components/Button/GoBackButton";
+import InvoiceFormWrapper from "@/src/components/Invoice/InvoiceFormWrapper";
 
 export default function Page() {
   const router = useRouter();
@@ -96,7 +97,8 @@ export default function Page() {
 
             <div className="fixed md:static flex justify-center bottom-0 left-0 w-full md:w-fit bg-white dark:bg-dark-light px-6 py-5 md:p-0">
               <div className="flex gap-2 justify-between w-[327px] md:w-fit">
-                <Button variant={"default"}>Edit</Button>
+                <InvoiceFormWrapper initialValues={invoice} action="edit" />
+
                 <Modal handleConfirm={() => handleDelete()} id={invoice.id} />
                 <Button
                   variant={"primary"}

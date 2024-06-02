@@ -19,12 +19,12 @@ const options = {
     clearBtn: "",
     icons:
       "p-0 hover:bg-white dark:bg-dark-medium hover:dark:bg-dark-medium focus:ring-0",
-    text: "text-heading-s-variant hover:text-primary-light hover:bg-white hover:dark:bg-dark-medium focus:ring-0",
+    text: "hover:text-primary-light hover:bg-white dark:hover:text-primary-light hover:dark:bg-dark-medium focus:ring-0",
     disabledText:
-      "leading-4 text-dark-darkest/[0.08] hover:bg-white hover:dark:bg-dark-medium dark:text-gray-light/[0.08]",
+      "leading-4 text-dark-darkest/[0.08] hover:bg-white hover:text-primary-light hover:dark:bg-dark-medium dark:text-gray-light/[0.08] dark:hover:text-primary-light ",
     input: "",
     inputIcon: "text-blue-gray",
-    selected: "text-primary bg-white dark:bg-dark-medium dark:text-primary",
+    selected: "text-primary bg-white dark:bg-dark-medium !dark:text-primary",
   },
   icons: {
     prev: () => <ArrowIcon />,
@@ -43,13 +43,17 @@ export default function InputDate({
   name,
   value,
   onChange,
+  error,
+  action,
 }: {
   name: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  error?: string | false | undefined;
+  action: "new" | "edit";
 }) {
   const [show, setShow] = useState<boolean>(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [selectedDate, setSelectedDate] = useState<Date | string | null>(value);
 
   const handleChange = (selectedDate: Date) => {
     setSelectedDate(selectedDate);
@@ -68,10 +72,12 @@ export default function InputDate({
   };
 
   return (
-    <div>
-      <h4 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
-        Invoice Date
-      </h4>
+    <div className={`${action === "new" ? "" : "opacity-50"}`}>
+      <div className="flex justify-between mb-2 text-body-variant text-blue-gray dark:text-gray-light">
+        <p className={`${error ? "text-red-medium" : ""}`}>Invoice Date</p>
+        {error && <p className="text-error text-red-medium pe-4">{error}</p>}
+      </div>
+
       <Datepicker
         options={options}
         onChange={handleChange}
@@ -80,16 +86,25 @@ export default function InputDate({
         classNames="relative"
       >
         <div className="relative">
-          <div className="absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none">
+          <div
+            className={`absolute inset-y-0 end-0 flex items-center pe-3.5 pointer-events-none text-blue-gray dark:text-gray-light ${
+              action === "new" ? "" : "opacity-50"
+            }`}
+          >
             <CalendarIcon />
           </div>
 
           <input
             type="text"
-            className="bg-white w-full h-12 text-heading-s-variant border border-gray-light rounded p-4 focus:outline-none focus:ring-primary focus:border-primary dark:bg-dark-light dark:border-[#252945]"
+            className={`bg-white w-full h-12 text-heading-s-variant border border-gray-light rounded p-4 focus:outline-none focus:ring-primary focus:border-primary dark:bg-dark-light dark:border-[#252945] ${
+              error
+                ? "border-red-medium dark:border-red-medium "
+                : "border-gray-light"
+            }`}
             placeholder={`${formatDate(new Date().toString())}`}
             value={selectedDate ? formatDate(selectedDate.toString()) : ""}
             onFocus={() => setShow(true)}
+            disabled={action === "new" ? false : true}
             readOnly
           />
         </div>
