@@ -255,7 +255,7 @@ export default function Page() {
                           {item.qty}
                         </p>
                         <p className="w-1/5 text-right text-blue-gray dark:text-gray-light">
-                          £ {item.price.toFixed(2)}
+                          £ {item.price && item.price.toFixed(2)}
                         </p>
                         <p className="w-1/5 text-right">
                           £ {item.total.toFixed(2)}
@@ -275,7 +275,7 @@ export default function Page() {
                           <p>{item.itemName}</p>
 
                           <p className="text-center text-blue-gray dark:text-gray-light">
-                            {item.qty} x £ {item.price}
+                            {item.qty} x £ {item.price && item.price.toFixed(2)}
                           </p>
                         </div>
 
