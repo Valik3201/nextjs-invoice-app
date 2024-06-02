@@ -3,20 +3,14 @@
 import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Formik, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Formik, Form } from "formik";
+import { signUpValidationSchema } from "@/src/validation/authValidationSchema";
 import { useAppDispatch, useAppSelector, useAppStore } from "@/src/lib/hooks";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import { signUp } from "@/src/lib/features/auth/authOperations";
 import AuthError from "@/src/components/AuthError";
 import InputField from "@/src/components/InputField";
 import Button from "@/src/components/Button";
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required("can’t be empty"),
-  email: Yup.string().required("can’t be empty"),
-  password: Yup.string().required("can’t be empty"),
-});
 
 export default function SignUp() {
   const router = useRouter();
@@ -43,7 +37,7 @@ export default function SignUp() {
             email: "",
             password: "",
           }}
-          validationSchema={validationSchema}
+          validationSchema={signUpValidationSchema}
           validateOnChange={false}
           onSubmit={async (values) => {
             const { name, email, password } = values;
