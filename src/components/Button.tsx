@@ -27,7 +27,7 @@ export default function Button({
     primary: "text-white bg-primary hover:bg-primary-light",
     red: "text-white bg-red-medium hover:bg-red-light",
     default:
-      "text-blue-gray bg-[#F9FAFE] hover:bg-gray-light dark:text-gray-light dark:bg-dark-medium dark:hover:bg-dark-light",
+      "text-blue-gray bg-[#F9FAFE] hover:bg-gray-light dark:text-gray-light dark:bg-dark-medium dark:hover:bg-white",
     dark: "text-gray-medium bg-[#373B53] hover:bg-dark-darkest dark:text-gray-light hover:dark:bg-dark-light",
     icon: "text-gray-medium hover:text-red-medium mb-[25px]",
   };
