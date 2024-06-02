@@ -74,6 +74,14 @@ const config: Config = {
             fontWeight: "500",
           },
         ],
+        error: [
+          "10px",
+          {
+            lineHeight: "15px",
+            letterSpacing: "-0.21px",
+            fontWeight: "500",
+          },
+        ],
       },
       boxShadow: {
         item: "0 10px 10px -10px rgba(72, 84, 159, 0.1)",
