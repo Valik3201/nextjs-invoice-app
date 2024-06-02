@@ -1,11 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import AddInvoiceForm from "../Form/AddInvoiceForm";
+import { Invoice } from "@/src/lib/types";
+import InvoiceForm from "../Form/InvoiceForm";
 import Button from "../Button/Button";
 import PlusIcon from "@/src/icons/PlusIcon";
 
-export default function InvoiceFormWrapper() {
+export default function InvoiceFormWrapper({
+  initialValues,
+  action,
+}: {
+  initialValues: Invoice;
+  action: "new" | "edit";
+}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const openForm = () => setIsOpen(true);
@@ -13,9 +20,15 @@ export default function InvoiceFormWrapper() {
 
   return (
     <>
-      <Button variant="primary" icon={<PlusIcon />} onClick={openForm}>
-        New<span className="hidden md:inline"> Invoice</span>
-      </Button>
+      {action === "new" ? (
+        <Button variant="primary" icon={<PlusIcon />} onClick={openForm}>
+          New<span className="hidden md:inline"> Invoice</span>
+        </Button>
+      ) : (
+        <Button variant={"default"} onClick={openForm}>
+          Edit
+        </Button>
+      )}
 
       <div
         onClick={closeForm}
@@ -31,7 +44,11 @@ export default function InvoiceFormWrapper() {
             isOpen ? "transform-none" : "-translate-x-full"
           }`}
         >
-          <AddInvoiceForm closeForm={closeForm} />
+          <InvoiceForm
+            initialValues={initialValues}
+            closeForm={closeForm}
+            action={action}
+          />
         </div>
       </div>
     </>

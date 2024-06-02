@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import InvoiceFormWrapper from "@/src/components/Invoice/InvoiceFormWrapper";
 import Status from "@/src/components/Status/Status";
+import { newInvoice } from "@/src/components/Form/initialValues";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
 import { formatDate } from "@/src/lib/utils";
@@ -141,7 +142,7 @@ export default function Page() {
                 </div>
               )}
 
-              <InvoiceFormWrapper />
+              <InvoiceFormWrapper initialValues={newInvoice} action="new" />
             </div>
           </div>
 

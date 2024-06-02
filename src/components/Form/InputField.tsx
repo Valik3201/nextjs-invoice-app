@@ -42,7 +42,9 @@ export default function InputField({
           placeholder={placeholder}
           readOnly={readOnly}
           className={`bg-white w-full h-12 text-heading-s-variant p-4 rounded focus:outline-none  ${
-            error ? "border-red-medium" : "border-gray-light"
+            error
+              ? "border-red-medium dark:border-red-medium "
+              : "border-gray-light"
           } ${
             readOnly
               ? "text-gray-medium text-heading-s-variant dark:bg-dark dark:text-gray-light cursor-default ps-0"
