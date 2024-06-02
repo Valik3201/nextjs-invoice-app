@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const addInvoiceValidationSchema = Yup.object().shape({
+export const invoiceValidationSchema = Yup.object().shape({
   billFrom: Yup.object().shape({
     streetAddress: Yup.string().required("can’t be empty"),
     city: Yup.string().required("can’t be empty"),
