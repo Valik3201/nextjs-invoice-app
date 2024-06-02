@@ -42,7 +42,14 @@ export default function InvoiceForm({
           <Form>
             <GoBackButton handleDiscard={() => handleDiscard(resetForm)} />
 
-            <h2 className="text-heading-m mb-6 md:mb-12">New Invoice</h2>
+            {action === "new" ? (
+              <h2 className="text-heading-m mb-6 md:mb-12">New Invoice</h2>
+            ) : (
+              <h2 className="text-heading-m mb-6 md:mb-12">
+                Edit <span className="text-gray-medium">#</span>
+                {values.id}
+              </h2>
+            )}
 
             <div className="h-[calc(100svh_-_245px)] overflow-y-scroll overflow-x-hidden pb-12 md:pb-32 lg:pb-8 pl-0.5 pr-4">
               <BillFromForm
