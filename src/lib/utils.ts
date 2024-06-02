@@ -43,5 +43,5 @@ export function calculateDueDate(
       throw new Error("Unknown payment term");
   }
 
-  return formatDate(dueDate.toISOString());
+  return formatDate(dueDate.toDateString());
 }
