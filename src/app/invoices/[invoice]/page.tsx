@@ -255,7 +255,7 @@ export default function Page() {
                           {item.qty}
                         </p>
                         <p className="w-1/5 text-right text-blue-gray dark:text-gray-light">
-                          £ {item.price}
+                          £ {item.price.toFixed(2)}
                         </p>
                         <p className="w-1/5 text-right">
                           £ {item.total.toFixed(2)}

@@ -87,8 +87,8 @@ export default function InputDate({
           <input
             type="text"
             className="bg-white w-full h-12 text-heading-s-variant border border-gray-light rounded p-4 focus:outline-none focus:ring-primary focus:border-primary dark:bg-dark-light dark:border-[#252945]"
-            placeholder={`${formatDate(new Date().toDateString())}`}
-            value={selectedDate ? formatDate(selectedDate.toDateString()) : ""}
+            placeholder={`${formatDate(new Date().toString())}`}
+            value={selectedDate ? formatDate(selectedDate.toString()) : ""}
             onFocus={() => setShow(true)}
             readOnly
           />
