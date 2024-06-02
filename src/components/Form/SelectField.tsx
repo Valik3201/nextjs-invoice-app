@@ -5,18 +5,16 @@ import { PaymentTerms } from "../../lib/types";
 import ArrowIcon from "../../icons/ArrowIcon";
 
 export default function SelectField({
+  value,
   onChange,
 }: {
+  value: PaymentTerms;
   onChange: (value: PaymentTerms) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTerm, setSelectedTerm] = useState<PaymentTerms>(
-    PaymentTerms.Net30Days
+    value || PaymentTerms.Net30Days
   );
-
-  const handleMenuToggle = () => {
-    setIsOpen(!isOpen);
-  };
 
   const handleTermSelect = (term: PaymentTerms) => {
     setSelectedTerm(term);

@@ -37,6 +37,7 @@ export default function InvoiceDetailsForm({
         />
 
         <SelectField
+          value={values.paymentTerms}
           onChange={(value) => setFieldValue("paymentTerms", value)}
         />
       </div>
