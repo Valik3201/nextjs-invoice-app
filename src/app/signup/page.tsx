@@ -8,9 +8,9 @@ import { signUpValidationSchema } from "@/src/validation/authValidationSchema";
 import { useAppDispatch, useAppSelector, useAppStore } from "@/src/lib/hooks";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import { signUp } from "@/src/lib/features/auth/authOperations";
-import AuthError from "@/src/components/AuthError";
-import InputField from "@/src/components/InputField";
-import Button from "@/src/components/Button";
+import AuthError from "@/src/components/Auth/AuthError";
+import InputField from "@/src/components/Form/InputField";
+import Button from "@/src/components/Button/Button";
 
 export default function SignUp() {
   const router = useRouter();

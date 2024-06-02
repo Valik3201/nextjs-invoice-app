@@ -2,9 +2,9 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useAppSelector, useAppDispatch } from "../lib/hooks";
+import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { logout } from "@/src/lib/features/auth/authOperations";
-import Avatar from "../icons/Avatar";
+import Avatar from "../../icons/Avatar";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
 

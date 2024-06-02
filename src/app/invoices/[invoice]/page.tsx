@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import {
   fetchInvoiceById,
@@ -12,12 +11,11 @@ import {
 } from "@/src/lib/features/invoices/invoicesOperations";
 import { formatDate, calculateDueDate } from "@/src/lib/utils";
 import { InvoiceStatus } from "@/src/lib/types";
-import Modal from "@/src/components/Modal";
-import Status from "@/src/components/Status";
-import SkeletonInvoice from "@/src/components/SkeletonInvoice";
-import Button from "@/src/components/Button";
-import ArrowIcon from "@/src/icons/ArrowIcon";
-import GoBackButton from "@/src/components/GoBackButton";
+import Modal from "@/src/components/Modal/Modal";
+import Status from "@/src/components/Status/Status";
+import SkeletonInvoice from "@/src/components/Invoice/SkeletonInvoice";
+import Button from "@/src/components/Button/Button";
+import GoBackButton from "@/src/components/Button/GoBackButton";
 
 export default function Page() {
   const router = useRouter();

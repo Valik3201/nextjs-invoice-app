@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { PaymentTerms } from "../lib/types";
-import ArrowIcon from "../icons/ArrowIcon";
+import { PaymentTerms } from "../../lib/types";
+import ArrowIcon from "../../icons/ArrowIcon";
 
 export default function SelectField({
   onChange,

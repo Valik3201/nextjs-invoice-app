@@ -1,5 +1,5 @@
-import MoonIcon from "../icons/MoonIcon";
-import DotIcon from "../icons/DotIcon";
+import MoonIcon from "../../icons/MoonIcon";
+import DotIcon from "../../icons/DotIcon";
 import { useTheme } from "next-themes";
 
 const ThemeToggle = () => {

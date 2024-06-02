@@ -1,5 +1,5 @@
 import { FormikTouched, FormikErrors } from "formik";
-import { Invoice } from "../lib/types";
+import { Invoice } from "../../lib/types";
 import InputField from "./InputField";
 import InputDate from "./InputDate";
 import SelectField from "./SelectField";

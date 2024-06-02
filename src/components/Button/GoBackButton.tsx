@@ -1,4 +1,4 @@
-import ArrowIcon from "../icons/ArrowIcon";
+import ArrowIcon from "@/src/icons/ArrowIcon";
 import Link from "next/link";
 
 export default function GoBackButton({

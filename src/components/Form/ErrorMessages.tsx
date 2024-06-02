@@ -1,5 +1,5 @@
 import { FormikTouched, FormikErrors } from "formik";
-import { Invoice } from "../lib/types";
+import { Invoice } from "../../lib/types";
 
 export default function ErrorMessages({
   errors,

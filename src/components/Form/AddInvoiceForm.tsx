@@ -1,14 +1,14 @@
 import { Formik, Form } from "formik";
-import { Invoice, PaymentTerms, InvoiceStatus } from "../lib/types";
-import { addInvoiceValidationSchema } from "../validation/addInvoiceValidationSchema";
-import { useInvoiceForm } from "../hooks/useInvoiceForm";
+import { Invoice, PaymentTerms, InvoiceStatus } from "../../lib/types";
+import { addInvoiceValidationSchema } from "../../validation/addInvoiceValidationSchema";
+import { useInvoiceForm } from "../../hooks/useInvoiceForm";
 import ItemListFieldArray from "./ItemListFieldArray";
 import BillFromForm from "./BillFromForm";
 import BillToForm from "./BillToForm";
 import InvoiceDetailsForm from "./InvoiceDetailsForm";
 import ErrorMessages from "./ErrorMessages";
 import FormActions from "./FormActions";
-import GoBackButton from "./GoBackButton";
+import GoBackButton from "../Button/GoBackButton";
 
 export default function AddInvoiceForm({
   closeForm,

@@ -1,9 +1,9 @@
 import { FieldArray, useFormikContext, getIn } from "formik";
 import { nanoid } from "nanoid";
-import { Invoice } from "../lib/types";
+import { Invoice } from "../../lib/types";
 import InputField from "./InputField";
-import Button from "./Button";
-import TrashIcon from "../icons/TrashIcon";
+import Button from "../Button/Button";
+import TrashIcon from "../../icons/TrashIcon";
 
 export default function ItemListFieldArray({ values }: { values: Invoice }) {
   const { handleChange, handleBlur, touched, errors, setFieldValue } =

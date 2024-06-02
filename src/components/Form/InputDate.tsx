@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
-import { formatDate } from "../lib/utils";
-import ArrowIcon from "../icons/ArrowIcon";
-import CalendarIcon from "../icons/CalendarIcon";
+import { formatDate } from "../../lib/utils";
+import ArrowIcon from "../../icons/ArrowIcon";
+import CalendarIcon from "../../icons/CalendarIcon";
 
 const options = {
   autoHide: true,

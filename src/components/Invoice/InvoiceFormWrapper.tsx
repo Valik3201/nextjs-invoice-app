@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import AddInvoiceForm from "./AddInvoiceForm";
-import Button from "./Button";
-import PlusIcon from "../icons/PlusIcon";
+import AddInvoiceForm from "../Form/AddInvoiceForm";
+import Button from "../Button/Button";
+import PlusIcon from "@/src/icons/PlusIcon";
 
 export default function InvoiceFormWrapper() {
   const [isOpen, setIsOpen] = useState(false);
