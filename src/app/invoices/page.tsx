@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { format } from "date-fns";
 import InvoiceFormWrapper from "@/src/components/Invoice/InvoiceFormWrapper";
 import Status from "@/src/components/Status/Status";
 import { newInvoice } from "@/src/components/Form/initialValues";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
-import { formatDate } from "@/src/lib/utils";
 import { InvoiceStatus } from "@/src/lib/types";
 import SkeletonInvoices from "@/src/components/Invoice/SkeletonInvoices";
 import ArrowIcon from "@/src/icons/ArrowIcon";
@@ -165,7 +165,10 @@ export default function Page() {
                           </p>
                           <p className="text-body-variant text-gray-medium dark:text-gray-light w-[20%]">
                             {invoice.invoiceDate !== ""
-                              ? `Due ${formatDate(invoice.invoiceDate)}`
+                              ? `Due ${format(
+                                  invoice.invoiceDate,
+                                  "dd MMM yyyy"
+                                )}`
                               : "Date not provided"}
                           </p>
                           <p className="text-body-variant text-gray-medium dark:text-gray-light w-[20%] truncate">
@@ -200,7 +203,10 @@ export default function Page() {
                             <div>
                               <p className="text-body-variant text-gray-medium dark:text-gray-light pb-2">
                                 {invoice.invoiceDate !== ""
-                                  ? `Due ${formatDate(invoice.invoiceDate)}`
+                                  ? `Due ${format(
+                                      invoice.invoiceDate,
+                                      "dd MMM yyyy"
+                                    )}`
                                   : "Date not provided"}
                               </p>
                               <p className="text-heading-s">£ {total}</p>

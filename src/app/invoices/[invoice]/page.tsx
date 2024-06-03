@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { nanoid } from "nanoid";
 import { useParams, useRouter } from "next/navigation";
+import { format } from "date-fns";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import {
   fetchInvoiceById,
   updateInvoice,
   deleteInvoice,
 } from "@/src/lib/features/invoices/invoicesOperations";
-import { formatDate, calculateDueDate } from "@/src/lib/utils";
 import { InvoiceStatus } from "@/src/lib/types";
 import Modal from "@/src/components/Modal/Modal";
 import Status from "@/src/components/Status/Status";
@@ -26,29 +26,12 @@ export default function Page() {
     (state) => state.invoices
   );
   const user = useAppSelector((state) => state.auth.user);
-  const [invoiceTotal, setInvoiceTotal] = useState<string>("");
-  const [dueDate, setDueDate] = useState<string>("");
 
   useEffect(() => {
     if (user && user.uid && invoiceUid) {
       dispatch(fetchInvoiceById({ userId: user.uid, invoiceUid }));
     }
   }, [dispatch, user, invoiceUid]);
-
-  useEffect(() => {
-    if (invoice) {
-      const total = invoice.itemList
-        .reduce((acc, item) => acc + item.total, 0)
-        .toFixed(2);
-      setInvoiceTotal(total);
-
-      const paymentDueDate = invoice.invoiceDate
-        ? calculateDueDate(invoice.invoiceDate, invoice.paymentTerms)
-        : "Date not provided";
-
-      setDueDate(paymentDueDate);
-    }
-  }, [invoice]);
 
   const handleStatusChange = (newStatus: InvoiceStatus) => {
     if (user && user.uid && invoiceUid) {
@@ -120,7 +103,7 @@ export default function Page() {
                 <p className="text-blue-gray dark:text-gray-light text-body-variant">
                   {invoice.projectDescription
                     ? invoice.projectDescription
-                    : "No project description"}
+                    : "No description"}
                 </p>
               </div>
 
@@ -157,7 +140,7 @@ export default function Page() {
                     </h3>
                     <p className="text-heading-s-variant">
                       {invoice.invoiceDate !== ""
-                        ? formatDate(invoice.invoiceDate)
+                        ? format(invoice.invoiceDate, "dd MMM yyyy")
                         : "Date not provided"}
                     </p>
                   </div>
@@ -165,7 +148,10 @@ export default function Page() {
                     <h3 className="text-blue-gray dark:text-gray-light text-body-variant mb-[13px]">
                       Payment Due
                     </h3>
-                    <p className="text-heading-s-variant">{dueDate}</p>
+                    <p className="text-heading-s-variant">
+                      {invoice.paymentDue &&
+                        format(invoice.paymentDue, "dd MMM yyyy")}
+                    </p>
                   </div>
                 </div>
 
@@ -286,7 +272,9 @@ export default function Page() {
             <div className="w-full text-white bg-[#373B53] dark:bg-dark-darkest px-8 py-9 rounded-b-lg">
               <div className="flex justify-between w-full items-center">
                 <p className="text-body">Amount Due</p>
-                <p className="text-heading-m">£ {invoiceTotal}</p>
+                <p className="text-heading-m">
+                  £ {invoice.total ? invoice.total.toFixed(2) : "0.00"}
+                </p>
               </div>
             </div>
           </div>
