@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Datepicker from "tailwind-datepicker-react";
-import { formatDate } from "../../lib/utils";
+import { format } from "date-fns";
 import ArrowIcon from "../../icons/ArrowIcon";
 import CalendarIcon from "../../icons/CalendarIcon";
 
@@ -56,12 +56,14 @@ export default function InputDate({
   const [selectedDate, setSelectedDate] = useState<Date | string | null>(value);
 
   const handleChange = (selectedDate: Date) => {
-    setSelectedDate(selectedDate);
+    const formattedDate = format(selectedDate, "yyyy-MM-dd");
+
+    setSelectedDate(formattedDate);
     if (onChange) {
       onChange({
         target: {
           name: name,
-          value: selectedDate.toString(),
+          value: formattedDate,
         },
       } as React.ChangeEvent<HTMLInputElement>);
     }
@@ -101,8 +103,8 @@ export default function InputDate({
                 ? "border-red-medium dark:border-red-medium "
                 : "border-gray-light"
             }`}
-            placeholder={`${formatDate(new Date().toString())}`}
-            value={selectedDate ? formatDate(selectedDate.toString()) : ""}
+            placeholder={`${format(new Date(), "dd MMM yyyy")}`}
+            value={selectedDate ? format(selectedDate, "dd MMM yyyy") : ""}
             onFocus={() => setShow(true)}
             disabled={action === "new" ? false : true}
             readOnly
