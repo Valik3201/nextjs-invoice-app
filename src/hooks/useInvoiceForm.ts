@@ -1,12 +1,15 @@
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
-import { addInvoice } from "../lib/features/invoices/invoicesOperations";
+import {
+  addInvoice,
+  updateInvoice,
+} from "../lib/features/invoices/invoicesOperations";
 import { Invoice, InvoiceStatus } from "../lib/types";
 
 export const useInvoiceForm = (closeForm: () => void) => {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (
+  const handleNewSubmit = async (
     values: Invoice,
     { setSubmitting, resetForm }: any
   ) => {
@@ -20,6 +23,26 @@ export const useInvoiceForm = (closeForm: () => void) => {
     }
     setSubmitting(false);
     closeForm();
+  };
+
+  const handleEditSubmit = async (
+    values: Invoice,
+    { setSubmitting, resetForm }: any
+  ) => {
+    if (user) {
+      try {
+        dispatch(
+          updateInvoice({
+            userId: user.uid,
+            invoiceUid: values.uid,
+            updatedData: values,
+          })
+        );
+        resetForm();
+      } catch (error) {
+        console.error("Error editing invoice:", error);
+      }
+    }
   };
 
   const handleSaveAsDraft = async (
@@ -50,7 +73,8 @@ export const useInvoiceForm = (closeForm: () => void) => {
   };
 
   return {
-    handleSubmit,
+    handleNewSubmit,
+    handleEditSubmit,
     handleSaveAsDraft,
     handleDiscard,
   };
