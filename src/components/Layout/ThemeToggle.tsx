@@ -1,5 +1,5 @@
 import MoonIcon from "../../icons/MoonIcon";
-import DotIcon from "../../icons/DotIcon";
+import SunIcon from "@/src/icons/SunIcon";
 import { useTheme } from "next-themes";
 
 const ThemeToggle = () => {
@@ -14,7 +14,7 @@ const ThemeToggle = () => {
       onClick={toggleTheme}
       className="text-blue-gray dark:text-gray-light"
     >
-      {theme === "dark" ? <DotIcon /> : <MoonIcon />}
+      {theme === "dark" ? <SunIcon /> : <MoonIcon />}
     </button>
   );
 };
