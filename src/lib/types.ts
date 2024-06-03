@@ -10,10 +10,10 @@ export enum InvoiceStatus {
 }
 
 export enum PaymentTerms {
-  Net1Day = "Net 1 Day",
-  Net7Days = "Net 7 Days",
-  Net14Days = "Net 14 Days",
-  Net30Days = "Net 30 Days",
+  Net1Day = 1,
+  Net7Days = 7,
+  Net14Days = 14,
+  Net30Days = 30,
 }
 
 export interface InvoiceItem {
@@ -27,6 +27,7 @@ export interface InvoiceItem {
 export interface Invoice {
   id: string;
   uid: string;
+  status: InvoiceStatus;
   billFrom: {
     city: string;
     country: string;
@@ -34,16 +35,17 @@ export interface Invoice {
     streetAddress: string;
   };
   billTo: {
-    city: string;
     clientEmail: string;
     clientName: string;
+    city: string;
     country: string;
     postCode: string;
     streetAddress: string;
   };
-  invoiceDate: any;
-  itemList: InvoiceItem[];
+  invoiceDate: string;
+  paymentDue: string;
   paymentTerms: PaymentTerms;
   projectDescription: string;
-  status: InvoiceStatus;
+  itemList: InvoiceItem[];
+  total: number;
 }

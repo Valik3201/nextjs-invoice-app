@@ -67,7 +67,7 @@ export default function ItemListFieldArray({ values }: { values: Invoice }) {
                         }
                       />
                     </div>
-                    <div className="w-[15%]">
+                    <div className="w-[20%]">
                       <InputField
                         label={index === 0 ? "Price" : ""}
                         name={`itemList[${index}].price`}
@@ -89,7 +89,7 @@ export default function ItemListFieldArray({ values }: { values: Invoice }) {
                         }
                       />
                     </div>
-                    <div className="w-[15%]">
+                    <div className="w-[20%]">
                       <InputField
                         label={index === 0 ? "Total" : ""}
                         name={`itemList.${index}.total`}

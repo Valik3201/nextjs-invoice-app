@@ -5,7 +5,6 @@ import {
   getDocs,
   getDoc,
   addDoc,
-  setDoc,
   updateDoc,
   deleteDoc,
   QuerySnapshot,
@@ -13,7 +12,11 @@ import {
 } from "firebase/firestore";
 import { db } from "@/src/firebase.config";
 import { Invoice } from "@/src/lib/types";
-import { generateInvoiceId } from "../../utils";
+import {
+  generateInvoiceId,
+  calculateDueDate,
+  calculateTotal,
+} from "../../utils";
 
 export const fetchInvoices = createAsyncThunk(
   "invoices/fetchInvoices",
@@ -44,11 +47,16 @@ export const addInvoice = createAsyncThunk(
   ) => {
     try {
       const invoiceId = generateInvoiceId();
-      const invoiceWithId = { ...invoice, id: invoiceId };
+      const total = calculateTotal(invoice.itemList);
+      const paymentDue = calculateDueDate(
+        invoice.invoiceDate,
+        invoice.paymentTerms
+      );
+      const invoiceData = { ...invoice, id: invoiceId, total, paymentDue };
 
       const addedInvoice = await addDoc(
         collection(db, `users/${userId}/invoices`),
-        invoiceWithId
+        invoiceData
       );
 
       const invoiceRef = doc(db, `users/${userId}/invoices/${addedInvoice.id}`);
@@ -57,7 +65,10 @@ export const addInvoice = createAsyncThunk(
         uid: invoiceRef.id,
       });
 
-      return { ...invoiceWithId, uid: invoiceRef.id };
+      return {
+        ...invoiceData,
+        uid: invoiceRef.id,
+      };
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";

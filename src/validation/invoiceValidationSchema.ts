@@ -16,7 +16,7 @@ export const invoiceValidationSchema = Yup.object().shape({
     country: Yup.string().required("can’t be empty"),
   }),
   invoiceDate: Yup.string().required("can’t be empty"),
-  paymentTerms: Yup.string().required("can’t be empty"),
+  paymentTerms: Yup.number().required("can’t be empty"),
   projectDescription: Yup.string().required("can’t be empty"),
   itemList: Yup.array().of(
     Yup.object()
