@@ -19,15 +19,19 @@ export default function InvoiceForm({
   closeForm: () => void;
   action: "new" | "edit";
 }) {
-  const { handleSubmit, handleSaveAsDraft, handleDiscard } =
-    useInvoiceForm(closeForm);
+  const {
+    handleNewSubmit,
+    handleEditSubmit,
+    handleSaveAsDraft,
+    handleDiscard,
+  } = useInvoiceForm(closeForm);
 
   return (
     <div className="relative md:w-[616px] max-h-full pl-6 md:pl-14 pr-2 md:pr-10 py-6 md:pb-28 md:py-16">
       <Formik
         initialValues={initialValues}
         validationSchema={invoiceValidationSchema}
-        onSubmit={handleSubmit}
+        onSubmit={action === "new" ? handleNewSubmit : handleEditSubmit}
       >
         {({
           values,
