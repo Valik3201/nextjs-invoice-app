@@ -22,6 +22,13 @@ export default function SelectField({
     onChange(term);
   };
 
+  const paymentTermsOptions: PaymentTerms[] = [
+    PaymentTerms.Net1Day,
+    PaymentTerms.Net7Days,
+    PaymentTerms.Net14Days,
+    PaymentTerms.Net30Days,
+  ];
+
   return (
     <div className="mb-[25px] relative">
       <h4 className="block text-body-variant text-blue-gray mb-2">
@@ -33,7 +40,7 @@ export default function SelectField({
         dark:bg-dark-light dark:border-[#252945]"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {selectedTerm}
+        {`Net ${selectedTerm} ${selectedTerm === 1 ? "Day" : "Days"}`}
 
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 mr-1.5 rotate-0">
           <span
@@ -48,13 +55,13 @@ export default function SelectField({
 
       {isOpen && (
         <div className="absolute mt-2 z-10 bg-white top-full left-0 w-full rounded-lg shadow-filter-light divide-y-[1px] divide-gray-light dark:bg-dark-medium dark:shadow-filter-dark dark:divide-dark-light">
-          {Object.values(PaymentTerms).map((term) => (
+          {paymentTermsOptions.map((term) => (
             <div
               key={term}
               onClick={() => handleTermSelect(term)}
               className="text-heading-s-variant py-4 ps-6 hover:text-primary cursor-pointer transition duration-200 ease-in-out"
             >
-              {term}
+              {`Net ${term} ${term === 1 ? "Day" : "Days"}`}
             </div>
           ))}
         </div>
