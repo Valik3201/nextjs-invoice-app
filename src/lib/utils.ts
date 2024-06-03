@@ -1,4 +1,5 @@
-import { PaymentTerms } from "./types";
+import { InvoiceItem } from "./types";
+import { format } from "date-fns";
 
 export function generateInvoiceId(): string {
   const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -9,39 +10,18 @@ export function generateInvoiceId(): string {
   return letterPart + numberPart;
 }
 
-export function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  const options: Intl.DateTimeFormatOptions = {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  };
-  return date.toLocaleDateString("en-GB", options);
-}
-
 export function calculateDueDate(
   invoiceDate: string,
-  paymentTerms: PaymentTerms
+  paymentTerms: number
 ): string {
   const date = new Date(invoiceDate);
   let dueDate = new Date(date);
 
-  switch (paymentTerms) {
-    case PaymentTerms.Net1Day:
-      dueDate.setDate(date.getDate() + 1);
-      break;
-    case PaymentTerms.Net7Days:
-      dueDate.setDate(date.getDate() + 7);
-      break;
-    case PaymentTerms.Net14Days:
-      dueDate.setDate(date.getDate() + 14);
-      break;
-    case PaymentTerms.Net30Days:
-      dueDate.setDate(date.getDate() + 30);
-      break;
-    default:
-      throw new Error("Unknown payment term");
-  }
+  dueDate.setDate(date.getDate() + paymentTerms);
 
-  return formatDate(dueDate.toDateString());
+  return format(dueDate, "yyyy-MM-dd");
+}
+
+export function calculateTotal(itemList: InvoiceItem[]): number {
+  return itemList.reduce((sum, item) => sum + item.total, 0);
 }
