@@ -76,7 +76,10 @@ const invoicesSlice = createSlice({
       })
       .addCase(updateInvoice.fulfilled, (state, action) => {
         if (state.invoice && state.invoice.uid === action.payload.invoiceUid) {
-          state.invoice = { ...state.invoice, ...action.payload.updatedData };
+          state.invoice = {
+            ...state.invoice,
+            ...action.payload.updatedInvoice,
+          };
         }
         state.invoicesLoading = false;
       })

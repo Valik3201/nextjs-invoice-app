@@ -111,8 +111,21 @@ export const updateInvoice = createAsyncThunk(
   ) => {
     try {
       const invoiceRef = doc(db, `users/${userId}/invoices/${invoiceUid}`);
-      await updateDoc(invoiceRef, updatedData);
-      return { invoiceUid, updatedData };
+
+      const invoiceSnapshot = await getDoc(invoiceRef);
+      const currentInvoiceData = invoiceSnapshot.data() as Invoice;
+
+      const updatedInvoiceData = {
+        ...currentInvoiceData,
+        ...updatedData,
+        total: updatedData.itemList
+          ? calculateTotal(updatedData.itemList)
+          : currentInvoiceData.total,
+      };
+
+      await updateDoc(invoiceRef, updatedInvoiceData);
+
+      return { invoiceUid, updatedInvoice: updatedInvoiceData };
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
