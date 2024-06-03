@@ -19,7 +19,9 @@ export const newInvoice: Invoice = {
     country: "",
   },
   invoiceDate: "",
+  paymentDue: "",
   paymentTerms: PaymentTerms.Net30Days,
   projectDescription: "",
   itemList: [],
+  total: 0,
 };
