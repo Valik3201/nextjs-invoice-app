@@ -3,7 +3,7 @@ import { Formik, Form } from "formik";
 import { useProfileForm } from "@/src/hooks/useProfileForm";
 import { passwordSchema } from "@/src/validation/profileValidationSchema";
 import InputField from "@/src/components/InvoiceForm/InputField";
-import Button from "@/src/components/Button/Button";
+import FormButtons from "./FormButtons";
 
 export default function SecurityForm() {
   const { user, error, handleUpdatePassword, useEditState } = useProfileForm();
@@ -87,28 +87,12 @@ export default function SecurityForm() {
                 </p>
               )}
 
-              <div className="flex justify-end gap-2 mt-4 md:mt-0">
-                {edit ? (
-                  <>
-                    <Button
-                      variant="default"
-                      onClick={() => {
-                        handleToggleEdit();
-                        resetForm();
-                      }}
-                    >
-                      Discard
-                    </Button>
-                    <Button variant="primary" type="submit">
-                      Save Password
-                    </Button>
-                  </>
-                ) : (
-                  <Button variant="primary" onClick={handleToggleEdit}>
-                    Change Password
-                  </Button>
-                )}
-              </div>
+              <FormButtons
+                edit={edit}
+                handleToggleEdit={handleToggleEdit}
+                resetForm={resetForm}
+                context="Password"
+              />
             </Form>
           )}
         </Formik>

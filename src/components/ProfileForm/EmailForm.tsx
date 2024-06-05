@@ -5,7 +5,7 @@ import { useAppDispatch } from "@/src/lib/hooks";
 import { sendlVerificationEmail } from "@/src/lib/features/auth/authOperations";
 import { useProfileForm } from "@/src/hooks/useProfileForm";
 import InputField from "@/src/components/InvoiceForm/InputField";
-import Button from "@/src/components/Button/Button";
+import FormButtons from "./FormButtons";
 
 export default function EmailForm() {
   const dispatch = useAppDispatch();
@@ -102,28 +102,12 @@ export default function EmailForm() {
                   </p>
                 )}
 
-                <div className="flex justify-end gap-2 mt-4 md:mt-0">
-                  {edit ? (
-                    <>
-                      <Button
-                        variant="default"
-                        onClick={() => {
-                          handleToggleEdit();
-                          resetForm();
-                        }}
-                      >
-                        Discard
-                      </Button>
-                      <Button variant="primary" type="submit">
-                        Save Email
-                      </Button>
-                    </>
-                  ) : (
-                    <Button variant="primary" onClick={handleToggleEdit}>
-                      Change Email
-                    </Button>
-                  )}
-                </div>
+                <FormButtons
+                  edit={edit}
+                  handleToggleEdit={handleToggleEdit}
+                  resetForm={resetForm}
+                  context="Email"
+                />
               </Form>
             )}
           </Formik>
