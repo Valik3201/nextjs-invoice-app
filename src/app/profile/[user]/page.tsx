@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import { useAppSelector, useAppStore } from "@/src/lib/hooks";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import AvatarUpload from "@/src/components/ProfileForm/AvatarUpload";
+import DisplayNameForm from "@/src/components/ProfileForm/DisplayNameForm";
 import EmailForm from "@/src/components/ProfileForm/EmailForm";
-import ProfileForm from "@/src/components/ProfileForm/ProfileForm";
 import SecurityForm from "@/src/components/ProfileForm/SecurityForm";
 
 export default function Page() {
@@ -41,7 +41,7 @@ export default function Page() {
         <AvatarUpload />
       </div>
 
-      <ProfileForm />
+      <DisplayNameForm />
 
       <EmailForm />
 

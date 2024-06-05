@@ -19,4 +19,9 @@ export const passwordSchema = Yup.object({
     .matches(/[0-9]/, "must have a number")
     .matches(/[@$!%*?&#]/, "must have a special character")
     .required("can't be empty"),
+  confirmPassword: Yup.string()
+    .test("passwords-match", "passwords must match", function (value) {
+      return this.parent.newPassword === value;
+    })
+    .required("can't be empty"),
 });

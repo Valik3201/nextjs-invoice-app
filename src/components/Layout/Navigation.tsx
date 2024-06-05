@@ -2,13 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { useAppSelector, useAppDispatch } from "../../lib/hooks";
 import { logout } from "@/src/lib/features/auth/authOperations";
 import Avatar from "../../icons/Avatar";
 import Logo from "./Logo";
 import ThemeToggle from "./ThemeToggle";
-
-import Image from "next/image";
 
 export default function Navigation() {
   const router = useRouter();
@@ -69,16 +68,15 @@ export default function Navigation() {
           <div className="flex justify-center items-center w-full h-full py-8 px-6 lg:py-[26px]">
             <Link
               href={`/profile/${user?.uid}`}
-              className="w-8 h-8 lg:w-10 lg:h-10"
+              className="relative w-8 h-8 lg:w-10 lg:h-10"
             >
               {user?.photoURL ? (
                 <Image
                   src={user.photoURL}
                   alt="User avatar"
                   className="rounded-full object-cover"
-                  layout="responsive"
-                  width={40}
-                  height={40}
+                  sizes="100%"
+                  fill
                 />
               ) : (
                 <Avatar />

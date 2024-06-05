@@ -1,51 +1,20 @@
-"use client";
-
 import { useState } from "react";
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, Form } from "formik";
+import { useProfileForm } from "@/src/hooks/useProfileForm";
 import { passwordSchema } from "@/src/validation/profileValidationSchema";
-import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
-import { updateUserPassword } from "@/src/lib/features/auth/authOperations";
 import InputField from "@/src/components/InvoiceForm/InputField";
-import Button from "@/src/components/Button/Button";
+import FormButtons from "./FormButtons";
 
 export default function SecurityForm() {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
-  const error = useAppSelector((state) => state.auth.errors.authError);
-  const [edit, setEdit] = useState(false);
-  const [passwordUpdated, setPasswordUpdated] = useState(false);
-
-  const handleToggleEdit = () => {
-    setEdit((prevEdit) => !prevEdit);
-    if (!edit) {
-      setPasswordUpdated(false);
-    }
-  };
-
-  const handleUpdatePassword = async (
-    values: any,
-    {
-      resetForm,
-    }: FormikHelpers<{
-      newPassword: string;
-    }>
-  ) => {
-    try {
-      await dispatch(
-        updateUserPassword({ newPassword: values.newPassword })
-      ).unwrap();
-      resetForm();
-      handleToggleEdit();
-      setPasswordUpdated(true);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      setPasswordUpdated(false);
-    }
-  };
+  const { user, error, handleUpdatePassword, useEditState } = useProfileForm();
+  const { edit, handleToggleEdit } = useEditState();
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   return (
     <div className="flex flex-col items-start justify-between bg-white rounded-lg mt-9 md:mt-6 p-6 md:p-8 lg:p-[52px] shadow-item dark:bg-dark-light dark:border-dark-light">
-      <h2 className="text-primary text-heading-s-variant mb-6">Security</h2>
+      <h2 className="text-primary text-heading-s-variant mb-6">
+        Security Settings
+      </h2>
 
       <h3 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
         Sign-in Provider
@@ -57,24 +26,31 @@ export default function SecurityForm() {
       )}
 
       <div className="w-full">
-        {user && (
-          <Formik
-            initialValues={{ newPassword: "" }}
-            onSubmit={handleUpdatePassword}
-            validationSchema={passwordSchema}
-          >
-            {({
+        <Formik
+          initialValues={{ newPassword: "", confirmPassword: "" }}
+          onSubmit={(values) =>
+            handleUpdatePassword(
               values,
-              touched,
-              errors,
-              handleChange,
-              handleBlur,
-              resetForm,
-            }) => (
-              <Form>
-                {edit && (
+              "Password successfully updated!",
+              setStatusMessage,
+              handleToggleEdit
+            )
+          }
+          validationSchema={passwordSchema}
+        >
+          {({
+            values,
+            touched,
+            errors,
+            handleChange,
+            handleBlur,
+            resetForm,
+          }) => (
+            <Form>
+              {edit && (
+                <>
                   <InputField
-                    label="Password"
+                    label="New Password"
                     name="newPassword"
                     type="password"
                     value={values.newPassword}
@@ -84,46 +60,42 @@ export default function SecurityForm() {
                     readOnly={!edit}
                     profile
                   />
-                )}
 
-                {error && edit && (
-                  <p className="text-red-medium my-4 text-heading-s-variant font-medium">
-                    {error.message}
-                  </p>
-                )}
+                  <InputField
+                    label="Confirm Password"
+                    name="confirmPassword"
+                    type="password"
+                    value={values.confirmPassword}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    error={touched.confirmPassword && errors.confirmPassword}
+                    readOnly={!edit}
+                    profile
+                  />
+                </>
+              )}
 
-                {passwordUpdated && !edit && (
-                  <p className="text-[#33D69F] my-4 text-heading-s-variant font-medium">
-                    Password successfully updated!
-                  </p>
-                )}
+              {error && edit && (
+                <p className="text-red-medium my-4 text-heading-s-variant font-medium">
+                  {error.message}
+                </p>
+              )}
 
-                <div className="flex justify-end gap-2">
-                  {edit ? (
-                    <>
-                      <Button
-                        variant="default"
-                        onClick={() => {
-                          handleToggleEdit();
-                          resetForm();
-                        }}
-                      >
-                        Discard
-                      </Button>
-                      <Button variant="primary" type="submit">
-                        Change Password
-                      </Button>
-                    </>
-                  ) : (
-                    <Button variant="primary" onClick={handleToggleEdit}>
-                      Change Password
-                    </Button>
-                  )}
-                </div>
-              </Form>
-            )}
-          </Formik>
-        )}
+              {statusMessage && !edit && (
+                <p className="text-[#33D69F] my-4 text-heading-s-variant font-medium">
+                  {statusMessage}
+                </p>
+              )}
+
+              <FormButtons
+                edit={edit}
+                handleToggleEdit={handleToggleEdit}
+                resetForm={resetForm}
+                context="Password"
+              />
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );
