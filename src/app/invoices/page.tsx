@@ -7,7 +7,7 @@ import Image from "next/image";
 import { format } from "date-fns";
 import InvoiceFormWrapper from "@/src/components/Invoice/InvoiceFormWrapper";
 import Status from "@/src/components/Status/Status";
-import { newInvoice } from "@/src/components/Form/initialValues";
+import { newInvoice } from "@/src/components/InvoiceForm/initialValues";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
 import { InvoiceStatus } from "@/src/lib/types";

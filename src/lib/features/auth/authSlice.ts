@@ -1,6 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
-import { signUp, signIn, logout, listenToAuthChanges } from "./authOperations";
+import {
+  signUp,
+  signIn,
+  logout,
+  listenToAuthChanges,
+  updateUserProfile,
+  updateUserEmail,
+  sendlVerificationEmail,
+  updateUserPassword,
+} from "./authOperations";
 import { FirebaseError } from "firebase/app";
 
 interface AuthState {
@@ -24,8 +33,8 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User | null>) => {
-      state.user = action.payload;
+    setUser: (state, action) => {
+      state.user = action.payload as User;
       state.loading = false;
     },
     resetErrors: (state) => {
@@ -42,8 +51,8 @@ const authSlice = createSlice({
         state.loading = true;
         state.errors.registerError = null;
       })
-      .addCase(signUp.fulfilled, (state, action: PayloadAction<User>) => {
-        state.user = action.payload;
+      .addCase(signUp.fulfilled, (state, action) => {
+        state.user = action.payload as User;
         state.loading = false;
       })
       .addCase(signUp.rejected, (state, action) => {
@@ -54,8 +63,8 @@ const authSlice = createSlice({
         state.loading = true;
         state.errors.loginError = null;
       })
-      .addCase(signIn.fulfilled, (state, action: PayloadAction<User>) => {
-        state.user = action.payload;
+      .addCase(signIn.fulfilled, (state, action) => {
+        state.user = action.payload as User;
         state.loading = false;
       })
       .addCase(signIn.rejected, (state, action) => {
@@ -80,11 +89,57 @@ const authSlice = createSlice({
       })
       .addCase(listenToAuthChanges.fulfilled, (state, action) => {
         state.refreshing = false;
-        state.user = action.payload;
+        state.user = action.payload as User;
       })
       .addCase(listenToAuthChanges.rejected, (state, action) => {
         state.errors.authError = action.payload as FirebaseError;
         state.refreshing = false;
+      })
+      .addCase(updateUserProfile.pending, (state) => {
+        state.loading = true;
+        state.errors.authError = null;
+      })
+      .addCase(updateUserProfile.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload as User;
+      })
+      .addCase(updateUserProfile.rejected, (state, action) => {
+        state.errors.authError = action.payload as FirebaseError;
+        state.loading = false;
+      })
+      .addCase(updateUserEmail.pending, (state) => {
+        state.loading = true;
+        state.errors.authError = null;
+      })
+      .addCase(updateUserEmail.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload as User;
+      })
+      .addCase(updateUserEmail.rejected, (state, action) => {
+        state.errors.authError = action.payload as FirebaseError;
+        state.loading = false;
+      })
+      .addCase(sendlVerificationEmail.pending, (state) => {
+        state.loading = true;
+        state.errors.authError = null;
+      })
+      .addCase(sendlVerificationEmail.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(sendlVerificationEmail.rejected, (state, action) => {
+        state.errors.authError = action.payload as FirebaseError;
+        state.loading = false;
+      })
+      .addCase(updateUserPassword.pending, (state) => {
+        state.loading = true;
+        state.errors.authError = null;
+      })
+      .addCase(updateUserPassword.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(updateUserPassword.rejected, (state, action) => {
+        state.errors.authError = action.payload as FirebaseError;
+        state.loading = false;
       });
   },
 });

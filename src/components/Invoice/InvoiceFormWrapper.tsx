@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Invoice } from "@/src/lib/types";
-import InvoiceForm from "../Form/InvoiceForm";
+import InvoiceForm from "../InvoiceForm/InvoiceForm";
 import Button from "../Button/Button";
 import PlusIcon from "@/src/icons/PlusIcon";
 

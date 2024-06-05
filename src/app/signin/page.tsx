@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector, useAppStore } from "@/src/lib/hooks";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import { signIn } from "@/src/lib/features/auth/authOperations";
 import AuthError from "@/src/components/Auth/AuthError";
-import InputField from "@/src/components/Form/InputField";
+import InputField from "@/src/components/InvoiceForm/InputField";
 import Button from "@/src/components/Button/Button";
 
 export default function SignIn() {

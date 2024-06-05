@@ -41,7 +41,7 @@ export default function Navigation() {
                 </li>
 
                 <li className="text-red-medium hover:text-red-light transition duration-200 ease-in-out">
-                  <button onClick={handleLogout}>Logout</button>
+                  <button onClick={handleLogout}>Log Out</button>
                 </li>
               </>
             )}
@@ -67,17 +67,23 @@ export default function Navigation() {
           </div>
 
           <div className="flex justify-center items-center w-full h-full py-8 px-6 lg:py-[26px]">
-            {user?.photoURL ? (
-              <Image
-                src={user.photoURL}
-                alt="User avatar"
-                className="w-8 h-8 lg:w-10 lg:h-10 rounded-full"
-                width={40}
-                height={40}
-              />
-            ) : (
-              <Avatar />
-            )}
+            <Link
+              href={`/profile/${user?.uid}`}
+              className="w-8 h-8 lg:w-10 lg:h-10"
+            >
+              {user?.photoURL ? (
+                <Image
+                  src={user.photoURL}
+                  alt="User avatar"
+                  className="rounded-full object-cover"
+                  layout="responsive"
+                  width={40}
+                  height={40}
+                />
+              ) : (
+                <Avatar />
+              )}
+            </Link>
           </div>
         </div>
       </div>

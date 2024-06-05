@@ -6,6 +6,9 @@ import {
   signOut,
   onAuthStateChanged,
   updateProfile,
+  updateEmail,
+  updatePassword,
+  sendEmailVerification,
   User,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
@@ -82,6 +85,85 @@ export const listenToAuthChanges = createAsyncThunk(
       });
     } catch (error) {
       const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
+    }
+  }
+);
+
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async (
+    { displayName, photoURL }: { displayName?: string; photoURL?: string },
+    { rejectWithValue }
+  ) => {
+    const user = auth.currentUser;
+    if (!user) throw new Error("User not authenticated");
+    user.reload();
+
+    try {
+      if (displayName || photoURL) {
+        await updateProfile(user, { displayName, photoURL });
+      }
+
+      return {
+        ...auth.currentUser,
+        displayName: displayName || user.displayName,
+        photoURL: photoURL || user.photoURL,
+      };
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
+    }
+  }
+);
+
+export const updateUserEmail = createAsyncThunk(
+  "auth/updateUserEmail",
+  async ({ email }: { email: string }, { rejectWithValue }) => {
+    const user = auth.currentUser;
+    if (!user) throw new Error("User not authenticated");
+    user.reload();
+    try {
+      await updateEmail(user, email);
+
+      return {
+        ...user,
+        email: email || user.email,
+      };
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
+    }
+  }
+);
+
+export const sendlVerificationEmail = createAsyncThunk(
+  "auth/sendlVerificationEmail",
+  async (_, { rejectWithValue }) => {
+    try {
+      const user = auth.currentUser;
+      if (!user) throw new Error("User not authenticated");
+
+      await sendEmailVerification(user);
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
+    }
+  }
+);
+
+export const updateUserPassword = createAsyncThunk(
+  "auth/updateUserPassword",
+  async ({ newPassword }: { newPassword: string }, { rejectWithValue }) => {
+    const user = auth.currentUser;
+    if (!user) throw new Error("User not authenticated");
+    try {
+      await updatePassword(user, newPassword);
+
+      return user;
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      console.log(error);
       return rejectWithValue(firebaseError);
     }
   }
