@@ -1,41 +1,18 @@
-"use client";
-
 import { useState } from "react";
 import { Formik, Form } from "formik";
 import { emailSchema } from "@/src/validation/profileValidationSchema";
-import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
-import {
-  updateUserEmail,
-  sendlVerificationEmail,
-} from "@/src/lib/features/auth/authOperations";
+import { useAppDispatch } from "@/src/lib/hooks";
+import { sendlVerificationEmail } from "@/src/lib/features/auth/authOperations";
+import { useProfileForm } from "@/src/hooks/useProfileForm";
 import InputField from "@/src/components/InvoiceForm/InputField";
 import Button from "@/src/components/Button/Button";
 
 export default function EmailForm() {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
-  const error = useAppSelector((state) => state.auth.errors.authError);
-  const [edit, setEdit] = useState(false);
-  const [emailUpdated, setEmailUpdated] = useState(false);
+  const { user, error, handleUpdateEmail, useEditState } = useProfileForm();
+  const { edit, handleToggleEdit } = useEditState();
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [verificationEmailSent, setVerificationEmailSent] = useState(false);
-
-  const handleToggleEdit = () => {
-    setEdit((prevEdit) => !prevEdit);
-    if (!edit) {
-      setEmailUpdated(false);
-    }
-  };
-
-  const handleUpdateEmail = async (values: any) => {
-    try {
-      await dispatch(updateUserEmail({ email: values.email })).unwrap();
-      handleToggleEdit();
-      setEmailUpdated(true);
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      setEmailUpdated(false);
-    }
-  };
 
   const handleSendVerificationEmail = async () => {
     try {
@@ -55,10 +32,15 @@ export default function EmailForm() {
       <div className="w-full">
         {user && (
           <Formik
-            initialValues={{
-              email: user?.email || "",
-            }}
-            onSubmit={handleUpdateEmail}
+            initialValues={{ email: user.email || "" }}
+            onSubmit={(values) =>
+              handleUpdateEmail(
+                values,
+                "Email successfully updated!",
+                setStatusMessage,
+                handleToggleEdit
+              )
+            }
             validationSchema={emailSchema}
           >
             {({
@@ -87,7 +69,7 @@ export default function EmailForm() {
                       Verified
                     </p>
                   ) : (
-                    <div className="text-body-variant -mt-[15px]">
+                    <div className="text-body-variant">
                       <span className="text-[#FF8F00] font-bold p-2 mr-2 bg-[#FF8F00]/10 rounded">
                         Unverified
                       </span>
@@ -114,9 +96,9 @@ export default function EmailForm() {
                   </p>
                 )}
 
-                {user.email !== values.email && emailUpdated && !edit && (
+                {user.email !== values.email && statusMessage && !edit && (
                   <p className="text-[#33D69F] my-4 text-heading-s-variant font-medium">
-                    Email successfully updated!
+                    {statusMessage}
                   </p>
                 )}
 
