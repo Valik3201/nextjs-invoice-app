@@ -8,6 +8,7 @@ export default function InputField({
   placeholder = "",
   readOnly = false,
   error,
+  profile,
 }: {
   label: string;
   name: string;
@@ -18,7 +19,25 @@ export default function InputField({
   placeholder?: string;
   readOnly?: boolean;
   error?: string | false | undefined;
+  profile?: boolean;
 }) {
+  const baseClasses =
+    "w-full h-12 text-heading-s-variant p-4 rounded focus:outline-none";
+  const readOnlyClasses =
+    "text-gray-medium text-heading-s-variant dark:text-gray-light cursor-default ps-0";
+  const errorClasses =
+    "border-red-medium dark:border-red-medium text-red-medium";
+  const defaultClasses =
+    "text-dark-darkest dark:text-white dark:bg-dark-light border focus:ring-primary focus:border-primary dark:border-[#252945]";
+  const profileClasses = "dark:bg-dark-light";
+  const typeClasses = type === "number" ? "pe-0" : "";
+
+  const inputClasses = `${baseClasses} ${
+    readOnly ? readOnlyClasses : defaultClasses
+  } ${error ? errorClasses : "border-gray-light"} ${
+    profile ? profileClasses : "dark:bg-dark"
+  } ${typeClasses}`;
+
   return (
     <div className="mb-[25px]">
       <label>
@@ -41,15 +60,7 @@ export default function InputField({
           type={type}
           placeholder={placeholder}
           readOnly={readOnly}
-          className={`bg-white w-full h-12 text-heading-s-variant p-4 rounded focus:outline-none  ${
-            error
-              ? "border-red-medium dark:border-red-medium "
-              : "border-gray-light"
-          } ${
-            readOnly
-              ? "text-gray-medium text-heading-s-variant dark:bg-dark dark:text-gray-light cursor-default ps-0"
-              : "text-dark-darkest dark:text-white dark:bg-dark-light border focus:ring-primary focus:border-primary dark:border-[#252945]"
-          } ${type === "number" ? "pe-0" : ""}`}
+          className={inputClasses}
         />
       </label>
     </div>
