@@ -7,10 +7,14 @@ import { Formik, Form } from "formik";
 import { signInValidationSchema } from "@/src/validation/authValidationSchema";
 import { useAppDispatch, useAppSelector, useAppStore } from "@/src/lib/hooks";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
-import { signIn } from "@/src/lib/features/auth/authOperations";
+import {
+  signIn,
+  loginWithGoogle,
+} from "@/src/lib/features/auth/authOperations";
 import AuthError from "@/src/components/Auth/AuthError";
 import InputField from "@/src/components/InvoiceForm/InputField";
 import Button from "@/src/components/Button/Button";
+import GoogleIcon from "@/src/icons/Google";
 
 export default function SignIn() {
   const router = useRouter();
@@ -26,10 +30,32 @@ export default function SignIn() {
     }
   }, [store]);
 
+  const handleLogin = () => {
+    dispatch(loginWithGoogle());
+  };
+
   return (
     <div className="flex justify-center w-full">
       <div className="w-full md:w-80">
         <h1 className="text-heading-m md:text-heading-l mb-8">Sign In</h1>
+
+        <Button
+          variant="white"
+          type="submit"
+          size="full"
+          icon={<GoogleIcon />}
+          onClick={handleLogin}
+        >
+          Sign In with Google
+        </Button>
+
+        <div className="flex items-center gap-4">
+          <div className="h-px w-full bg-gray-light"></div>
+          <h2 className="text-body-variant md:text-heading-s-variant my-6 text-center">
+            or
+          </h2>
+          <div className="h-px w-full bg-gray-light"></div>
+        </div>
 
         <Formik
           initialValues={{
@@ -73,12 +99,6 @@ export default function SignIn() {
                 placeholder="Password"
               />
 
-              {Object.keys(formik.errors).length > 0 && (
-                <div className="text-error text-red-medium mb-[25px]">
-                  - All fields are required
-                </div>
-              )}
-
               <Button variant="primary" type="submit" size="full">
                 Sign In
               </Button>
@@ -86,7 +106,7 @@ export default function SignIn() {
           )}
         </Formik>
 
-        <p className="text-body-variant text-gray-medium dark:text-gray-light mt-6">
+        <p className="text-body-variant text-gray-medium dark:text-gray-light my-6">
           Don’t have an account yet?{" "}
           <Link href={"/signup"} className="text-primary hover:underline">
             Sign up here

@@ -1,8 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { auth } from "@/src/firebase.config";
+import { auth, provider } from "@/src/firebase.config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   onAuthStateChanged,
   updateProfile,
@@ -51,7 +52,19 @@ export const signIn = createAsyncThunk(
   ) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
+      return result.user;
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
+    }
+  }
+);
 
+export const loginWithGoogle = createAsyncThunk(
+  "auth/loginWithGoogle",
+  async (_, { rejectWithValue }) => {
+    try {
+      const result = await signInWithPopup(auth, provider);
       return result.user;
     } catch (error) {
       const firebaseError = error as FirebaseError;

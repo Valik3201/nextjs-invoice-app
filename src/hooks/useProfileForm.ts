@@ -22,14 +22,14 @@ export const useProfileForm = () => {
 
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [toastType, setToastType] = useState<
-    "success" | "danger" | "warning" | "message"
-  >("message");
+    "success" | "danger" | "warning" | "email"
+  >("email");
 
   useEffect(() => {
     if (toastMessage) {
       const timer = setTimeout(() => {
         setToastMessage(null);
-        setToastType("message");
+        setToastType("email");
         dispatch(resetErrors());
       }, 5000);
       return () => clearTimeout(timer);
@@ -38,7 +38,7 @@ export const useProfileForm = () => {
 
   const showToast = (
     message: string,
-    type: "success" | "danger" | "warning" | "message"
+    type: "success" | "danger" | "warning" | "email"
   ) => {
     setToastMessage(message);
     setToastType(type);
