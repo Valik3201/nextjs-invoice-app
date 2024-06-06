@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { auth, provider } from "@/src/firebase.config";
+import { auth, googleProvider, facebookProvider } from "@/src/firebase.config";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -64,7 +64,20 @@ export const loginWithGoogle = createAsyncThunk(
   "auth/loginWithGoogle",
   async (_, { rejectWithValue }) => {
     try {
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, googleProvider);
+      return result.user;
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
+    }
+  }
+);
+
+export const loginWithFacebook = createAsyncThunk(
+  "auth/loginWithFacebook",
+  async (_, { rejectWithValue }) => {
+    try {
+      const result = await signInWithPopup(auth, facebookProvider);
       return result.user;
     } catch (error) {
       const firebaseError = error as FirebaseError;

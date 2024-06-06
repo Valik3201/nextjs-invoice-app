@@ -10,6 +10,7 @@ import {
   sendlVerificationEmail,
   updateUserPassword,
   loginWithGoogle,
+  loginWithFacebook,
 } from "./authOperations";
 import { FirebaseError } from "firebase/app";
 
@@ -80,6 +81,17 @@ const authSlice = createSlice({
         state.user = action.payload as User;
       })
       .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.errors.loginError = action.payload as FirebaseError;
+      })
+      .addCase(loginWithFacebook.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginWithFacebook.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload as User;
+      })
+      .addCase(loginWithFacebook.rejected, (state, action) => {
         state.loading = false;
         state.errors.loginError = action.payload as FirebaseError;
       })
