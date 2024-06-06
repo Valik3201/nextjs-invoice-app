@@ -90,12 +90,6 @@ export default function SignUp() {
                 placeholder="Password"
               />
 
-              {Object.keys(formik.errors).length > 0 && (
-                <div className="text-error text-red-medium mb-[25px]">
-                  - All fields are required
-                </div>
-              )}
-
               <Button variant="primary" type="submit" size="full">
                 Sign Up
               </Button>
