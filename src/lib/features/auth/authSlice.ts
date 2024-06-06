@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { User } from "firebase/auth";
 import {
   signUp,
@@ -9,6 +9,7 @@ import {
   updateUserEmail,
   sendlVerificationEmail,
   updateUserPassword,
+  loginWithGoogle,
 } from "./authOperations";
 import { FirebaseError } from "firebase/app";
 
@@ -70,6 +71,17 @@ const authSlice = createSlice({
       .addCase(signIn.rejected, (state, action) => {
         state.errors.loginError = action.payload as FirebaseError;
         state.loading = false;
+      })
+      .addCase(loginWithGoogle.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload as User;
+      })
+      .addCase(loginWithGoogle.rejected, (state, action) => {
+        state.loading = false;
+        state.errors.loginError = action.payload as FirebaseError;
       })
       .addCase(logout.pending, (state) => {
         state.loading = true;
