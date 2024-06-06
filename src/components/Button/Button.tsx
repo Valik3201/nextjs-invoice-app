@@ -7,7 +7,7 @@ export default function Button({
   icon,
   isOnlyIcon,
 }: {
-  variant: "primary" | "red" | "default" | "dark" | "icon";
+  variant: "primary" | "red" | "default" | "white" | "dark" | "icon";
   size?: "full" | "auto";
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
@@ -29,6 +29,8 @@ export default function Button({
     default:
       "text-blue-gray bg-[#F9FAFE] hover:bg-gray-light dark:text-gray-light dark:bg-dark-medium dark:hover:bg-white",
     dark: "text-gray-medium bg-[#373B53] hover:bg-dark-darkest dark:text-gray-light hover:dark:bg-dark-light",
+    white:
+      "text-dark bg-white hover:bg-gray-light dark:text-white dark:bg-dark-medium dark:hover:bg-dark-light p-3",
     icon: "text-gray-medium hover:text-red-medium mb-[25px]",
   };
 
