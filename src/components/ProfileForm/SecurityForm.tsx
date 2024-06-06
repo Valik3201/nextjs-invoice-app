@@ -18,7 +18,7 @@ export default function SecurityForm() {
       </h2>
 
       <h3 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
-        Sign-in Provider
+        Sign In Provider
       </h3>
       {user && (
         <p className="capitalize text-heading-s-variant text-dark-darkest dark:text-white mb-8">
