@@ -10,11 +10,13 @@ import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import {
   signIn,
   loginWithGoogle,
+  loginWithFacebook,
 } from "@/src/lib/features/auth/authOperations";
 import AuthError from "@/src/components/Auth/AuthError";
 import InputField from "@/src/components/InvoiceForm/InputField";
 import Button from "@/src/components/Button/Button";
 import GoogleIcon from "@/src/icons/Google";
+import FacebookIcon from "@/src/icons/FacebookIcon";
 
 export default function SignIn() {
   const router = useRouter();
@@ -30,8 +32,22 @@ export default function SignIn() {
     }
   }, [store]);
 
-  const handleLogin = () => {
-    dispatch(loginWithGoogle());
+  const handleLoginwithGoogle = async () => {
+    try {
+      await dispatch(loginWithGoogle()).unwrap();
+      router.push("/invoices");
+    } catch (error) {
+      console.log("Error login with Google", error);
+    }
+  };
+
+  const handleLoginwithFacebook = async () => {
+    try {
+      await dispatch(loginWithFacebook()).unwrap();
+      router.push("/invoices");
+    } catch (error) {
+      console.log("Error login with Google", error);
+    }
   };
 
   return (
@@ -39,16 +55,27 @@ export default function SignIn() {
       <div className="w-full md:w-80">
         <h1 className="text-heading-m md:text-heading-l mb-8">Sign In</h1>
 
-        <Button
-          variant="white"
-          type="submit"
-          size="full"
-          icon={<GoogleIcon />}
-          onClick={handleLogin}
-        >
-          Sign In with Google
-        </Button>
+        <div className="flex flex-col gap-4">
+          <Button
+            variant="white"
+            type="submit"
+            size="full"
+            icon={<GoogleIcon />}
+            onClick={handleLoginwithGoogle}
+          >
+            Sign In with Google
+          </Button>
 
+          <Button
+            variant="facebook"
+            type="submit"
+            size="full"
+            icon={<FacebookIcon />}
+            onClick={handleLoginwithFacebook}
+          >
+            Sign In with Facebook
+          </Button>
+        </div>
         <div className="flex items-center gap-4">
           <div className="h-px w-full bg-gray-light"></div>
           <h2 className="text-body-variant md:text-heading-s-variant my-6 text-center">
