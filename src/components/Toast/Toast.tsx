@@ -9,7 +9,7 @@ export default function Toast({
   type,
   children,
 }: {
-  type: "success" | "danger" | "warning" | "message";
+  type: "success" | "danger" | "warning" | "email";
   children: React.ReactNode;
 }) {
   const [dismissed, setDismissed] = useState(false);
