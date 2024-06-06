@@ -7,7 +7,14 @@ export default function Button({
   icon,
   isOnlyIcon,
 }: {
-  variant: "primary" | "red" | "default" | "white" | "dark" | "icon";
+  variant:
+    | "primary"
+    | "red"
+    | "default"
+    | "white"
+    | "dark"
+    | "icon"
+    | "facebook";
   size?: "full" | "auto";
   type?: "button" | "submit" | "reset";
   onClick?: () => void;
@@ -32,6 +39,7 @@ export default function Button({
     white:
       "text-dark bg-white hover:bg-gray-light dark:text-white dark:bg-dark-medium dark:hover:bg-dark-light p-3",
     icon: "text-gray-medium hover:text-red-medium mb-[25px]",
+    facebook: "bg-[#0866ff] text-white hover:bg-[#0866ff]/80 p-3",
   };
 
   const sizeClasses = {
