@@ -2,30 +2,28 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useProfileForm } from "@/src/hooks/useProfileForm";
 import Avatar from "@/src/icons/Avatar";
-import { updateUserProfile } from "@/src/lib/features/auth/authOperations";
-import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
-import { storage } from "@/src/firebase.config";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import Toast from "../Toast/Toast";
 
 export default function AvatarUpload() {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.auth.user);
+  const { user, handleAvatarUpload, showToast, toastMessage, toastType } =
+    useProfileForm();
   const [photoURL, setPhotoURL] = useState(user?.photoURL);
 
-  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
 
-    try {
-      const storageRef = ref(storage, `avatars/${user?.uid}`);
-      const snapshot = await uploadBytes(storageRef, file);
+    if (!file || !user?.uid) return;
 
-      const downloadURL = await getDownloadURL(snapshot.ref);
-      setPhotoURL(downloadURL);
-      await dispatch(updateUserProfile({ photoURL: downloadURL }));
-    } catch (error) {
-      console.error("Error uploading avatar:", error);
+    if (!file.type.startsWith("image/")) {
+      showToast("Only image files are allowed.", "danger");
+      return;
+    }
+
+    const newPhotoURL = await handleAvatarUpload(file, user.uid);
+    if (newPhotoURL) {
+      setPhotoURL(newPhotoURL);
     }
   };
 
@@ -55,9 +53,11 @@ export default function AvatarUpload() {
           type="file"
           accept="image/*"
           className="hidden"
-          onChange={handleAvatarUpload}
+          onChange={handleFileChange}
         />
       </label>
+
+      {toastMessage && <Toast type={toastType}>{toastMessage}</Toast>}
     </div>
   );
 }
