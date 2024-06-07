@@ -43,6 +43,7 @@ export const useInvoiceForm = (closeForm: () => void) => {
         console.error("Error editing invoice:", error);
       }
     }
+    setSubmitting(false);
   };
 
   const handleSaveAsDraft = async (
