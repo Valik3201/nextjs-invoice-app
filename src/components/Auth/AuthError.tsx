@@ -34,6 +34,9 @@ export default function AuthError({ errorCode }: { errorCode: string }) {
       errorMessage =
         "Registration is currently not allowed. Please try again later or contact support.";
       break;
+    case "auth/account-exists-with-different-credential":
+      errorMessage =
+        "It looks like you already have an account with a different sign-in method. Please choose another method to link your existing account.";
 
     default:
   }
