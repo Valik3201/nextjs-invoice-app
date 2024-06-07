@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import {
   addInvoice,
@@ -15,7 +16,7 @@ export const useInvoiceForm = (closeForm: () => void) => {
   ) => {
     if (user) {
       try {
-        dispatch(addInvoice({ userId: user.uid, invoice: values }));
+        dispatch(addInvoice({ userId: user.uid, invoice: values })).unwrap();
         resetForm();
       } catch (error) {
         console.error("Error adding invoice:", error);
@@ -37,7 +38,7 @@ export const useInvoiceForm = (closeForm: () => void) => {
             invoiceUid: values.uid,
             updatedData: values,
           })
-        );
+        ).unwrap();
         resetForm();
       } catch (error) {
         console.error("Error editing invoice:", error);
@@ -54,11 +55,12 @@ export const useInvoiceForm = (closeForm: () => void) => {
       const draftInvoiceData = {
         ...values,
         status: InvoiceStatus.Draft,
+        invoiceDate: format(new Date(), "yyyy-MM-dd"),
       };
       try {
         await dispatch(
           addInvoice({ userId: user.uid, invoice: draftInvoiceData })
-        );
+        ).unwrap();
         resetForm();
         closeForm();
       } catch (error) {
