@@ -29,7 +29,9 @@ export default function SignUp() {
   return (
     <div className="flex justify-center w-full">
       <div className="w-full md:w-80">
-        <h1 className="text-heading-m md:text-heading-l mb-8">Sign Up</h1>
+        <h1 className="text-heading-m md:text-heading-l mb-8">
+          Create an account
+        </h1>
 
         <Formik
           initialValues={{
