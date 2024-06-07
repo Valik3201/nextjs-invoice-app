@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import CloseIcon from "@/src/icons/CloseIcon";
 
 export default function Modal({
   handleConfirm,
@@ -69,16 +70,7 @@ export default function Modal({
                 onClick={closeModal}
                 className="absolute top-6 right-6 stroke-dark-darkest dark:stroke-gray-light"
               >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M1 1L13 13" strokeWidth="2" />
-                  <path d="M1 13L13 0.999999" strokeWidth="2" />
-                </svg>
+                <CloseIcon />
                 <span className="sr-only">Close modal</span>
               </button>
 
