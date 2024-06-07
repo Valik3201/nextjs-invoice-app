@@ -9,8 +9,7 @@ import { useAppDispatch, useAppSelector, useAppStore } from "@/src/lib/hooks";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import {
   signIn,
-  loginWithGoogle,
-  loginWithFacebook,
+  loginWithProvider,
 } from "@/src/lib/features/auth/authOperations";
 import AuthError from "@/src/components/Auth/AuthError";
 import InputField from "@/src/components/InvoiceForm/InputField";
@@ -32,28 +31,42 @@ export default function SignIn() {
     }
   }, [store]);
 
-  const handleLoginwithGoogle = async () => {
+  const handleSubmit = async (
+    values: {
+      email: string;
+      password: string;
+    },
+    { setSubmitting }: any
+  ) => {
+    const { email, password } = values;
+
     try {
-      await dispatch(loginWithGoogle()).unwrap();
+      await dispatch(signIn({ email, password })).unwrap();
       router.push("/invoices");
     } catch (error) {
-      console.log("Error login with Google", error);
+      console.log(error);
     }
+
+    setSubmitting(false);
   };
 
-  const handleLoginwithFacebook = async () => {
+  const handleLoginwithProvider = async ({
+    provider,
+  }: {
+    provider: "google" | "facebook";
+  }) => {
     try {
-      await dispatch(loginWithFacebook()).unwrap();
+      await dispatch(loginWithProvider({ provider })).unwrap();
       router.push("/invoices");
     } catch (error) {
-      console.log("Error login with Google", error);
+      console.log(`Error login with ${provider}`, error);
     }
   };
 
   return (
     <div className="flex justify-center w-full">
       <div className="w-full md:w-80">
-        <h1 className="text-heading-m md:text-heading-l mb-8">Sign In</h1>
+        <h1 className="text-heading-m md:text-heading-l mb-8">Welcome back</h1>
 
         <div className="flex flex-col gap-4">
           <Button
@@ -61,7 +74,7 @@ export default function SignIn() {
             type="submit"
             size="full"
             icon={<GoogleIcon />}
-            onClick={handleLoginwithGoogle}
+            onClick={() => handleLoginwithProvider({ provider: "google" })}
           >
             Sign In with Google
           </Button>
@@ -71,17 +84,17 @@ export default function SignIn() {
             type="submit"
             size="full"
             icon={<FacebookIcon />}
-            onClick={handleLoginwithFacebook}
+            onClick={() => handleLoginwithProvider({ provider: "facebook" })}
           >
             Sign In with Facebook
           </Button>
         </div>
         <div className="flex items-center gap-4">
-          <div className="h-px w-full bg-gray-light"></div>
+          <div className="h-px w-full bg-gray-light dark:bg-dark-medium"></div>
           <h2 className="text-body-variant md:text-heading-s-variant my-6 text-center">
             or
           </h2>
-          <div className="h-px w-full bg-gray-light"></div>
+          <div className="h-px w-full bg-gray-light dark:bg-dark-medium"></div>
         </div>
 
         <Formik
@@ -91,16 +104,7 @@ export default function SignIn() {
           }}
           validationSchema={signInValidationSchema}
           validateOnChange={false}
-          onSubmit={async (values) => {
-            const { email, password } = values;
-
-            try {
-              await dispatch(signIn({ email, password })).unwrap();
-              router.push("/invoices");
-            } catch (error) {
-              console.log(error);
-            }
-          }}
+          onSubmit={handleSubmit}
         >
           {(formik) => (
             <Form>
@@ -112,7 +116,7 @@ export default function SignIn() {
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
                 error={formik.touched.email && formik.errors.email}
-                placeholder="example@mail.com"
+                placeholder="name@company.com"
               />
 
               <InputField
@@ -123,7 +127,7 @@ export default function SignIn() {
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
                 error={formik.touched.password && formik.errors.password}
-                placeholder="Password"
+                placeholder="•••••••••••••"
               />
 
               <Button variant="primary" type="submit" size="full">
