@@ -55,7 +55,7 @@ export default function Toast({
           aria-label="Close"
         >
           <span className="sr-only">Close</span>
-          <CloseIcon className="w-3 h-3" />
+          <CloseIcon />
         </button>
       </div>
     </div>
