@@ -37,7 +37,7 @@ export default function Button({
       "text-blue-gray bg-[#F9FAFE] hover:bg-gray-light dark:text-gray-light dark:bg-dark-medium dark:hover:bg-white",
     dark: "text-gray-medium bg-[#373B53] hover:bg-dark-darkest dark:text-gray-light hover:dark:bg-dark-light",
     white:
-      "text-dark bg-white hover:bg-gray-light dark:text-white dark:bg-dark-medium dark:hover:bg-dark-light p-3",
+      "text-dark bg-white hover:bg-black/5 dark:text-white dark:bg-dark-medium dark:hover:bg-dark-light p-3",
     icon: "text-gray-medium hover:text-red-medium mb-[25px]",
     facebook: "bg-[#0866ff] text-white hover:bg-[#0866ff]/80 p-3",
   };
