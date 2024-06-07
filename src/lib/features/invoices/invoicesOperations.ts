@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { FirebaseError } from "firebase/app";
 import {
   collection,
   doc,
@@ -32,9 +33,8 @@ export const fetchInvoices = createAsyncThunk(
       })) as Invoice[];
       return invoices;
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      return rejectWithValue(errorMessage);
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
     }
   }
 );
@@ -70,9 +70,8 @@ export const addInvoice = createAsyncThunk(
         uid: invoiceRef.id,
       };
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      return rejectWithValue(errorMessage);
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
     }
   }
 );
@@ -92,9 +91,8 @@ export const fetchInvoiceById = createAsyncThunk(
         throw new Error("Invoice not found");
       }
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      return rejectWithValue(errorMessage);
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
     }
   }
 );
@@ -127,9 +125,8 @@ export const updateInvoice = createAsyncThunk(
 
       return { invoiceUid, updatedInvoice: updatedInvoiceData };
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      return rejectWithValue(errorMessage);
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
     }
   }
 );
@@ -145,9 +142,8 @@ export const deleteInvoice = createAsyncThunk(
       await deleteDoc(invoiceRef);
       return { userId, invoiceUid };
     } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      return rejectWithValue(errorMessage);
+      const firebaseError = error as FirebaseError;
+      return rejectWithValue(firebaseError);
     }
   }
 );
