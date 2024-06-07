@@ -1,18 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { User } from "firebase/auth";
+import { User, AuthCredential } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
 import {
+  listenToAuthChanges,
+  loginWithProvider,
+  logout,
+  sendlVerificationEmail,
   signUp,
   signIn,
-  logout,
-  listenToAuthChanges,
-  updateUserProfile,
   updateUserEmail,
-  sendlVerificationEmail,
+  updateUserProfile,
   updateUserPassword,
-  loginWithGoogle,
-  loginWithFacebook,
 } from "./authOperations";
-import { FirebaseError } from "firebase/app";
 
 interface AuthState {
   user: User | null;
@@ -23,12 +22,14 @@ interface AuthState {
     loginError: FirebaseError | null;
     authError: FirebaseError | null;
   };
+  pendingCred: AuthCredential | null;
 }
 const initialState: AuthState = {
   user: null,
   loading: false,
   refreshing: false,
   errors: { registerError: null, loginError: null, authError: null },
+  pendingCred: null,
 };
 
 const authSlice = createSlice({
@@ -45,6 +46,9 @@ const authSlice = createSlice({
         loginError: null,
         authError: null,
       };
+    },
+    savePendingCredential: (state, action) => {
+      state.pendingCred = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -73,25 +77,14 @@ const authSlice = createSlice({
         state.errors.loginError = action.payload as FirebaseError;
         state.loading = false;
       })
-      .addCase(loginWithGoogle.pending, (state) => {
+      .addCase(loginWithProvider.pending, (state) => {
         state.loading = true;
       })
-      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+      .addCase(loginWithProvider.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload as User;
       })
-      .addCase(loginWithGoogle.rejected, (state, action) => {
-        state.loading = false;
-        state.errors.loginError = action.payload as FirebaseError;
-      })
-      .addCase(loginWithFacebook.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(loginWithFacebook.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload as User;
-      })
-      .addCase(loginWithFacebook.rejected, (state, action) => {
+      .addCase(loginWithProvider.rejected, (state, action) => {
         state.loading = false;
         state.errors.loginError = action.payload as FirebaseError;
       })
@@ -168,5 +161,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { setUser, resetErrors } = authSlice.actions;
+export const { setUser, resetErrors, savePendingCredential } =
+  authSlice.actions;
 export default authSlice.reducer;
