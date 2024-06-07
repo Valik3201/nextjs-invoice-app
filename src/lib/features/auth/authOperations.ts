@@ -1,30 +1,33 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { auth, googleProvider, facebookProvider } from "@/src/firebase.config";
 import {
   createUserWithEmailAndPassword,
+  FacebookAuthProvider,
+  GoogleAuthProvider,
+  linkWithCredential,
+  onAuthStateChanged,
+  sendEmailVerification,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
-  onAuthStateChanged,
-  updateProfile,
   updateEmail,
+  updateProfile,
   updatePassword,
-  sendEmailVerification,
   User,
 } from "firebase/auth";
 import { FirebaseError } from "firebase/app";
-import { setUser } from "./authSlice";
+import { auth } from "@/src/firebase.config";
+import { RootState } from "../../store";
+import { savePendingCredential, setUser } from "./authSlice";
+
+interface AuthData {
+  email: string;
+  password: string;
+  displayName?: string;
+}
 
 export const signUp = createAsyncThunk(
   "auth/signUp",
-  async (
-    {
-      email,
-      password,
-      displayName,
-    }: { email: string; password: string; displayName: string },
-    { rejectWithValue }
-  ) => {
+  async ({ email, password, displayName }: AuthData, { rejectWithValue }) => {
     try {
       const result = await createUserWithEmailAndPassword(
         auth,
@@ -46,10 +49,7 @@ export const signUp = createAsyncThunk(
 
 export const signIn = createAsyncThunk(
   "auth/signIn",
-  async (
-    { email, password }: { email: string; password: string },
-    { rejectWithValue }
-  ) => {
+  async ({ email, password }: AuthData, { rejectWithValue }) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
       return result.user;
@@ -60,27 +60,41 @@ export const signIn = createAsyncThunk(
   }
 );
 
-export const loginWithGoogle = createAsyncThunk(
-  "auth/loginWithGoogle",
-  async (_, { rejectWithValue }) => {
+export const loginWithProvider = createAsyncThunk(
+  "auth/loginWithProvider",
+  async (
+    { provider }: { provider: "google" | "facebook" },
+    { getState, dispatch, rejectWithValue }
+  ) => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      return result.user;
-    } catch (error) {
-      const firebaseError = error as FirebaseError;
-      return rejectWithValue(firebaseError);
-    }
-  }
-);
+      const result = await signInWithPopup(
+        auth,
+        provider === "google"
+          ? new GoogleAuthProvider()
+          : new FacebookAuthProvider()
+      );
+      const state = getState() as RootState;
+      if (state.auth.pendingCred) {
+        const pendingCred = state.auth.pendingCred!;
 
-export const loginWithFacebook = createAsyncThunk(
-  "auth/loginWithFacebook",
-  async (_, { rejectWithValue }) => {
-    try {
-      const result = await signInWithPopup(auth, facebookProvider);
+        if (pendingCred !== null) {
+          await linkWithCredential(result.user, pendingCred);
+          await result.user.reload();
+          dispatch(savePendingCredential(null));
+        }
+      }
       return result.user;
     } catch (error) {
       const firebaseError = error as FirebaseError;
+      if (
+        firebaseError.code === "auth/account-exists-with-different-credential"
+      ) {
+        const pendingCred =
+          provider === "google"
+            ? GoogleAuthProvider.credentialFromError(firebaseError)
+            : FacebookAuthProvider.credentialFromError(firebaseError);
+        dispatch(savePendingCredential(pendingCred));
+      }
       return rejectWithValue(firebaseError);
     }
   }
