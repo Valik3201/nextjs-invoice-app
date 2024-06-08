@@ -14,7 +14,7 @@ import {
 import AuthError from "@/src/components/Auth/AuthError";
 import InputField from "@/src/components/InvoiceForm/InputField";
 import Button from "@/src/components/Button/Button";
-import GoogleIcon from "@/src/icons/Google";
+import GoogleIcon from "@/src/icons/GoogleIcon";
 import FacebookIcon from "@/src/icons/FacebookIcon";
 
 export default function SignIn() {
