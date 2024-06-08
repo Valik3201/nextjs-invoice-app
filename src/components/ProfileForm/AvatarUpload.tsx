@@ -29,14 +29,14 @@ export default function AvatarUpload() {
 
   return (
     <div className="relative w-14 h-14 lg:w-20 lg:h-20">
-      <div className="relative w-full">
+      <div className="relative w-14 h-14 lg:w-20 lg:h-20">
         {photoURL ? (
           <Image
             src={photoURL}
             alt="User avatar"
-            className="w-14 h-14 lg:w-20 lg:h-20 rounded-full"
-            width={80}
-            height={80}
+            className="rounded-full object-cover"
+            sizes="100%"
+            fill
           />
         ) : (
           <Avatar size="lg" />

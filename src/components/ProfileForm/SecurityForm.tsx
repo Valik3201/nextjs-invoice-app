@@ -1,15 +1,23 @@
-import { useState } from "react";
 import { Formik, Form } from "formik";
 import { useProfileForm } from "@/src/hooks/useProfileForm";
 import { passwordSchema } from "@/src/validation/profileValidationSchema";
 import InputField from "@/src/components/InvoiceForm/InputField";
 import FormButtons from "./FormButtons";
 import Toast from "../Toast/Toast";
+import GoogleIcon from "@/src/icons/GoogleIcon";
+import FacebookIcon from "@/src/icons/FacebookIcon";
+import FirebaseIcon from "@/src/icons/FirebaseIcon";
 
 export default function SecurityForm() {
   const { user, useEditState, handleUpdatePassword, toastMessage, toastType } =
     useProfileForm();
   const { edit, handleToggleEdit } = useEditState();
+
+  const ProviderIcons: { [key: string]: React.FC } = {
+    "google.com": GoogleIcon,
+    "facebook.com": FacebookIcon,
+    password: FirebaseIcon,
+  };
 
   return (
     <div className="flex flex-col items-start justify-between bg-white rounded-lg mt-9 md:mt-6 p-6 md:p-8 lg:p-[52px] shadow-item dark:bg-dark-light dark:border-dark-light">
@@ -18,12 +26,28 @@ export default function SecurityForm() {
       </h2>
 
       <h3 className="mb-2 text-body-variant text-blue-gray dark:text-gray-light">
-        Sign In Provider
+        Providers
       </h3>
+
       {user && (
-        <p className="capitalize text-heading-s-variant text-dark-darkest dark:text-white mb-8">
-          {user.providerId}
-        </p>
+        <ul className="flex items-center gap-2 mb-8">
+          {user.providerData.map((provider) => {
+            const ProviderIcon = ProviderIcons[provider.providerId];
+            return (
+              <li key={provider.uid}>
+                <div
+                  className={`rounded w-8 h-8 flex justify-center items-center p-1 ${
+                    provider.providerId === "facebook.com"
+                      ? "bg-[#0866ff] text-white"
+                      : "bg-black/5 dark:bg-white"
+                  }`}
+                >
+                  <ProviderIcon />
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       )}
 
       <div className="w-full">
