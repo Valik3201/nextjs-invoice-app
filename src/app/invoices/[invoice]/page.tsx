@@ -11,7 +11,7 @@ import {
   deleteInvoice,
 } from "@/src/lib/features/invoices/invoicesOperations";
 import { InvoiceStatus } from "@/src/lib/types";
-import Modal from "@/src/components/Modal/Modal";
+import ConfirmDeletionModal from "@/src/components/Modal/ConfirmDeletionModal";
 import Status from "@/src/components/Status/Status";
 import SkeletonInvoice from "@/src/components/Invoice/SkeletonInvoice";
 import Button from "@/src/components/Button/Button";
@@ -82,7 +82,10 @@ export default function Page() {
               <div className="flex gap-2 justify-between w-[327px] md:w-fit">
                 <InvoiceFormWrapper initialValues={invoice} action="edit" />
 
-                <Modal handleConfirm={() => handleDelete()} id={invoice.id} />
+                <ConfirmDeletionModal
+                  handleConfirm={handleDelete}
+                  id={invoice.id}
+                />
                 <Button
                   variant={"primary"}
                   onClick={() => handleStatusChange(InvoiceStatus.Paid)}
