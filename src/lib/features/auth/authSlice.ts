@@ -5,6 +5,7 @@ import {
   listenToAuthChanges,
   loginWithProvider,
   logout,
+  resetUserPassword,
   sendlVerificationEmail,
   signUp,
   signIn,
@@ -155,6 +156,17 @@ const authSlice = createSlice({
         state.loading = false;
       })
       .addCase(updateUserPassword.rejected, (state, action) => {
+        state.errors.authError = action.payload as FirebaseError;
+        state.loading = false;
+      })
+      .addCase(resetUserPassword.pending, (state) => {
+        state.loading = true;
+        state.errors.authError = null;
+      })
+      .addCase(resetUserPassword.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(resetUserPassword.rejected, (state, action) => {
         state.errors.authError = action.payload as FirebaseError;
         state.loading = false;
       });

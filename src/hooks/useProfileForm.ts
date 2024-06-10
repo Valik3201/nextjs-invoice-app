@@ -7,6 +7,7 @@ import {
   updateUserEmail,
   updateUserPassword,
   sendlVerificationEmail,
+  resetUserPassword,
 } from "@/src/lib/features/auth/authOperations";
 import { resetErrors } from "../lib/features/auth/authSlice";
 
@@ -107,6 +108,24 @@ export const useProfileForm = () => {
     }
   };
 
+  const handleResetPassword = async (
+    values: any,
+    successMessage: string,
+    resetForm: () => void
+  ) => {
+    try {
+      await dispatch(resetUserPassword({ email: values.email })).unwrap();
+      showToast(successMessage, "success");
+      resetForm();
+    } catch (error) {
+      console.log("Error sending password reset link:", error);
+      showToast(
+        "Error sending password reset link. Please try again.",
+        "danger"
+      );
+    }
+  };
+
   const handleAvatarUpload = async (file: File, userId: string) => {
     try {
       const storageRef = ref(storage, `avatars/${userId}`);
@@ -129,6 +148,7 @@ export const useProfileForm = () => {
     handleUpdateEmail,
     handleSendVerificationEmail,
     handleUpdatePassword,
+    handleResetPassword,
     handleAvatarUpload,
     showToast,
     toastMessage,

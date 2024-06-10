@@ -1,5 +1,5 @@
 export default function Button({
-  variant,
+  variant = "default",
   size = "auto",
   type = "button",
   onClick,
@@ -7,7 +7,7 @@ export default function Button({
   icon,
   isOnlyIcon,
 }: {
-  variant:
+  variant?:
     | "primary"
     | "red"
     | "default"

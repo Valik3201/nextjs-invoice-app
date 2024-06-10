@@ -130,6 +130,18 @@ export default function SignIn() {
                 placeholder="•••••••••••••"
               />
 
+              <Link
+                href={"/forgot-password"}
+                className="w-full flex justify-end mb-6"
+              >
+                <button
+                  type="button"
+                  className="text-body-variant text-right text-primary hover:underline"
+                >
+                  Forgot Password?
+                </button>
+              </Link>
+
               <Button variant="primary" type="submit" size="full">
                 Sign In
               </Button>

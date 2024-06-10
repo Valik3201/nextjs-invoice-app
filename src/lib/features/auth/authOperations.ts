@@ -6,6 +6,7 @@ import {
   linkWithCredential,
   onAuthStateChanged,
   sendEmailVerification,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -203,7 +204,18 @@ export const updateUserPassword = createAsyncThunk(
       return user;
     } catch (error) {
       const firebaseError = error as FirebaseError;
-      console.log(error);
+      return rejectWithValue(firebaseError);
+    }
+  }
+);
+
+export const resetUserPassword = createAsyncThunk(
+  "auth/resetUserPassword",
+  async ({ email }: { email: string }, { rejectWithValue }) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+    } catch (error) {
+      const firebaseError = error as FirebaseError;
       return rejectWithValue(firebaseError);
     }
   }
