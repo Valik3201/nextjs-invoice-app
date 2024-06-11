@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
-import InvoiceFormWrapper from "@/src/components/Invoice/InvoiceFormWrapper";
+import InvoiceFormWrapper from "@/src/components/InvoiceForm/InvoiceFormWrapper";
 import Status from "@/src/components/Status/Status";
 import { newInvoice } from "@/src/components/InvoiceForm/initialValues";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
 import { InvoiceStatus } from "@/src/lib/types";
-import SkeletonInvoices from "@/src/components/Invoice/SkeletonInvoices";
+import SkeletonInvoices from "@/src/components/Loader/SkeletonInvoices";
 import ArrowIcon from "@/src/icons/ArrowIcon";
 import CheckboxIcon from "@/src/icons/CheckboxIcon";
 

@@ -1,7 +1,7 @@
 import { Formik, Form } from "formik";
 import { emailSchema } from "@/src/validation/profileValidationSchema";
 import { useProfileForm } from "@/src/hooks/useProfileForm";
-import InputField from "@/src/components/InvoiceForm/InputField";
+import InputField from "@/src/components/FormElements/InputField";
 import FormButtons from "./FormButtons";
 import Toast from "../Toast/Toast";
 

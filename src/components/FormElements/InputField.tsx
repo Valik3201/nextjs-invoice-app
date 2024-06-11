@@ -9,6 +9,7 @@ export default function InputField({
   readOnly = false,
   error,
   profile,
+  className,
 }: {
   label: string;
   name: string;
@@ -20,6 +21,7 @@ export default function InputField({
   readOnly?: boolean;
   error?: string | false | undefined;
   profile?: boolean;
+  className?: string;
 }) {
   const baseClasses =
     "w-full h-12 text-heading-s-variant p-4 rounded focus:outline-none";
@@ -39,7 +41,7 @@ export default function InputField({
   } ${typeClasses}`;
 
   return (
-    <div className="mb-[25px]">
+    <div className={className}>
       <label>
         <div
           className={`flex justify-between ${
