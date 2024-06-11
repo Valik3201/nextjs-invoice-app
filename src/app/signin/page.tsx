@@ -12,7 +12,7 @@ import {
   loginWithProvider,
 } from "@/src/lib/features/auth/authOperations";
 import AuthError from "@/src/components/Auth/AuthError";
-import InputField from "@/src/components/InvoiceForm/InputField";
+import InputField from "@/src/components/FormElements/InputField";
 import Button from "@/src/components/Button/Button";
 import GoogleIcon from "@/src/icons/GoogleIcon";
 import FacebookIcon from "@/src/icons/FacebookIcon";
@@ -108,37 +108,39 @@ export default function SignIn() {
         >
           {(formik) => (
             <Form>
-              <InputField
-                label="Email"
-                name="email"
-                type="email"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.email}
-                error={formik.touched.email && formik.errors.email}
-                placeholder="name@company.com"
-              />
+              <div className="flex flex-col gap-6">
+                <InputField
+                  label="Email"
+                  name="email"
+                  type="email"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.email}
+                  error={formik.touched.email && formik.errors.email}
+                  placeholder="name@company.com"
+                />
 
-              <InputField
-                label="Password"
-                name="password"
-                type="password"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-                error={formik.touched.password && formik.errors.password}
-                placeholder="•••••••••••••"
-              />
+                <InputField
+                  label="Password"
+                  name="password"
+                  type="password"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.password}
+                  error={formik.touched.password && formik.errors.password}
+                  placeholder="•••••••••••••"
+                />
+              </div>
 
               <Link
                 href={"/forgot-password"}
-                className="w-full flex justify-end mb-6"
+                className="w-full flex justify-end mt-2 mb-6"
               >
                 <button
                   type="button"
                   className="text-body-variant text-right text-primary hover:underline"
                 >
-                  Forgot Password?
+                  Forgot password?
                 </button>
               </Link>
 
