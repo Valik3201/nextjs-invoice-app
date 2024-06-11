@@ -26,6 +26,7 @@ const config: Config = {
         "red-light": "#FF9797",
         light: "#F8F8FB",
         dark: "#141625",
+        facebook: "#0866ff",
       },
       fontSize: {
         "heading-l": [
