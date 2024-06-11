@@ -73,7 +73,7 @@ function Modal({
   const renderTrigger = () => {
     if (typeof trigger === "string") {
       return (
-        <Button variant="red" onClick={openModal}>
+        <Button variant="red" onClick={openModal} className="px-5">
           {trigger}
         </Button>
       );

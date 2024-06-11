@@ -1,8 +1,8 @@
 import { FormikTouched, FormikErrors } from "formik";
 import { Invoice } from "../../lib/types";
-import InputField from "./InputField";
-import InputDate from "./InputDate";
-import SelectField from "./SelectField";
+import InputField from "../FormElements/InputField";
+import InputDate from "../FormElements/InputDate";
+import SelectField from "../FormElements/SelectField";
 
 export default function InvoiceDetailsForm({
   values,
@@ -23,7 +23,7 @@ export default function InvoiceDetailsForm({
 }) {
   return (
     <>
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-6 mt-6">
         <InputDate
           name="invoiceDate"
           value={values.invoiceDate}

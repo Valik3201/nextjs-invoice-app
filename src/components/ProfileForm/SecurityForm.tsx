@@ -1,7 +1,7 @@
 import { Formik, Form } from "formik";
 import { useProfileForm } from "@/src/hooks/useProfileForm";
 import { passwordSchema } from "@/src/validation/profileValidationSchema";
-import InputField from "@/src/components/InvoiceForm/InputField";
+import InputField from "@/src/components/FormElements/InputField";
 import FormButtons from "./FormButtons";
 import Toast from "../Toast/Toast";
 import GoogleIcon from "@/src/icons/GoogleIcon";
@@ -36,10 +36,10 @@ export default function SecurityForm() {
             return (
               <li key={provider.uid}>
                 <div
-                  className={`rounded w-8 h-8 flex justify-center items-center p-1 ${
+                  className={`rounded w-8 h-8 flex justify-center items-center ${
                     provider.providerId === "facebook.com"
-                      ? "bg-[#0866ff] text-white"
-                      : "bg-black/5 dark:bg-white"
+                      ? "bg-facebook text-white p-1"
+                      : "bg-black/5 dark:bg-white p-1.5"
                   }`}
                 >
                   <ProviderIcon />

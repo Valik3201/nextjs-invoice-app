@@ -25,7 +25,7 @@ export default function InvoiceFormWrapper({
           New<span className="hidden md:inline"> Invoice</span>
         </Button>
       ) : (
-        <Button variant={"default"} onClick={openForm}>
+        <Button variant={"default"} onClick={openForm} className="px-6">
           Edit
         </Button>
       )}

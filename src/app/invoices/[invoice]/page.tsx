@@ -13,10 +13,10 @@ import {
 import { InvoiceStatus } from "@/src/lib/types";
 import ConfirmDeletionModal from "@/src/components/Modal/ConfirmDeletionModal";
 import Status from "@/src/components/Status/Status";
-import SkeletonInvoice from "@/src/components/Invoice/SkeletonInvoice";
+import SkeletonInvoice from "@/src/components/Loader/SkeletonInvoice";
 import Button from "@/src/components/Button/Button";
 import GoBackButton from "@/src/components/Button/GoBackButton";
-import InvoiceFormWrapper from "@/src/components/Invoice/InvoiceFormWrapper";
+import InvoiceFormWrapper from "@/src/components/InvoiceForm/InvoiceFormWrapper";
 
 export default function Page() {
   const router = useRouter();
@@ -89,6 +89,7 @@ export default function Page() {
                 <Button
                   variant={"primary"}
                   onClick={() => handleStatusChange(InvoiceStatus.Paid)}
+                  className="px-8 md:px-6"
                 >
                   Mark as Paid
                 </Button>

@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector, useAppStore } from "@/src/lib/hooks";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import { signUp } from "@/src/lib/features/auth/authOperations";
 import AuthError from "@/src/components/Auth/AuthError";
-import InputField from "@/src/components/InvoiceForm/InputField";
+import InputField from "@/src/components/FormElements/InputField";
 import Button from "@/src/components/Button/Button";
 
 export default function SignUp() {
@@ -55,7 +55,7 @@ export default function SignUp() {
           }}
         >
           {(formik) => (
-            <Form>
+            <Form className="flex flex-col gap-6">
               <InputField
                 label="Name"
                 name="name"
