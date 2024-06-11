@@ -3,7 +3,7 @@
 import { Formik, Form } from "formik";
 import { emailSchema } from "@/src/validation/profileValidationSchema";
 import { useProfileForm } from "@/src/hooks/useProfileForm";
-import InputField from "@/src/components/InvoiceForm/InputField";
+import InputField from "@/src/components/FormElements/InputField";
 import Button from "@/src/components/Button/Button";
 import GoBackButton from "@/src/components/Button/GoBackButton";
 import Toast from "@/src/components/Toast/Toast";
@@ -49,6 +49,7 @@ export default function Page() {
                 value={formik.values.email}
                 error={formik.touched.email && formik.errors.email}
                 placeholder="name@company.com"
+                className="mb-6"
               />
 
               <Button variant="primary" type="submit" size="full">
