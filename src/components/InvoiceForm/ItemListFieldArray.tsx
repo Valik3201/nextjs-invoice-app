@@ -1,7 +1,7 @@
 import { FieldArray, useFormikContext, getIn } from "formik";
 import { nanoid } from "nanoid";
 import { Invoice } from "../../lib/types";
-import InputField from "./InputField";
+import InputField from "../FormElements/InputField";
 import Button from "../Button/Button";
 import TrashIcon from "../../icons/TrashIcon";
 
@@ -19,7 +19,7 @@ export default function ItemListFieldArray({ values }: { values: Invoice }) {
 
   return (
     <>
-      <h3 className="text-blue-gray-light text-lg font-bold -tracking-[0.38px] mb-4">
+      <h3 className="text-blue-gray-light text-lg font-bold -tracking-[0.38px] my-6">
         Item List
       </h3>
 
@@ -28,26 +28,105 @@ export default function ItemListFieldArray({ values }: { values: Invoice }) {
         render={({ remove, push }) => (
           <>
             {/* Tablet & Desktop Styles */}
-            <ul className="hidden md:block max-w-full">
+            <ul className="hidden md:block max-w-full space-y-6 mb-6">
               {values.itemList.length > 0 &&
                 values.itemList.map((item, index) => (
                   <li key={item.id} className="flex gap-4 items-center">
-                    <div className="w-[35%]">
+                    <InputField
+                      label={index === 0 ? "Item Name" : ""}
+                      name={`itemList[${index}].itemName`}
+                      value={item.itemName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        getIn(touched, `itemList[${index}].itemName`) &&
+                        getIn(errors, `itemList[${index}].itemName`)
+                      }
+                      className="w-[35%]"
+                    />
+
+                    <InputField
+                      label={index === 0 ? "Qty" : ""}
+                      name={`itemList[${index}].qty`}
+                      type="number"
+                      value={item.qty}
+                      onChange={(e) => {
+                        handleChange(e);
+                        const total = calculateTotal(
+                          e.target.value,
+                          getIn(values, `itemList.${index}.price`)
+                        );
+                        setFieldValue(`itemList.${index}.total`, total);
+                      }}
+                      onBlur={handleBlur}
+                      placeholder="0"
+                      error={
+                        getIn(touched, `itemList[${index}].qty`) &&
+                        getIn(errors, `itemList[${index}].qty`)
+                      }
+                      className="w-[15%]"
+                    />
+
+                    <InputField
+                      label={index === 0 ? "Price" : ""}
+                      name={`itemList[${index}].price`}
+                      type="number"
+                      value={item.price && item.price.toFixed(2)}
+                      onChange={(e) => {
+                        handleChange(e);
+                        const total = calculateTotal(
+                          getIn(values, `itemList.${index}.qty`),
+                          e.target.value
+                        );
+                        setFieldValue(`itemList.${index}.total`, total);
+                      }}
+                      onBlur={handleBlur}
+                      placeholder="0.00"
+                      error={
+                        getIn(touched, `itemList[${index}].price`) &&
+                        getIn(errors, `itemList[${index}].price`)
+                      }
+                      className="w-[20%]"
+                    />
+
+                    <InputField
+                      label={index === 0 ? "Total" : ""}
+                      name={`itemList.${index}.total`}
+                      value={item.total.toFixed(2)}
+                      readOnly
+                      className="w-[20%]"
+                    />
+
+                    <Button
+                      variant="icon"
+                      onClick={() => remove(index)}
+                      icon={<TrashIcon />}
+                      isOnlyIcon
+                      className={`${index === 0 ? "mt-[15px]" : ""}`}
+                    />
+                  </li>
+                ))}
+            </ul>
+
+            {/* Mobile Styles */}
+            <ul className="block md:hidden max-w-full space-y-6 mb-6">
+              {values.itemList.length > 0 &&
+                values.itemList.map((item, index) => (
+                  <li key={item.id} className="flex flex-col gap-6">
+                    <InputField
+                      label={"Item Name"}
+                      name={`itemList[${index}].itemName`}
+                      value={item.itemName}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      error={
+                        getIn(touched, `itemList[${index}].itemName`) &&
+                        getIn(errors, `itemList[${index}].itemName`)
+                      }
+                    />
+                    <div className="flex gap-4">
                       <InputField
-                        label={index === 0 ? "Item Name" : ""}
-                        name={`itemList[${index}].itemName`}
-                        value={item.itemName}
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        error={
-                          getIn(touched, `itemList[${index}].itemName`) &&
-                          getIn(errors, `itemList[${index}].itemName`)
-                        }
-                      />
-                    </div>
-                    <div className="w-[15%]">
-                      <InputField
-                        label={index === 0 ? "Qty" : ""}
+                        label={"Qty"}
                         name={`itemList[${index}].qty`}
                         type="number"
                         value={item.qty}
@@ -65,11 +144,10 @@ export default function ItemListFieldArray({ values }: { values: Invoice }) {
                           getIn(touched, `itemList[${index}].qty`) &&
                           getIn(errors, `itemList[${index}].qty`)
                         }
+                        className="w-[25%]"
                       />
-                    </div>
-                    <div className="w-[20%]">
                       <InputField
-                        label={index === 0 ? "Price" : ""}
+                        label={"Price"}
                         name={`itemList[${index}].price`}
                         type="number"
                         value={item.price && item.price.toFixed(2)}
@@ -87,107 +165,23 @@ export default function ItemListFieldArray({ values }: { values: Invoice }) {
                           getIn(touched, `itemList[${index}].price`) &&
                           getIn(errors, `itemList[${index}].price`)
                         }
+                        className="w-[35%]"
                       />
-                    </div>
-                    <div className="w-[20%]">
                       <InputField
-                        label={index === 0 ? "Total" : ""}
+                        label={"Total"}
                         name={`itemList.${index}.total`}
                         value={item.total.toFixed(2)}
                         readOnly
+                        className="w-[35%]"
                       />
-                    </div>
 
-                    <div className={`${index === 0 ? "mt-[15px]" : ""}`}>
                       <Button
                         variant="icon"
                         onClick={() => remove(index)}
                         icon={<TrashIcon />}
                         isOnlyIcon
+                        className="mt-5"
                       />
-                    </div>
-                  </li>
-                ))}
-            </ul>
-
-            {/* Mobile Styles */}
-            <ul className="block md:hidden max-w-full">
-              {values.itemList.length > 0 &&
-                values.itemList.map((item, index) => (
-                  <li key={item.id} className="flex flex-col gap-6">
-                    <InputField
-                      label={"Item Name"}
-                      name={`itemList[${index}].itemName`}
-                      value={item.itemName}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      error={
-                        getIn(touched, `itemList[${index}].itemName`) &&
-                        getIn(errors, `itemList[${index}].itemName`)
-                      }
-                    />
-                    <div className="flex gap-4 -mt-[25px]">
-                      <div className="w-[25%]">
-                        <InputField
-                          label={"Qty"}
-                          name={`itemList[${index}].qty`}
-                          type="number"
-                          value={item.qty}
-                          onChange={(e) => {
-                            handleChange(e);
-                            const total = calculateTotal(
-                              e.target.value,
-                              getIn(values, `itemList.${index}.price`)
-                            );
-                            setFieldValue(`itemList.${index}.total`, total);
-                          }}
-                          onBlur={handleBlur}
-                          placeholder="0"
-                          error={
-                            getIn(touched, `itemList[${index}].qty`) &&
-                            getIn(errors, `itemList[${index}].qty`)
-                          }
-                        />
-                      </div>
-                      <div className="w-[35%]">
-                        <InputField
-                          label={"Price"}
-                          name={`itemList[${index}].price`}
-                          type="number"
-                          value={item.price && item.price.toFixed(2)}
-                          onChange={(e) => {
-                            handleChange(e);
-                            const total = calculateTotal(
-                              getIn(values, `itemList.${index}.qty`),
-                              e.target.value
-                            );
-                            setFieldValue(`itemList.${index}.total`, total);
-                          }}
-                          onBlur={handleBlur}
-                          placeholder="0.00"
-                          error={
-                            getIn(touched, `itemList[${index}].price`) &&
-                            getIn(errors, `itemList[${index}].price`)
-                          }
-                        />
-                      </div>
-                      <div className="w-[35%]">
-                        <InputField
-                          label={"Total"}
-                          name={`itemList.${index}.total`}
-                          value={item.total.toFixed(2)}
-                          readOnly
-                        />
-                      </div>
-
-                      <div className="mt-[28px]">
-                        <Button
-                          variant="icon"
-                          onClick={() => remove(index)}
-                          icon={<TrashIcon />}
-                          isOnlyIcon
-                        />
-                      </div>
                     </div>
                   </li>
                 ))}

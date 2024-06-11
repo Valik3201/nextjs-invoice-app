@@ -1,6 +1,6 @@
 import { FormikTouched, FormikErrors } from "formik";
 import { Invoice } from "../../lib/types";
-import InputField from "./InputField";
+import InputField from "../FormElements/InputField";
 
 export default function BillFromForm({
   values,
@@ -18,7 +18,7 @@ export default function BillFromForm({
   return (
     <>
       <h3 className="text-primary text-heading-s-variant mb-6">Bill From</h3>
-      <div className="flex flex-col">
+      <div className="flex flex-col gap-6">
         <InputField
           label="Street Address"
           name="billFrom.streetAddress"
@@ -55,6 +55,7 @@ export default function BillFromForm({
             onChange={handleChange}
             onBlur={handleBlur}
             error={touched.billFrom?.country && errors.billFrom?.country}
+            className="mt-6 md:mt-0"
           />
         </div>
       </div>
