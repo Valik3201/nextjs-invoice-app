@@ -5,12 +5,13 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { format } from "date-fns";
-import InvoiceFormWrapper from "@/src/components/InvoiceForm/InvoiceFormWrapper";
-import Status from "@/src/components/Status/Status";
+import { useToggleState } from "@/src/hooks/useToggleState";
 import { newInvoice } from "@/src/components/InvoiceForm/initialValues";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
 import { fetchInvoices } from "@/src/lib/features/invoices/invoicesOperations";
 import { InvoiceStatus } from "@/src/lib/types";
+import InvoiceFormWrapper from "@/src/components/InvoiceForm/InvoiceFormWrapper";
+import Status from "@/src/components/Status/Status";
 import SkeletonInvoices from "@/src/components/Loader/SkeletonInvoices";
 import ArrowIcon from "@/src/icons/ArrowIcon";
 import CheckboxIcon from "@/src/icons/CheckboxIcon";
@@ -19,17 +20,15 @@ export default function Page() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
-  const { invoices, invoicesLoading, invoicesError } = useAppSelector(
+  const { invoices, invoicesLoading } = useAppSelector(
     (state) => state.invoices
   );
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const { state: isOpen, toggleState } = useToggleState();
+
   const [selectedStatuses, setSelectedStatuses] = useState<Set<InvoiceStatus>>(
     new Set()
   );
-
-  const toggleFilter = () => {
-    setIsOpen((prevState) => !prevState);
-  };
 
   const handleStatusChange = (status: InvoiceStatus) => {
     setSelectedStatuses((prevSelectedStatuses) => {
@@ -105,7 +104,7 @@ export default function Page() {
 
             <div className="relative flex gap-5 md:gap-10 items-center">
               <button
-                onClick={toggleFilter}
+                onClick={toggleState}
                 className="flex gap-[14px] items-center text-heading-s-variant"
               >
                 <p>

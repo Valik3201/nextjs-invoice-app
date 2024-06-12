@@ -1,20 +1,20 @@
 import { Formik, Form } from "formik";
 import { emailSchema } from "@/src/validation/profileValidationSchema";
-import { useProfileForm } from "@/src/hooks/useProfileForm";
+import { useToggleState } from "@/src/hooks/useToggleState";
+import { useAccountActions } from "@/src/hooks/useAccountActions";
 import InputField from "@/src/components/FormElements/InputField";
 import FormButtons from "./FormButtons";
 import Toast from "../Toast/Toast";
 
 export default function EmailForm() {
+  const { state: isEdit, toggleState } = useToggleState();
   const {
     user,
-    useEditState,
     handleUpdateEmail,
     handleSendVerificationEmail,
     toastMessage,
     toastType,
-  } = useProfileForm();
-  const { edit, handleToggleEdit } = useEditState();
+  } = useAccountActions();
 
   return (
     <div className="flex flex-col items-start justify-between bg-white rounded-lg mt-9 md:mt-6 p-6 md:p-8 lg:p-[52px] shadow-item dark:bg-dark-light dark:border-dark-light">
@@ -26,13 +26,7 @@ export default function EmailForm() {
         {user && (
           <Formik
             initialValues={{ email: user.email || "" }}
-            onSubmit={(values) =>
-              handleUpdateEmail(
-                values,
-                "Email successfully updated!",
-                handleToggleEdit
-              )
-            }
+            onSubmit={(values) => handleUpdateEmail(values, toggleState)}
             validationSchema={emailSchema}
           >
             {({
@@ -52,8 +46,9 @@ export default function EmailForm() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={touched.email && errors.email}
-                    readOnly={!edit}
+                    readOnly={!isEdit}
                     profile
+                    className="mb-4"
                   />
 
                   {user.emailVerified ? (
@@ -79,8 +74,8 @@ export default function EmailForm() {
                 {toastMessage && <Toast type={toastType}>{toastMessage}</Toast>}
 
                 <FormButtons
-                  edit={edit}
-                  handleToggleEdit={handleToggleEdit}
+                  edit={isEdit}
+                  handleToggleEdit={toggleState}
                   resetForm={resetForm}
                   context="Email"
                 />

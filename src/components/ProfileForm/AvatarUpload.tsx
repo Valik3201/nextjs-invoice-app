@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { useProfileForm } from "@/src/hooks/useProfileForm";
+import { useAccountActions } from "@/src/hooks/useAccountActions";
 import Avatar from "@/src/icons/Avatar";
 import Toast from "../Toast/Toast";
 
 export default function AvatarUpload() {
   const { user, handleAvatarUpload, showToast, toastMessage, toastType } =
-    useProfileForm();
+    useAccountActions();
   const [photoURL, setPhotoURL] = useState(user?.photoURL);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

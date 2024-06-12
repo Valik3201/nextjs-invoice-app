@@ -1,35 +1,34 @@
 "use client";
 
-import React, {
-  useState,
-  useEffect,
-  createContext,
-  useContext,
-  ReactNode,
-} from "react";
+import React, { useEffect, createContext, useContext, ReactNode } from "react";
+import { useToggleState } from "@/src/hooks/useToggleState";
 import Button from "../Button/Button";
 import CloseIcon from "@/src/icons/CloseIcon";
 
-const ModalContext = createContext<{
+interface ModalContextProps {
   closeModal: () => void;
   handleConfirm: () => void;
-}>({
+}
+
+const ModalContext = createContext<ModalContextProps>({
   closeModal: () => {},
   handleConfirm: () => {},
 });
+
+interface ModalProps {
+  handleConfirm: () => void;
+  children: ReactNode;
+  trigger?: ReactNode | string | null;
+  shouldCloseOnConfirm?: boolean;
+}
 
 function Modal({
   handleConfirm,
   children,
   trigger,
   shouldCloseOnConfirm = true,
-}: {
-  handleConfirm: () => void;
-  children: ReactNode;
-  trigger?: ReactNode | string | null;
-  shouldCloseOnConfirm?: boolean;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
+}: ModalProps) {
+  const { state: isOpen, toggleState } = useToggleState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -43,43 +42,35 @@ function Modal({
     };
   }, [isOpen]);
 
-  const openModal = () => {
-    setIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsOpen(false);
-  };
-
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
-      closeModal();
+      toggleState();
     }
   };
 
   const handleKeyDown = (event: KeyboardEvent) => {
     if (event.key === "Escape") {
-      closeModal();
+      toggleState();
     }
   };
 
   const handleConfirmAction = () => {
     handleConfirm();
     if (shouldCloseOnConfirm) {
-      closeModal();
+      toggleState();
     }
   };
 
   const renderTrigger = () => {
     if (typeof trigger === "string") {
       return (
-        <Button variant="red" onClick={openModal} className="px-5">
+        <Button variant="red" onClick={toggleState} className="px-5">
           {trigger}
         </Button>
       );
     } else if (React.isValidElement(trigger)) {
       return React.cloneElement(trigger as React.ReactElement, {
-        onClick: openModal,
+        onClick: toggleState,
       });
     } else {
       return null;
@@ -88,7 +79,7 @@ function Modal({
 
   return (
     <ModalContext.Provider
-      value={{ closeModal, handleConfirm: handleConfirmAction }}
+      value={{ closeModal: toggleState, handleConfirm: handleConfirmAction }}
     >
       <>
         {renderTrigger()}
@@ -102,7 +93,7 @@ function Modal({
               <div className="relative bg-white shadow-item p-8 md:p-12 rounded-lg dark:bg-dark-light">
                 <button
                   type="button"
-                  onClick={closeModal}
+                  onClick={toggleState}
                   className="absolute top-6 right-6 stroke-dark-darkest dark:stroke-gray-light"
                 >
                   <CloseIcon />

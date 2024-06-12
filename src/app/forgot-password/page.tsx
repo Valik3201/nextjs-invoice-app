@@ -2,14 +2,14 @@
 
 import { Formik, Form } from "formik";
 import { emailSchema } from "@/src/validation/profileValidationSchema";
-import { useProfileForm } from "@/src/hooks/useProfileForm";
+import { useAccountActions } from "@/src/hooks/useAccountActions";
 import InputField from "@/src/components/FormElements/InputField";
 import Button from "@/src/components/Button/Button";
 import GoBackButton from "@/src/components/Button/GoBackButton";
 import Toast from "@/src/components/Toast/Toast";
 
 export default function Page() {
-  const { handleResetPassword, toastMessage, toastType } = useProfileForm();
+  const { handleResetPassword, toastMessage, toastType } = useAccountActions();
 
   return (
     <div className="flex justify-center w-full">
@@ -31,11 +31,7 @@ export default function Page() {
           }}
           validationSchema={emailSchema}
           onSubmit={(values, { resetForm }) =>
-            handleResetPassword(
-              values,
-              "Password reset link sent successfully!",
-              resetForm
-            )
+            handleResetPassword(values, resetForm)
           }
         >
           {(formik) => (

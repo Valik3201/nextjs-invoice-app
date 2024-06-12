@@ -6,7 +6,7 @@ import {
 } from "../lib/features/invoices/invoicesOperations";
 import { Invoice, InvoiceStatus } from "../lib/types";
 
-export const useInvoiceForm = (closeForm: () => void) => {
+export const useInvoiceActions = (closeForm: () => void) => {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
@@ -23,7 +23,6 @@ export const useInvoiceForm = (closeForm: () => void) => {
       }
     }
     setSubmitting(false);
-    closeForm();
   };
 
   const handleEditSubmit = async (
@@ -76,6 +75,7 @@ export const useInvoiceForm = (closeForm: () => void) => {
   };
 
   return {
+    user,
     handleNewSubmit,
     handleEditSubmit,
     handleSaveAsDraft,
