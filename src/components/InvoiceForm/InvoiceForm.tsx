@@ -1,7 +1,7 @@
 import { Formik, Form } from "formik";
 import { Invoice } from "../../lib/types";
 import { invoiceValidationSchema } from "../../validation/invoiceValidationSchema";
-import { useInvoiceForm } from "../../hooks/useInvoiceForm";
+import { useInvoiceActions } from "../../hooks/useInvoiceActions";
 import ItemListFieldArray from "./ItemListFieldArray";
 import BillFromForm from "./BillFromForm";
 import BillToForm from "./BillToForm";
@@ -24,7 +24,7 @@ export default function InvoiceForm({
     handleEditSubmit,
     handleSaveAsDraft,
     handleDiscard,
-  } = useInvoiceForm(closeForm);
+  } = useInvoiceActions(closeForm);
 
   return (
     <div className="relative md:w-[616px] max-h-full pl-6 md:pl-14 pr-2 md:pr-10 py-6 md:pb-28 md:py-16">

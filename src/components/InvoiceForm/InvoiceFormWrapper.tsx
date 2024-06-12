@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Invoice } from "@/src/lib/types";
 import InvoiceForm from "../InvoiceForm/InvoiceForm";
 import Button from "../Button/Button";
 import PlusIcon from "@/src/icons/PlusIcon";
+import { useToggleState } from "@/src/hooks/useToggleState";
 
 export default function InvoiceFormWrapper({
   initialValues,
@@ -13,25 +13,22 @@ export default function InvoiceFormWrapper({
   initialValues: Invoice;
   action: "new" | "edit";
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const openForm = () => setIsOpen(true);
-  const closeForm = () => setIsOpen(false);
+  const { state: isOpen, toggleState } = useToggleState();
 
   return (
     <>
       {action === "new" ? (
-        <Button variant="primary" icon={<PlusIcon />} onClick={openForm}>
+        <Button variant="primary" icon={<PlusIcon />} onClick={toggleState}>
           New<span className="hidden md:inline"> Invoice</span>
         </Button>
       ) : (
-        <Button variant={"default"} onClick={openForm} className="px-6">
+        <Button variant={"default"} onClick={toggleState} className="px-6">
           Edit
         </Button>
       )}
 
       <div
-        onClick={closeForm}
+        onClick={toggleState}
         className={`fixed top-0 left-0 transition duration-500 ease-in-out ${
           isOpen
             ? "overflow-y-auto overflow-x-hidden z-10 w-full h-full max-h-full bg-dark-darkest/50"
@@ -46,7 +43,7 @@ export default function InvoiceFormWrapper({
         >
           <InvoiceForm
             initialValues={initialValues}
-            closeForm={closeForm}
+            closeForm={toggleState}
             action={action}
           />
         </div>

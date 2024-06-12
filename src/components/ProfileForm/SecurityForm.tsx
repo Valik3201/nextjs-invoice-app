@@ -1,5 +1,6 @@
 import { Formik, Form } from "formik";
-import { useProfileForm } from "@/src/hooks/useProfileForm";
+import { useToggleState } from "@/src/hooks/useToggleState";
+import { useAccountActions } from "@/src/hooks/useAccountActions";
 import { passwordSchema } from "@/src/validation/profileValidationSchema";
 import InputField from "@/src/components/FormElements/InputField";
 import FormButtons from "./FormButtons";
@@ -7,11 +8,12 @@ import Toast from "../Toast/Toast";
 import GoogleIcon from "@/src/icons/GoogleIcon";
 import FacebookIcon from "@/src/icons/FacebookIcon";
 import FirebaseIcon from "@/src/icons/FirebaseIcon";
+import { stat } from "fs";
 
 export default function SecurityForm() {
-  const { user, useEditState, handleUpdatePassword, toastMessage, toastType } =
-    useProfileForm();
-  const { edit, handleToggleEdit } = useEditState();
+  const { state: isEdit, toggleState } = useToggleState();
+  const { user, handleUpdatePassword, toastMessage, toastType } =
+    useAccountActions();
 
   const ProviderIcons: { [key: string]: React.FC } = {
     "google.com": GoogleIcon,
@@ -53,13 +55,7 @@ export default function SecurityForm() {
       <div className="w-full">
         <Formik
           initialValues={{ newPassword: "", confirmPassword: "" }}
-          onSubmit={(values) =>
-            handleUpdatePassword(
-              values,
-              "Password successfully updated!",
-              handleToggleEdit
-            )
-          }
+          onSubmit={(values) => handleUpdatePassword(values, toggleState)}
           validationSchema={passwordSchema}
         >
           {({
@@ -71,7 +67,7 @@ export default function SecurityForm() {
             resetForm,
           }) => (
             <Form>
-              {edit && (
+              {isEdit && (
                 <>
                   <InputField
                     label="New Password"
@@ -81,8 +77,9 @@ export default function SecurityForm() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={touched.newPassword && errors.newPassword}
-                    readOnly={!edit}
+                    readOnly={!isEdit}
                     profile
+                    className="mb-4"
                   />
 
                   <InputField
@@ -93,8 +90,9 @@ export default function SecurityForm() {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     error={touched.confirmPassword && errors.confirmPassword}
-                    readOnly={!edit}
+                    readOnly={!isEdit}
                     profile
+                    className="mb-4"
                   />
                 </>
               )}
@@ -102,8 +100,8 @@ export default function SecurityForm() {
               {toastMessage && <Toast type={toastType}>{toastMessage}</Toast>}
 
               <FormButtons
-                edit={edit}
-                handleToggleEdit={handleToggleEdit}
+                edit={isEdit}
+                handleToggleEdit={toggleState}
                 resetForm={resetForm}
                 context="Password"
               />
