@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { storage } from "@/src/firebase.config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
@@ -9,54 +8,22 @@ import {
   sendlVerificationEmail,
   resetUserPassword,
 } from "@/src/lib/features/auth/authOperations";
-import { resetErrors } from "../lib/features/auth/authSlice";
+import { useToast } from "./useToast";
 
-export const useProfileForm = () => {
+export const useAccountActions = () => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.auth.user);
 
-  const useEditState = () => {
-    const [edit, setEdit] = useState(false);
-    const handleToggleEdit = () => setEdit((prevEdit) => !prevEdit);
-    return { edit, handleToggleEdit };
-  };
+  const { toastMessage, toastType, showToast } = useToast();
 
-  const [toastMessage, setToastMessage] = useState<string | null>(null);
-  const [toastType, setToastType] = useState<
-    "success" | "danger" | "warning" | "email"
-  >("email");
-
-  useEffect(() => {
-    if (toastMessage) {
-      const timer = setTimeout(() => {
-        setToastMessage(null);
-        setToastType("email");
-        dispatch(resetErrors());
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [toastMessage, dispatch]);
-
-  const showToast = (
-    message: string,
-    type: "success" | "danger" | "warning" | "email"
-  ) => {
-    setToastMessage(message);
-    setToastType(type);
-  };
-
-  const handleSaveName = async (
-    values: any,
-    successMessage: string,
-    toggleEdit: () => void
-  ) => {
+  const handleSaveName = async (values: any, toggleEdit: () => void) => {
     try {
       await dispatch(
         updateUserProfile({ displayName: values.displayName })
       ).unwrap();
       toggleEdit();
-      if (user?.displayName !== values.displayName) {
-        showToast(successMessage, "success");
+      if (user && user.displayName !== values.displayName) {
+        showToast("Name successfully updated!", "success");
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -64,16 +31,12 @@ export const useProfileForm = () => {
     }
   };
 
-  const handleUpdateEmail = async (
-    values: any,
-    successMessage: string,
-    toggleEdit: () => void
-  ) => {
+  const handleUpdateEmail = async (values: any, toggleEdit: () => void) => {
     try {
       await dispatch(updateUserEmail({ email: values.email })).unwrap();
       toggleEdit();
-      if (user?.email !== values.email) {
-        showToast(successMessage, "success");
+      if (user && user.email !== values.email) {
+        showToast("Email successfully updated!", "success");
       }
     } catch (error) {
       console.error("Error updating email:", error);
@@ -84,38 +47,30 @@ export const useProfileForm = () => {
   const handleSendVerificationEmail = async () => {
     try {
       await dispatch(sendlVerificationEmail());
-      showToast("Verification email sent", "success");
+      showToast("Verification email sent successfully!", "success");
     } catch (error) {
       console.error("Error sending verification email:", error);
       showToast("Error sending verification email", "danger");
     }
   };
 
-  const handleUpdatePassword = async (
-    values: any,
-    successMessage: string,
-    toggleEdit: () => void
-  ) => {
+  const handleUpdatePassword = async (values: any, toggleEdit: () => void) => {
     try {
       await dispatch(
         updateUserPassword({ newPassword: values.newPassword })
       ).unwrap();
       toggleEdit();
-      showToast(successMessage, "success");
+      showToast("Password successfully updated!", "success");
     } catch (error) {
       console.error("Error updating password:", error);
       showToast("Error updating password", "danger");
     }
   };
 
-  const handleResetPassword = async (
-    values: any,
-    successMessage: string,
-    resetForm: () => void
-  ) => {
+  const handleResetPassword = async (values: any, resetForm: () => void) => {
     try {
       await dispatch(resetUserPassword({ email: values.email })).unwrap();
-      showToast(successMessage, "success");
+      showToast("Password reset link sent successfully!", "email");
       resetForm();
     } catch (error) {
       console.log("Error sending password reset link:", error);
@@ -132,7 +87,7 @@ export const useProfileForm = () => {
       const snapshot = await uploadBytes(storageRef, file);
       const downloadURL = await getDownloadURL(snapshot.ref);
       await dispatch(updateUserProfile({ photoURL: downloadURL })).unwrap();
-      showToast("Avatar updated successfully", "success");
+      showToast("Avatar updated successfully!", "success");
       return downloadURL;
     } catch (error) {
       console.error("Error uploading avatar:", error);
@@ -143,15 +98,14 @@ export const useProfileForm = () => {
 
   return {
     user,
-    useEditState,
     handleSaveName,
     handleUpdateEmail,
     handleSendVerificationEmail,
     handleUpdatePassword,
     handleResetPassword,
     handleAvatarUpload,
-    showToast,
     toastMessage,
     toastType,
+    showToast,
   };
 };
