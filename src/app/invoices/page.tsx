@@ -9,7 +9,7 @@ import { useInvoiceStatus } from "@/src/hooks/useInvoiceStatus";
 import { newInvoice } from "@/src/components/InvoiceForm/initialValues";
 import InvoicesStats from "@/src/components/Invoices/InvoicesStats";
 import InvoiceFormWrapper from "@/src/components/InvoiceForm/InvoiceFormWrapper";
-import InvoiceList from "@/src/components/Invoices/InvoiceList";
+import InvoicesList from "@/src/components/Invoices/InvoicesList";
 import FilterByStatus from "@/src/components/Invoices/FilterByStatus";
 import NoInvoicesMessage from "@/src/components/Invoices/NoInvoicesMessage";
 import SkeletonInvoices from "@/src/components/Loader/SkeletonInvoices";
@@ -76,7 +76,7 @@ export default function Page() {
           {invoices.length === 0 || filteredInvoices.length === 0 ? (
             <NoInvoicesMessage />
           ) : (
-            <InvoiceList invoices={filteredInvoices} />
+            <InvoicesList invoices={filteredInvoices} />
           )}
         </>
       )}

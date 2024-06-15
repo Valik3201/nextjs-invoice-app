@@ -24,24 +24,28 @@ export interface InvoiceItem {
   total: number;
 }
 
+export interface BillTo {
+  clientEmail: string;
+  clientName: string;
+  city: string;
+  country: string;
+  postCode: string;
+  streetAddress: string;
+}
+
+export interface BillFrom {
+  city: string;
+  country: string;
+  postCode: string;
+  streetAddress: string;
+}
+
 export interface Invoice {
   id: string;
   uid: string;
   status: InvoiceStatus;
-  billFrom: {
-    city: string;
-    country: string;
-    postCode: string;
-    streetAddress: string;
-  };
-  billTo: {
-    clientEmail: string;
-    clientName: string;
-    city: string;
-    country: string;
-    postCode: string;
-    streetAddress: string;
-  };
+  billFrom: BillFrom;
+  billTo: BillTo;
   invoiceDate: string;
   paymentDue: string;
   paymentTerms: PaymentTerms;

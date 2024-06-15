@@ -1,12 +1,16 @@
+import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 import { useAppDispatch, useAppSelector } from "../lib/hooks";
 import {
   addInvoice,
+  deleteInvoice,
+  fetchInvoiceById,
   updateInvoice,
 } from "../lib/features/invoices/invoicesOperations";
 import { Invoice, InvoiceStatus } from "../lib/types";
 
-export const useInvoiceActions = (closeForm: () => void) => {
+export const useInvoiceActions = (closeForm: () => void = () => {}) => {
+  const router = useRouter();
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
@@ -74,11 +78,39 @@ export const useInvoiceActions = (closeForm: () => void) => {
     closeForm();
   };
 
+  const handleDelete = (invoice: Invoice) => {
+    if (user && user.uid) {
+      dispatch(
+        deleteInvoice({ userId: user.uid, invoiceUid: invoice.uid })
+      ).unwrap();
+
+      router.push("/invoices");
+    }
+  };
+
+  const handleStatusChange = (invoice: Invoice, newStatus: InvoiceStatus) => {
+    if (user && user.uid) {
+      dispatch(
+        updateInvoice({
+          userId: user.uid,
+          invoiceUid: invoice.uid,
+          updatedData: { status: newStatus },
+        })
+      );
+
+      dispatch(
+        fetchInvoiceById({ userId: user.uid, invoiceUid: invoice.uid })
+      ).unwrap();
+    }
+  };
+
   return {
     user,
-    handleNewSubmit,
-    handleEditSubmit,
-    handleSaveAsDraft,
+    handleDelete,
     handleDiscard,
+    handleEditSubmit,
+    handleNewSubmit,
+    handleStatusChange,
+    handleSaveAsDraft,
   };
 };
