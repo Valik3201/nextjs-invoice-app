@@ -4,7 +4,7 @@ import { Invoice } from "@/src/lib/types";
 import Status from "../Status/Status";
 import ArrowIcon from "@/src/icons/ArrowIcon";
 
-export default function InvoiceList({ invoices }: { invoices: Invoice[] }) {
+export default function InvoicesList({ invoices }: { invoices: Invoice[] }) {
   return (
     <ul className="flex flex-col gap-4 w-full">
       {invoices.map((invoice) => {
