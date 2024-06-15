@@ -49,7 +49,7 @@ export const addInvoice = createAsyncThunk(
       const invoiceId = generateInvoiceId();
       const total = calculateTotal(invoice.itemList);
       const paymentDue = calculateDueDate(
-        invoice.invoiceDate,
+        invoice.createdAt,
         invoice.paymentTerms
       );
       const invoiceData = { ...invoice, id: invoiceId, total, paymentDue };
@@ -113,12 +113,20 @@ export const updateInvoice = createAsyncThunk(
       const invoiceSnapshot = await getDoc(invoiceRef);
       const currentInvoiceData = invoiceSnapshot.data() as Invoice;
 
+      const newPaymentDue = updatedData.paymentTerms
+        ? calculateDueDate(
+            currentInvoiceData.createdAt,
+            updatedData.paymentTerms
+          )
+        : currentInvoiceData.paymentDue;
+
       const updatedInvoiceData = {
         ...currentInvoiceData,
         ...updatedData,
         total: updatedData.itemList
           ? calculateTotal(updatedData.itemList)
           : currentInvoiceData.total,
+        paymentDue: newPaymentDue,
       };
 
       await updateDoc(invoiceRef, updatedInvoiceData);
