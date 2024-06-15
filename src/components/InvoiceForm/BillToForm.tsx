@@ -21,55 +21,60 @@ export default function BillToForm({
       <div className="flex flex-col gap-6">
         <InputField
           label="Client Name"
-          name="billTo.clientName"
-          value={values.billTo.clientName}
+          name="clientName"
+          value={values.clientName}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.billTo?.clientName && errors.billTo?.clientName}
+          error={touched?.clientName && errors?.clientName}
         />
         <InputField
           label="Client Email"
           type="email"
-          name="billTo.clientEmail"
-          value={values.billTo.clientEmail}
+          name="clientEmail"
+          value={values.clientEmail}
           onChange={handleChange}
           placeholder="e.g. email@example.com"
-          error={touched.billTo?.clientEmail && errors.billTo?.clientEmail}
+          error={touched?.clientEmail && errors?.clientEmail}
         />
         <InputField
           label="Street Address"
-          name="billTo.streetAddress"
-          value={values.billTo.streetAddress}
+          name="clientAddress.street"
+          value={values.clientAddress.street}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={touched.billTo?.streetAddress && errors.billTo?.streetAddress}
+          error={touched.clientAddress?.street && errors.clientAddress?.street}
         />
         <div className="flex flex-col md:flex-row md:gap-6">
           <div className="flex gap-6">
             <InputField
               label="City"
-              name="billTo.city"
-              value={values.billTo.city}
+              name="clientAddress.city"
+              value={values.clientAddress.city}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.billTo?.city && errors.billTo?.city}
+              error={touched.clientAddress?.city && errors.clientAddress?.city}
             />
             <InputField
               label="Post Code"
-              name="billTo.postCode"
-              value={values.billTo.postCode}
+              name="clientAddress.postCode"
+              value={values.clientAddress.postCode}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.billTo?.postCode && errors.billTo?.postCode}
+              error={
+                touched.clientAddress?.postCode &&
+                errors.clientAddress?.postCode
+              }
             />
           </div>
           <InputField
             label="Country"
-            name="billTo.country"
-            value={values.billTo.country}
+            name="clientAddress.country"
+            value={values.clientAddress.country}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.billTo?.country && errors.billTo?.country}
+            error={
+              touched.clientAddress?.country && errors.clientAddress?.country
+            }
             className="mt-6 md:mt-0"
           />
         </div>

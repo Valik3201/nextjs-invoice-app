@@ -1,23 +1,21 @@
 import * as Yup from "yup";
 
+const addressSchema = Yup.object().shape({
+  street: Yup.string().required("can’t be empty"),
+  city: Yup.string().required("Ccan’t be empty"),
+  postCode: Yup.string().required("can’t be empty"),
+  country: Yup.string().required("can’t be empty"),
+});
+
 export const invoiceValidationSchema = Yup.object().shape({
-  billFrom: Yup.object().shape({
-    streetAddress: Yup.string().required("can’t be empty"),
-    city: Yup.string().required("can’t be empty"),
-    postCode: Yup.string().required("can’t be empty"),
-    country: Yup.string().required("can’t be empty"),
-  }),
-  billTo: Yup.object().shape({
-    clientName: Yup.string().required("can’t be empty"),
-    clientEmail: Yup.string().required("can’t be empty"),
-    streetAddress: Yup.string().required("can’t be empty"),
-    city: Yup.string().required("can’t be empty"),
-    postCode: Yup.string().required("can’t be empty"),
-    country: Yup.string().required("can’t be empty"),
-  }),
-  invoiceDate: Yup.string().required("can’t be empty"),
-  paymentTerms: Yup.number().required("can’t be empty"),
-  projectDescription: Yup.string().required("can’t be empty"),
+  createdAt: Yup.string().required("can’t be empty"),
+  description: Yup.string().required("can’t be empty"),
+  clientName: Yup.string().required("can’t be empty"),
+  clientEmail: Yup.string()
+    .email("Invalid email format")
+    .required("can’t be empty"),
+  senderAddress: addressSchema,
+  clientAddress: addressSchema,
   itemList: Yup.array().of(
     Yup.object()
       .shape({

@@ -58,7 +58,7 @@ export const useInvoiceActions = (closeForm: () => void = () => {}) => {
       const draftInvoiceData = {
         ...values,
         status: InvoiceStatus.Draft,
-        invoiceDate: format(new Date(), "yyyy-MM-dd"),
+        createdAt: format(new Date(), "yyyy-MM-dd"),
       };
       try {
         await dispatch(
