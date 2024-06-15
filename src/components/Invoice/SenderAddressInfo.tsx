@@ -1,16 +1,16 @@
-import { BillFrom } from "@/src/lib/types";
+import { Address } from "@/src/lib/types";
 
 export default function SenderAddressInfo({
-  billFrom,
+  senderAddress,
 }: {
-  billFrom: BillFrom;
+  senderAddress: Address;
 }) {
   return (
     <div className="md:text-right text-blue-gray dark:text-gray-light text-body">
-      <p>{billFrom.streetAddress ? billFrom.streetAddress : "No street"}</p>
-      <p>{billFrom.city ? billFrom.city : "No city"}</p>
-      <p>{billFrom.postCode ? billFrom.postCode : "No postcode"}</p>
-      <p>{billFrom.country ? billFrom.country : "No country"}</p>
+      <p>{senderAddress.street ? senderAddress.street : "No street"}</p>
+      <p>{senderAddress.city ? senderAddress.city : "No city"}</p>
+      <p>{senderAddress.postCode ? senderAddress.postCode : "No postcode"}</p>
+      <p>{senderAddress.country ? senderAddress.country : "No country"}</p>
     </div>
   );
 }

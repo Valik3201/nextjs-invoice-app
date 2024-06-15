@@ -12,11 +12,11 @@ export default function InvoicesList({ invoices }: { invoices: Invoice[] }) {
           .reduce((acc, item) => acc + item.total, 0)
           .toFixed(2);
 
-        const dueDate = invoice.invoiceDate
-          ? format(new Date(invoice.invoiceDate), "dd MMM yyyy")
+        const dueDate = invoice.createdAt
+          ? format(new Date(invoice.createdAt), "dd MMM yyyy")
           : "Date not provided";
 
-        const clientName = invoice.billTo?.clientName || "No client name";
+        const clientName = invoice.clientName || "No client name";
 
         return (
           <li key={invoice.id}>

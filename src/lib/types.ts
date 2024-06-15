@@ -1,8 +1,3 @@
-export interface GetInvoiceResult {
-  invoice: Invoice | null;
-  error: any;
-}
-
 export enum InvoiceStatus {
   Draft = "draft",
   Pending = "pending",
@@ -24,32 +19,25 @@ export interface InvoiceItem {
   total: number;
 }
 
-export interface BillTo {
-  clientEmail: string;
-  clientName: string;
+export interface Address {
+  street: string;
   city: string;
-  country: string;
   postCode: string;
-  streetAddress: string;
-}
-
-export interface BillFrom {
-  city: string;
   country: string;
-  postCode: string;
-  streetAddress: string;
 }
 
 export interface Invoice {
   id: string;
   uid: string;
-  status: InvoiceStatus;
-  billFrom: BillFrom;
-  billTo: BillTo;
-  invoiceDate: string;
+  createdAt: string;
   paymentDue: string;
+  description: string;
   paymentTerms: PaymentTerms;
-  projectDescription: string;
+  clientName: string;
+  clientEmail: string;
+  status: InvoiceStatus;
+  senderAddress: Address;
+  clientAddress: Address;
   itemList: InvoiceItem[];
   total: number;
 }

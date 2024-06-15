@@ -21,40 +21,43 @@ export default function BillFromForm({
       <div className="flex flex-col gap-6">
         <InputField
           label="Street Address"
-          name="billFrom.streetAddress"
-          value={values.billFrom.streetAddress}
+          name="senderAddress.street"
+          value={values.senderAddress.street}
           onChange={handleChange}
           onBlur={handleBlur}
-          error={
-            touched.billFrom?.streetAddress && errors.billFrom?.streetAddress
-          }
+          error={touched.senderAddress?.street && errors.senderAddress?.street}
         />
         <div className="flex flex-col md:flex-row md:gap-6">
           <div className="flex gap-6">
             <InputField
               label="City"
-              name="billFrom.city"
-              value={values.billFrom.city}
+              name="senderAddress.city"
+              value={values.senderAddress.city}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.billFrom?.city && errors.billFrom?.city}
+              error={touched.senderAddress?.city && errors.senderAddress?.city}
             />
             <InputField
               label="Post Code"
-              name="billFrom.postCode"
-              value={values.billFrom.postCode}
+              name="senderAddress.postCode"
+              value={values.senderAddress.postCode}
               onChange={handleChange}
               onBlur={handleBlur}
-              error={touched.billFrom?.postCode && errors.billFrom?.postCode}
+              error={
+                touched.senderAddress?.postCode &&
+                errors.senderAddress?.postCode
+              }
             />
           </div>
           <InputField
             label="Country"
-            name="billFrom.country"
-            value={values.billFrom.country}
+            name="senderAddress.country"
+            value={values.senderAddress.country}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.billFrom?.country && errors.billFrom?.country}
+            error={
+              touched.senderAddress?.country && errors.senderAddress?.country
+            }
             className="mt-6 md:mt-0"
           />
         </div>

@@ -25,14 +25,12 @@ export default function InvoiceDetailsForm({
     <>
       <div className="grid md:grid-cols-2 gap-6 mt-6">
         <InputDate
-          name="invoiceDate"
-          value={values.invoiceDate}
+          name="createdAt"
+          value={values.createdAt}
           onChange={(e) => setFieldValue("invoiceDate", e.target.value)}
           action={action}
           error={
-            touched.invoiceDate && !values.invoiceDate
-              ? "cant'be empty"
-              : undefined
+            touched.createdAt && !values.createdAt ? "cant'be empty" : undefined
           }
         />
 
@@ -44,12 +42,12 @@ export default function InvoiceDetailsForm({
 
       <InputField
         label="Project Description"
-        name="projectDescription"
-        value={values.projectDescription}
+        name="description"
+        value={values.description}
         onChange={handleChange}
         onBlur={handleBlur}
         placeholder="e.g. Graphic Design Service"
-        error={touched.projectDescription && errors.projectDescription}
+        error={touched.description && errors.description}
       />
     </>
   );
