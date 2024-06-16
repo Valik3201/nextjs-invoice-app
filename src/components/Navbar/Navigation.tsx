@@ -30,7 +30,7 @@ export default function Navigation() {
           </ul>
         </div>
 
-        <div className="flex flex-row lg:flex-col items-center divide-x-2 lg:divide-y-2 divide-[#494e6e]">
+        <div className="flex flex-row lg:flex-col items-center divide-x-2 lg:divide-x-0 lg:divide-y-2 divide-[#494e6e]">
           <div className="flex justify-center w-full pe-6 lg:pe-0 lg:py-7">
             <div className="w-5 h-5 flex justify-center items-center text-[#858BB2]">
               <ThemeToggle />
