@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { deleteCookie, setCookie } from "cookies-next";
 import {
   createUserWithEmailAndPassword,
   FacebookAuthProvider,
@@ -35,6 +36,12 @@ export const signUp = createAsyncThunk(
         email,
         password
       );
+
+      const token = await result.user.getIdToken();
+      setCookie("token", token, {
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      });
+
       if (result.user) {
         await updateProfile(result.user as User, {
           displayName: displayName,
@@ -53,6 +60,12 @@ export const signIn = createAsyncThunk(
   async ({ email, password }: AuthData, { rejectWithValue }) => {
     try {
       const result = await signInWithEmailAndPassword(auth, email, password);
+
+      const token = await result.user.getIdToken();
+      setCookie("token", token, {
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      });
+
       return result.user;
     } catch (error) {
       const firebaseError = error as FirebaseError;
@@ -74,6 +87,12 @@ export const loginWithProvider = createAsyncThunk(
           ? new GoogleAuthProvider()
           : new FacebookAuthProvider()
       );
+
+      const token = await result.user.getIdToken();
+      setCookie("__token__", token, {
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+      });
+
       const state = getState() as RootState;
       if (state.auth.pendingCred) {
         const pendingCred = state.auth.pendingCred!;
@@ -106,6 +125,7 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       await signOut(auth);
+      deleteCookie("__token__");
     } catch (error) {
       const firebaseError = error as FirebaseError;
       return rejectWithValue(firebaseError);
@@ -118,9 +138,19 @@ export const listenToAuthChanges = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       return new Promise<User | null>((resolve) => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-          dispatch(setUser(user));
-          resolve(user);
+        const unsubscribe = onAuthStateChanged(auth, async (user) => {
+          if (user) {
+            const token = await user.getIdToken();
+            setCookie("__token__", token, {
+              expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+            });
+            dispatch(setUser(user));
+            resolve(user);
+          } else {
+            deleteCookie("__token__");
+            dispatch(logout());
+            resolve(null);
+          }
         });
         return () => unsubscribe();
       });
