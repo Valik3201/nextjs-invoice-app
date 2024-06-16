@@ -6,6 +6,7 @@ import StoreProvider from "../store/StoreProvider";
 import AuthProvider from "../store/AuthProvider";
 import Navigation from "../components/Navbar/Navigation";
 import "./globals.css";
+import Footer from "../components/Footer/Footer";
 
 const leagueSpartan = League_Spartan({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default function RootLayout({
               <main className="container mx-auto pt-[72px] md:pt-20 lg:pt-0 w-[327px] md:w-[672px] lg:w-[730px] my-8 md:my-[61px] lg:my-[78px]">
                 {children}
               </main>
+              <Footer />
             </ThemeProvider>
           </AuthProvider>
         </StoreProvider>
