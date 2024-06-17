@@ -5,7 +5,7 @@ export default function PersonalizeWorkspace() {
     <div className="flex flex-col items-center gap-6 bg-white rounded-lg p-8 shadow-item dark:bg-dark-light">
       <div className="space-y-4">
         <h2 className="text-heading-m">Personalize Your Workspace</h2>
-        <p className="text-body-variant text-gray-medium dark:text-gray-light">
+        <p className="text-body-variant md:text-center text-gray-medium dark:text-gray-light">
           Choose between light and dark modes
         </p>
       </div>

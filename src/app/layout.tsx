@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" style={theme !== "light" ? { colorScheme: theme } : {}}>
       <body
-        className={`${leagueSpartan.className} bg-light text-dark-darkest dark:bg-dark dark:text-white`}
+        className={`${leagueSpartan.className} min-h-svh flex flex-col bg-light text-dark-darkest dark:bg-dark dark:text-white`}
       >
         <StoreProvider>
           <AuthProvider>
