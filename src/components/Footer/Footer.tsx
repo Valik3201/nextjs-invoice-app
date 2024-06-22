@@ -1,8 +1,18 @@
+"use client";
+
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isInvoicePage = pathname.startsWith("/invoices/");
+
   return (
-    <footer className="mt-auto w-[327px] md:w-[672px] lg:w-[730px] mx-auto flex flex-col gap-4 pb-8 mb-20 md:mb-0">
+    <footer
+      className={`mt-auto w-[327px] md:w-[672px] lg:w-[730px] mx-auto flex flex-col gap-4 pb-8 ${
+        isInvoicePage ? "mb-20 md:mb-0" : ""
+      }`}
+    >
       <div className="h-px w-full bg-gray-light dark:bg-dark-medium"></div>
 
       <div className="flex gap-2 items-center justify-center pt-4">
