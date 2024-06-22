@@ -8,7 +8,7 @@ import AvatarUploadAndCrop from "@/src/components/ProfileForm/AvatarUploadAndCro
 import DisplayNameForm from "@/src/components/ProfileForm/DisplayNameForm";
 import EmailForm from "@/src/components/ProfileForm/EmailForm";
 import SecurityForm from "@/src/components/ProfileForm/SecurityForm";
-import ImageCropProvider from "@/src/store/ImageCropProvider";
+import ImageCropProvider from "@/src/providers/ImageCropProvider";
 
 export default function Page() {
   const router = useRouter();

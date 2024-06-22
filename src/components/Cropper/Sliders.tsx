@@ -1,4 +1,4 @@
-import { useImageCropContext } from "@/src/store/ImageCropProvider";
+import { useImageCropContext } from "@/src/providers/ImageCropProvider";
 import AddIcon from "@/src/icons/AddIcon";
 import RemoveIcon from "@/src/icons/RemoveIcon";
 import RotateLeftIcon from "@/src/icons/RotateLeftIcon";

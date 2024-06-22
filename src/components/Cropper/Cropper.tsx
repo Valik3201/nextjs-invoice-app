@@ -1,6 +1,6 @@
 import React from "react";
 import EasyCropper from "react-easy-crop";
-import { useImageCropContext } from "@/src/store/ImageCropProvider";
+import { useImageCropContext } from "@/src/providers/ImageCropProvider";
 
 const Cropper: React.FC = () => {
   const { image, zoom, setZoom, rotation, crop, setCrop, onCropComplete } =

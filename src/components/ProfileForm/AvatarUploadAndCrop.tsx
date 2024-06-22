@@ -1,6 +1,6 @@
 import { useState, useRef, ChangeEvent } from "react";
 import { useAccountActions } from "@/src/hooks/useAccountActions";
-import { useImageCropContext } from "@/src/store/ImageCropProvider";
+import { useImageCropContext } from "@/src/providers/ImageCropProvider";
 import { useToggleState } from "@/src/hooks/useToggleState";
 import { readFile } from "@/src/helpers/cropImage";
 import AvatarDisplay from "./AvatarDisplay";
