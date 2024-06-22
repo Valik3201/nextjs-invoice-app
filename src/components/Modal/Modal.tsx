@@ -20,6 +20,8 @@ interface ModalProps {
   children: ReactNode;
   trigger?: ReactNode | string | null;
   shouldCloseOnConfirm?: boolean;
+  isOpen?: boolean;
+  toggleState?: () => void;
 }
 
 function Modal({
@@ -27,8 +29,13 @@ function Modal({
   children,
   trigger,
   shouldCloseOnConfirm = true,
+  isOpen: externalIsOpen,
+  toggleState: externalToggleState,
 }: ModalProps) {
-  const { state: isOpen, toggleState } = useToggleState(false);
+  const { state: internalIsOpen, toggleState: internalToggleState } =
+    useToggleState(false);
+  const isOpen = externalIsOpen !== undefined ? externalIsOpen : internalIsOpen;
+  const toggleState = externalToggleState || internalToggleState;
 
   useEffect(() => {
     if (isOpen) {
@@ -132,11 +139,24 @@ function DiscardBtn({ children }: { children: ReactNode }) {
   return <Button onClick={closeModal}>{children}</Button>;
 }
 
-function ConfirmBtn({ children }: { children: ReactNode }) {
+function ConfirmBtn({
+  children,
+  variant = "red",
+}: {
+  children: ReactNode;
+  variant?:
+    | "red"
+    | "primary"
+    | "default"
+    | "white"
+    | "dark"
+    | "icon"
+    | "facebook";
+}) {
   const { handleConfirm } = useContext(ModalContext);
 
   return (
-    <Button variant="red" type="submit" onClick={handleConfirm}>
+    <Button variant={variant} type="submit" onClick={handleConfirm}>
       {children}
     </Button>
   );
