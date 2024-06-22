@@ -4,10 +4,11 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useAppSelector, useAppStore } from "@/src/lib/hooks";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
-import AvatarUpload from "@/src/components/ProfileForm/AvatarUpload";
+import AvatarUploadAndCrop from "@/src/components/ProfileForm/AvatarUploadAndCrop";
 import DisplayNameForm from "@/src/components/ProfileForm/DisplayNameForm";
 import EmailForm from "@/src/components/ProfileForm/EmailForm";
 import SecurityForm from "@/src/components/ProfileForm/SecurityForm";
+import ImageCropProvider from "@/src/store/ImageCropProvider";
 
 export default function Page() {
   const router = useRouter();
@@ -39,7 +40,9 @@ export default function Page() {
           </p>
         </div>
 
-        <AvatarUpload />
+        <ImageCropProvider>
+          <AvatarUploadAndCrop />
+        </ImageCropProvider>
       </div>
 
       <DisplayNameForm />
