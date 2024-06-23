@@ -1,5 +1,6 @@
 "use client";
 
+import AnimatedSection from "../components/Home/AnimatedSection";
 import Hero from "../components/Home/Hero";
 import InvoiceStatus from "../components/Home/InvoiceStatus";
 import ManageInvoices from "../components/Home/ManageInvoices";
@@ -12,14 +13,30 @@ import CreateFirstInvoice from "../components/Home/CreateFirstInvoice";
 export default function Home() {
   return (
     <div className="container mx-auto space-y-8">
-      <Hero />
-      <InvoiceStatus />
-      <ManageInvoices />
-      <FilterInvoices />
-      <Flexibility />
-      <PersonalizeWorkspace />
-      <ResponsiveDesign />
-      <CreateFirstInvoice />
+      <AnimatedSection delay={0}>
+        <Hero />
+      </AnimatedSection>
+      <AnimatedSection delay={0.2}>
+        <InvoiceStatus />
+      </AnimatedSection>
+      <AnimatedSection delay={0.4}>
+        <ManageInvoices />
+      </AnimatedSection>
+      <AnimatedSection delay={0.6}>
+        <FilterInvoices />
+      </AnimatedSection>
+      <AnimatedSection delay={0.8}>
+        <Flexibility />
+      </AnimatedSection>
+      <AnimatedSection delay={1.0}>
+        <PersonalizeWorkspace />
+      </AnimatedSection>
+      <AnimatedSection delay={0.7}>
+        <ResponsiveDesign />
+      </AnimatedSection>
+      <AnimatedSection delay={0.4}>
+        <CreateFirstInvoice />
+      </AnimatedSection>
     </div>
   );
 }
