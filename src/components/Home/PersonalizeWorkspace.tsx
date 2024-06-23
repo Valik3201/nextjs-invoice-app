@@ -1,6 +1,12 @@
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 export default function PersonalizeWorkspace() {
+  const { scrollYProgress } = useScroll();
+
+  const rotateX = useTransform(scrollYProgress, [0, 0.75], [135, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1.5, 1]);
+
   return (
     <div className="flex flex-col items-center gap-6 bg-white rounded-lg p-8 shadow-item dark:bg-dark-light">
       <div className="space-y-4">
@@ -10,12 +16,21 @@ export default function PersonalizeWorkspace() {
         </p>
       </div>
 
-      <Image
-        src="/mockups/mockup-3.png"
-        alt="Theme Toggle Macbook"
-        width={666}
-        height={444}
-      />
+      <div style={{ perspective: "1000px" }}>
+        <motion.div
+          style={{
+            rotateX: rotateX,
+            scale: scale,
+          }}
+        >
+          <Image
+            src="/mockups/mockup-3.png"
+            alt="Theme Toggle Macbook"
+            width={666}
+            height={444}
+          />
+        </motion.div>
+      </div>
     </div>
   );
 }

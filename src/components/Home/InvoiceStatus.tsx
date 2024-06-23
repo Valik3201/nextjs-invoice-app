@@ -1,37 +1,53 @@
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 export default function InvoiceStatus() {
+  const { scrollYProgress } = useScroll();
+
+  const rotatePaid = useTransform(scrollYProgress, [0, 1], [-8, 8]);
+  const translateXPaid = useTransform(scrollYProgress, [0, 1], [-20, 20]);
+  const rotatePending = useTransform(scrollYProgress, [0, 1], [8, -8]);
+  const translateXPending = useTransform(scrollYProgress, [0, 1], [50, -50]);
+  const rotateDraft = useTransform(scrollYProgress, [0, 1], [-6, 6]);
+  const translateXDraft = useTransform(scrollYProgress, [0, 1], [-10, 30]);
+
   return (
     <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8 md:gap-20 bg-white rounded-lg p-8 shadow-item dark:bg-dark-light">
       <div className="md:ps-8">
-        <Image
-          src="/status/status-paid.png"
-          alt="Status Paid"
-          width={150}
-          height={30}
-          className="-rotate-6"
-        />
-        <Image
-          src="/status/status-pending.png"
-          alt="Status Pending"
-          width={150}
-          height={30}
-          className="rotate-6 translate-x-8"
-        />
-        <Image
-          src="/status/status-draft.png"
-          alt="Status Draft"
-          width={150}
-          height={30}
-          className="dark:hidden -rotate-3"
-        />
-        <Image
-          src="/status/status-draft-dark.png"
-          alt="Status Draft"
-          width={150}
-          height={30}
-          className="hidden dark:block -rotate-3"
-        />
+        <motion.div style={{ rotate: rotatePaid, x: translateXPaid }}>
+          <Image
+            src="/status/status-paid.png"
+            alt="Status Paid"
+            width={150}
+            height={30}
+          />
+        </motion.div>
+        <motion.div style={{ rotate: rotatePending, x: translateXPending }}>
+          <Image
+            src="/status/status-pending.png"
+            alt="Status Pending"
+            width={150}
+            height={30}
+          />
+        </motion.div>
+        <motion.div style={{ rotate: rotateDraft, x: translateXDraft }}>
+          <Image
+            src="/status/status-draft.png"
+            alt="Status Draft"
+            width={150}
+            height={30}
+            className="dark:hidden"
+          />
+        </motion.div>
+        <motion.div style={{ rotate: rotateDraft, x: translateXDraft }}>
+          <Image
+            src="/status/status-draft-dark.png"
+            alt="Status Draft"
+            width={150}
+            height={30}
+            className="hidden dark:block"
+          />
+        </motion.div>
       </div>
 
       <div className="flex flex-col gap-4 pe-4">
