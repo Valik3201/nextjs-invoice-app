@@ -4,6 +4,16 @@
 
 A full-stack web application built with Next.js for managing invoices. This project includes functionalities for creating, editing, and viewing invoices, leveraging the capabilities of Next.js, Tailwind CSS, and Firebase for a seamless user experience.
 
+![Next.js Badge](https://img.shields.io/badge/Next.js-000?logo=nextdotjs&logoColor=fff&style=flat)
+![React Badge](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=000&style=flat)
+![Redux Badge](https://img.shields.io/badge/Redux-764ABC?logo=redux&logoColor=fff&style=flat)
+![TypeScript Badge](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff&style=flat)
+![Firebase Badge](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=000&style=flat)
+![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss&logoColor=fff&style=flat)
+![Vercel Badge](https://img.shields.io/badge/Vercel-000?logo=vercel&logoColor=fff&style=flat)
+
+[![screenshot](https://github.com/Valik3201/nextjs-invoice-app/blob/main/public/mockups/mockup-4.png)](https://github.com/Valik3201/nextjs-invoice-app/blob/main/public/mockups/mockup-4.png)
+
 ## Features
 
 - Create new invoices
@@ -136,16 +146,16 @@ We welcome contributions to enhance the project. To contribute:
 4. Push to the branch: `git push origin my-feature-branch`
 5. Open a pull request.
 
-## License
-
-This project is licensed under the MIT License.
-
 ## Contact Information
 
 For any inquiries or support, please reach out to the project maintainer at valik3201@gmail.com.
+
+[![Gmail Badge](https://img.shields.io/badge/Gmail-EA4335?logo=gmail&logoColor=fff&style=flat)](mailto:valik3201@gmail.com)
+[![Frontend Mentor Badge](https://img.shields.io/badge/Frontend%20Mentor-3F54A3?logo=frontendmentor&logoColor=fff&style=flat)](https://www.frontendmentor.io/profile/Valik3201)
+[![LinkedIn Badge](https://img.shields.io/badge/LinkedIn-0A66C2?logo=linkedin&logoColor=fff&style=flat)](https://www.linkedin.com/in/valentynchernetskyi/)
 
 ## Acknowledgments
 
 Special thanks to [Frontend Mentor](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl) for providing the challenge that inspired and guided this project. Their platform provides a great opportunity to practice frontend development skills and showcase projects.
 
-Don't forget to give the project a star! Thanks again!
+Don't forget to give the project a star! ⭐️ Thanks again! 
