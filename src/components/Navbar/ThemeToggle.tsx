@@ -15,6 +15,7 @@ const ThemeToggle = () => {
       className="text-blue-gray dark:text-gray-light"
     >
       {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+      <span className="sr-only">Theme Icon</span>
     </button>
   );
 };
