@@ -16,14 +16,14 @@ export default function ManageInvoices() {
         src="/mockups/mockup-2-light.png"
         alt="Filter"
         width={500}
-        height={250}
+        height={375}
         className="dark:hidden rounded-ee-lg"
       />
       <Image
         src="/mockups/mockup-2-dark.png"
         alt="Filter"
         width={500}
-        height={250}
+        height={375}
         className="hidden dark:block rounded-ee-lg"
       />
     </div>
