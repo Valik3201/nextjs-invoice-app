@@ -19,7 +19,7 @@ export default function InvoiceStatus() {
             src="/status/status-paid.png"
             alt="Status Paid"
             width={150}
-            height={30}
+            height={58}
           />
         </motion.div>
         <motion.div style={{ rotate: rotatePending, x: translateXPending }}>
@@ -27,7 +27,7 @@ export default function InvoiceStatus() {
             src="/status/status-pending.png"
             alt="Status Pending"
             width={150}
-            height={30}
+            height={58}
           />
         </motion.div>
         <motion.div style={{ rotate: rotateDraft, x: translateXDraft }}>
@@ -35,7 +35,7 @@ export default function InvoiceStatus() {
             src="/status/status-draft.png"
             alt="Status Draft"
             width={150}
-            height={30}
+            height={58}
             className="dark:hidden"
           />
         </motion.div>
@@ -44,7 +44,7 @@ export default function InvoiceStatus() {
             src="/status/status-draft-dark.png"
             alt="Status Draft"
             width={150}
-            height={30}
+            height={58}
             className="hidden dark:block"
           />
         </motion.div>

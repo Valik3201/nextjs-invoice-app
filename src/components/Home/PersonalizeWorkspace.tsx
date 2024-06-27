@@ -27,7 +27,7 @@ export default function PersonalizeWorkspace() {
             src="/mockups/mockup-3.png"
             alt="Theme Toggle Macbook"
             width={666}
-            height={444}
+            height={408}
           />
         </motion.div>
       </div>
