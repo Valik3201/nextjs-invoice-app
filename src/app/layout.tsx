@@ -18,24 +18,24 @@ export const metadata: Metadata = {
   title: "Invoices Dashboard",
   description: "Effortlessly oversee your invoicing processes",
   openGraph: {
+    title: "Generate Dynamic Open Graph and Twitter Images in Next.js",
+    description:
+      "A guide on how to optimize SEO with static and dynamic metatags using Next.js 13's new Metadata API.",
+    type: "article",
+    url: "https://cruip-tutorials-next.vercel.app/social-preview",
     images: [
       {
-        url: "https://nextjs-schedule-generator.vercel.app/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "Invoice App - Streamline Your Invoicing",
+        url: "https://cruip-tutorials-next.vercel.app/api/og?title=Generate Dynamic Open Graph and Twitter Images in Next.js",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
+    title: "Generate Dynamic Open Graph and Twitter Images in Next.js",
+    description:
+      "A guide on how to optimize SEO with static and dynamic metatags using Next.js 13's new Metadata API.",
     images: [
-      {
-        url: "https://nextjs-schedule-generator.vercel.app/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: "Invoice App - Streamline Your Invoicing",
-      },
+      "https://cruip-tutorials-next.vercel.app/api/og?title=Generate Dynamic Open Graph and Twitter Images in Next.js",
     ],
   },
 };
