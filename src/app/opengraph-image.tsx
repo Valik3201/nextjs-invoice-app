@@ -14,9 +14,10 @@ export default async function Image(req: NextRequest) {
   const url = new URL(req.url);
   const theme = url.searchParams.get("theme") || "light";
 
-  const font = fetch(new URL("/fonts/LeagueSpartan.ttf", import.meta.url)).then(
-    (res) => res.arrayBuffer()
+  const fontResponse = await fetch(
+    "https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
   );
+  const fontData = await fontResponse.arrayBuffer();
 
   const backgroundColor = theme === "dark" ? "#333" : "#fff";
   const textColor = theme === "dark" ? "#fff" : "#000";
@@ -54,7 +55,7 @@ export default async function Image(req: NextRequest) {
       fonts: [
         {
           name: "League Spartan",
-          data: await font,
+          data: fontData,
           style: "normal",
           weight: 400,
         },
