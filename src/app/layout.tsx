@@ -5,8 +5,8 @@ import dynamic from "next/dynamic";
 import StoreProvider from "../providers/StoreProvider";
 import AuthProvider from "../providers/AuthProvider";
 import Navigation from "../components/Navbar/Navigation";
-import "./globals.css";
 import Footer from "../components/Footer/Footer";
+import "./globals.css";
 
 const leagueSpartan = League_Spartan({ subsets: ["latin"] });
 
