@@ -16,27 +16,20 @@ const ThemeProvider = dynamic(() => import("../context/ThemeContext"), {
 
 export const metadata: Metadata = {
   title: "Invoices Dashboard",
-  description: "Effortlessly oversee your invoicing processes",
+  description:
+    "Work smarter with the invoice app. Streamline your invoicing process with ease.",
   openGraph: {
-    title: "Generate Dynamic Open Graph and Twitter Images in Next.js",
+    title: "Invoices Dashboard",
     description:
-      "A guide on how to optimize SEO with static and dynamic metatags using Next.js 13's new Metadata API.",
-    type: "article",
-    url: "https://cruip-tutorials-next.vercel.app/social-preview",
-    images: [
-      {
-        url: "https://cruip-tutorials-next.vercel.app/api/og?title=Generate Dynamic Open Graph and Twitter Images in Next.js",
-      },
-    ],
+      "Work smarter with the invoice app. Streamline your invoicing process with ease.",
+    type: "website",
+    url: "https://valik3201-invoice-app.vercel.app/",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Generate Dynamic Open Graph and Twitter Images in Next.js",
+    title: "Invoices Dashboard",
     description:
-      "A guide on how to optimize SEO with static and dynamic metatags using Next.js 13's new Metadata API.",
-    images: [
-      "https://cruip-tutorials-next.vercel.app/api/og?title=Generate Dynamic Open Graph and Twitter Images in Next.js",
-    ],
+      "Work smarter with the invoice app. Streamline your invoicing process with ease.",
   },
 };
 
