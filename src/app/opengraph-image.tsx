@@ -14,9 +14,9 @@ export default async function Image(req: NextRequest) {
   const url = new URL(req.url);
   const theme = url.searchParams.get("theme") || "light";
 
-  const font = fetch(new URL("./League_Spartan.ttf", import.meta.url)).then(
-    (res) => res.arrayBuffer()
-  );
+  const font = fetch(
+    new URL("./fonts/LeagueSpartan.ttf", import.meta.url)
+  ).then((res) => res.arrayBuffer());
 
   const backgroundColor = theme === "dark" ? "#333" : "#fff";
   const textColor = theme === "dark" ? "#fff" : "#000";
