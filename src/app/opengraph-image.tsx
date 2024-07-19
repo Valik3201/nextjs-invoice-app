@@ -10,7 +10,7 @@ export const size = {
 
 export const contentType = "image/png";
 
-export async function GET(req: NextRequest) {
+export default async function GET(req: NextRequest) {
   const leagueSpartan = await fetch(
     "https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
   ).then((res) => res.arrayBuffer());
