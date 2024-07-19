@@ -17,6 +17,27 @@ const ThemeProvider = dynamic(() => import("../context/ThemeContext"), {
 export const metadata: Metadata = {
   title: "Invoices Dashboard",
   description: "Effortlessly oversee your invoicing processes",
+  openGraph: {
+    images: [
+      {
+        url: "https://nextjs-schedule-generator.vercel.app/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Invoice App - Streamline Your Invoicing",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [
+      {
+        url: "https://nextjs-schedule-generator.vercel.app/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Invoice App - Streamline Your Invoicing",
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
