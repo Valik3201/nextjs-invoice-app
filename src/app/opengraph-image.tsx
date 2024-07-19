@@ -9,6 +9,9 @@ export const size = {
 
 export const contentType = "image/png";
 
+export const dynamic = "force-dynamic";
+export const dynamicParams = true;
+
 export default async function Image({ params }: { params: string[] }) {
   const leagueSpartan = await fetch(
     "https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap"
@@ -47,7 +50,7 @@ export default async function Image({ params }: { params: string[] }) {
       <div
         tw="h-full w-full flex flex-col align-start justify-center py-10 px-20"
         style={{
-          backgroundColor: "#F8F8FB",
+          background: "#F8F8FB",
           backgroundSize: "100% 100%",
           fontFamily: "League Spartan",
         }}
@@ -88,7 +91,7 @@ export default async function Image({ params }: { params: string[] }) {
           name: "League Spartan",
           data: leagueSpartan,
           style: "normal",
-          weight: 800,
+          weight: 400,
         },
       ],
     }
