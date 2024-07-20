@@ -25,7 +25,7 @@ export const metadata: Metadata = {
       "Manage and view all your invoices in one place on the Invoices App.",
     type: "website",
     url: "https://valik3201-invoice-app.vercel.app/",
-    siteName: "Invoice App",
+    siteName: "Invoices App",
   },
   twitter: {
     card: "summary_large_image",
