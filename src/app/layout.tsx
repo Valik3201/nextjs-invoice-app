@@ -15,8 +15,24 @@ const ThemeProvider = dynamic(() => import("../context/ThemeContext"), {
 });
 
 export const metadata: Metadata = {
-  title: "Invoices Dashboard",
-  description: "Effortlessly oversee your invoicing processes",
+  metadataBase: new URL("https://valik3201-invoice-app.vercel.app/"),
+  title: "Invoices App",
+  description:
+    "Work smarter with the invoice app. Streamline your invoicing process with ease.",
+  openGraph: {
+    title: "Invoices App",
+    description:
+      "Manage and view all your invoices in one place on the Invoices App.",
+    type: "website",
+    url: "https://valik3201-invoice-app.vercel.app/",
+    siteName: "Invoice App",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Invoices App",
+    description:
+      "Manage and view all your invoices in one place on the Invoices App.",
+  },
 };
 
 export default function RootLayout({
