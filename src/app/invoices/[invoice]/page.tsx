@@ -1,5 +1,6 @@
 "use client";
 
+import type { Metadata } from "next";
 import { useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
@@ -46,4 +47,19 @@ export default function Page() {
       )}
     </div>
   );
+}
+
+interface Params {
+  params: {
+    invoice: string;
+  };
+}
+
+export async function generateMetadata({ params }: Params): Promise<Metadata> {
+  const invoiceUid = params.invoice;
+
+  return {
+    title: `Invoice ${invoiceUid}`,
+    description: `Details of invoice ${invoiceUid}`,
+  };
 }

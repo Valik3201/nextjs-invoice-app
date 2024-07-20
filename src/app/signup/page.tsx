@@ -1,9 +1,9 @@
 "use client";
 
+import type { Metadata } from "next";
 import { useEffect, useRef } from "react";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import { useAppSelector, useAppStore } from "@/src/lib/hooks";
-import { useAuth } from "@/src/hooks/useAuth";
 import AuthNavigation from "@/src/components/Auth/AuthNavigation";
 import AuthError from "@/src/components/Auth/AuthError";
 import SignUpForm from "@/src/components/Auth/SignUpForm";
@@ -36,3 +36,9 @@ export default function SignUp() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Sign Up - Invoices App",
+  description:
+    "Create a new account to start managing your invoices on the Invoices App.",
+};

@@ -15,6 +15,7 @@ const ThemeProvider = dynamic(() => import("../context/ThemeContext"), {
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://valik3201-invoice-app.vercel.app/"),
   title: "Invoices Dashboard",
   description:
     "Work smarter with the invoice app. Streamline your invoicing process with ease.",
@@ -26,6 +27,7 @@ export const metadata: Metadata = {
     url: "https://valik3201-invoice-app.vercel.app/",
     siteName: "https://valik3201-invoice-app.vercel.app/",
   },
+
   twitter: {
     card: "summary_large_image",
     title: "Invoices Dashboard",

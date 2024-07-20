@@ -1,5 +1,6 @@
 "use client";
 
+import type { Metadata } from "next";
 import { useEffect, useRef } from "react";
 import { resetErrors } from "@/src/lib/features/auth/authSlice";
 import { useAppSelector, useAppStore } from "@/src/lib/hooks";
@@ -36,3 +37,9 @@ export default function SignIn() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Sign In - Invoices App",
+  description:
+    "Sign in to access your account and manage your invoices on the Invoices App.",
+};

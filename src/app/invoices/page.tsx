@@ -1,5 +1,6 @@
 "use client";
 
+import type { Metadata } from "next";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/src/lib/hooks";
@@ -83,3 +84,9 @@ export default function Page() {
     </>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Invoices - Invoices App",
+  description:
+    "Manage and view all your invoices in one place on the Invoices App.",
+};

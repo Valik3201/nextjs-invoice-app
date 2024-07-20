@@ -1,5 +1,6 @@
 "use client";
 
+import type { Metadata } from "next";
 import { Formik, Form } from "formik";
 import { emailSchema } from "@/src/validation/profileValidationSchema";
 import { useAccountActions } from "@/src/hooks/useAccountActions";
@@ -60,3 +61,9 @@ export default function Page() {
     </div>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Forgot Password - Invoices App",
+  description:
+    "Reset your password to regain access to your account on the Invoices App.",
+};
