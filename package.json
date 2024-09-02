@@ -16,7 +16,7 @@
     "formik": "^2.4.6",
     "framer-motion": "^11.3.28",
     "nanoid": "^5.0.7",
-    "next": "14.2.5",
+    "next": "14.2.7",
     "next-themes": "^0.3.0",
     "react": "^18",
     "react-dom": "^18",
