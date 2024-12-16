@@ -14,7 +14,7 @@
     "date-fns": "^4.1.0",
     "firebase": "^11.0.2",
     "formik": "^2.4.6",
-    "framer-motion": "^11.12.0",
+    "framer-motion": "^11.14.4",
     "nanoid": "^5.0.8",
     "next": "14.2.15",
     "next-themes": "^0.3.0",
