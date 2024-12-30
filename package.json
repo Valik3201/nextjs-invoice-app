@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^2.4.0",
+    "@reduxjs/toolkit": "^2.5.0",
     "cookies-next": "^4.3.0",
     "date-fns": "^4.1.0",
     "firebase": "^11.0.2",
